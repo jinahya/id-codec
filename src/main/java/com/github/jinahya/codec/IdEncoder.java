@@ -18,13 +18,11 @@
 package com.github.jinahya.codec;
 
 
-import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 /**
- * Encoder for Database IDs.
+ * A class for encoding identifiers.
  *
  * @author Jin Kwon <jinahya at gmail.com>
  */
@@ -32,24 +30,24 @@ public class IdEncoder {
 
 
     /**
-     * Encodes a single block.
+     * Returns a random single digit.
      *
-     * @param decoded block to encode
-     * @param random random
-     *
-     * @return encoded block
+     * @return a random ingle digit.
      */
-    private static String block(final long decoded, final Random random) {
+    private static int sd() {
 
-        final StringBuilder builder = new StringBuilder(Long.toString(decoded));
+        return (int) (Math.random() * 10);
+    }
 
-        builder.append(Integer.toString(random.nextInt(9) + 1)); // 1-9
-        builder.append(Integer.toString(random.nextInt(9) + 1)); // 1-9
 
-        builder.reverse();
+    /**
+     * Returns a random nonzero single digit.
+     *
+     * @return a random nonzero single digit.
+     */
+    private static int nzsd() {
 
-        return Long.toString(
-            Long.parseLong(builder.toString()), Character.MAX_RADIX);
+        return (int) (Math.random() * 9) + 1;
     }
 
 
@@ -57,12 +55,21 @@ public class IdEncoder {
      * Encodes a single block.
      *
      * @param decoded block to encode
+     * @param random a random to use
      *
      * @return encoded block
      */
     private static String block(final long decoded) {
 
-        return block(decoded, ThreadLocalRandom.current());
+        final StringBuilder builder = new StringBuilder(Long.toString(decoded));
+
+        builder.append(Integer.toString(nzsd()));
+        builder.append(Integer.toString(nzsd()));
+
+        builder.reverse();
+
+        return Long.toString(
+            Long.parseLong(builder.toString()), Character.MAX_RADIX);
     }
 
 
@@ -88,6 +95,10 @@ public class IdEncoder {
      */
     public static String encodeUUID(final UUID decoded) {
 
+        if (decoded == null) {
+            throw new NullPointerException("decoded");
+        }
+
         return encodeLong(decoded.getMostSignificantBits()) + "-"
                + encodeLong(decoded.getLeastSignificantBits());
     }
@@ -107,3 +118,4 @@ public class IdEncoder {
 
 
 }
+
