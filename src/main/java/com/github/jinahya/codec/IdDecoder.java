@@ -29,12 +29,6 @@ import java.util.UUID;
 public class IdDecoder {
 
 
-    static final int DEFAULT_RADIX = Character.MAX_RADIX;
-
-
-    static final int DEFAULT_SCALE = 1;
-
-
     /**
      * Decodes a single block.
      *
@@ -51,19 +45,9 @@ public class IdDecoder {
             throw new NullPointerException("encoded == null");
         }
 
-        if (radix < Character.MIN_RADIX) {
-            throw new IllegalArgumentException(
-                "radix(" + radix + ") < " + Character.MIN_RADIX);
-        }
+        IdCodec.requireValidRadix(radix);
 
-        if (radix > Character.MAX_RADIX) {
-            throw new IllegalArgumentException(
-                "radix(" + radix + ") > " + Character.MAX_RADIX);
-        }
-
-        if (scale < 1) {
-            throw new IllegalArgumentException("scale(" + scale + ") < 1");
-        }
+        IdCodec.requireValidScale(scale);
 
         final StringBuilder builder = new StringBuilder(
             Long.toString(Long.parseLong(encoded, radix)));
@@ -148,17 +132,7 @@ public class IdDecoder {
 
     public void setRadix(final int radix) {
 
-        if (radix < Character.MIN_RADIX) {
-            throw new IllegalArgumentException(
-                "radix(" + radix + ") < " + Character.MIN_RADIX);
-        }
-
-        if (radix > Character.MAX_RADIX) {
-            throw new IllegalArgumentException(
-                "radix(" + radix + ") > " + Character.MAX_RADIX);
-        }
-
-        this.radix = radix;
+        this.radix = IdCodec.requireValidRadix(radix);
     }
 
 
@@ -170,18 +144,14 @@ public class IdDecoder {
 
     public void setScale(final int scale) {
 
-        if (scale < 1) {
-            throw new IllegalArgumentException("scale(" + scale + ") < 1");
-        }
-
-        this.scale = scale;
+        this.scale = IdCodec.requireValidScale(scale);
     }
 
 
-    private int radix = DEFAULT_RADIX;
+    private int radix = IdCodec.RADIX_DEFAULT;
 
 
-    private int scale = DEFAULT_SCALE;
+    private int scale = IdCodec.SCALE_DEFAULT;
 
 
 }

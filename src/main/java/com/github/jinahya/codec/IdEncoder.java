@@ -29,12 +29,6 @@ import java.util.UUID;
 public class IdEncoder {
 
 
-    static final int DEFAULT_RADIX = Character.MAX_RADIX;
-
-
-    static final int DEFAULT_SCALE = 1;
-
-
     /**
      * Returns a random single digit.
      *
@@ -60,19 +54,9 @@ public class IdEncoder {
     private static String block(final long decoded, final int radix,
                                 final int scale) {
 
-        if (radix < Character.MIN_RADIX) {
-            throw new IllegalArgumentException(
-                "radix(" + radix + ") < " + Character.MIN_RADIX);
-        }
+        IdCodec.requireValidRadix(radix);
 
-        if (radix > Character.MAX_RADIX) {
-            throw new IllegalArgumentException(
-                "radix(" + radix + ") > " + Character.MAX_RADIX);
-        }
-
-        if (scale < 1) {
-            throw new IllegalArgumentException("scale(" + scale + ") < 1");
-        }
+        IdCodec.requireValidScale(scale);
 
         final StringBuilder builder = new StringBuilder(Long.toString(decoded));
 
@@ -215,10 +199,10 @@ public class IdEncoder {
     }
 
 
-    private int radix = DEFAULT_RADIX;
+    private int radix = IdCodec.RADIX_DEFAULT;
 
 
-    private int scale = DEFAULT_SCALE;
+    private int scale = IdCodec.SCALE_DEFAULT;
 
 
 }

@@ -145,7 +145,7 @@ public class IdCodecTest {
 
         final long expected = ThreadLocalRandom.current().nextInt();
 
-        for (int i = Character.MIN_RADIX; i <= Character.MAX_RADIX; i++) {
+        for (int i = IdCodec.RADIX_MINIMUM; i <= IdCodec.RADIX_MAXIMUM; i++) {
             LOGGER.trace("radix: {}", i);
             encoder.setRadix(i);
             decoder.setRadix(i);
@@ -165,7 +165,7 @@ public class IdCodecTest {
 
         final long expected = ThreadLocalRandom.current().nextInt();
 
-        for (int i = 1; i <= 5; i++) {
+        for (int i = IdCodec.SCALE_MINIMUM; i <= IdCodec.SCALE_MAXIMUM; i++) {
             LOGGER.trace("scale: {}", i);
             encoder.setScale(i);
             decoder.setScale(i);
