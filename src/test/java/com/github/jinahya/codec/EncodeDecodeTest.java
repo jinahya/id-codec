@@ -30,14 +30,14 @@ import org.testng.annotations.Test;
  *
  * @author Jin Kwon <jinahya at gmail.com>
  */
-public class IdCodecTest {
+public class EncodeDecodeTest {
 
 
     /**
      * logger.
      */
     private static final Logger LOGGER
-        = LoggerFactory.getLogger(IdCodecTest.class);
+        = LoggerFactory.getLogger(EncodeDecodeTest.class);
 
 
     private static void encodeDecode(final long expected, final boolean print) {
@@ -142,10 +142,11 @@ public class IdCodecTest {
 
         final long expected = ThreadLocalRandom.current().nextInt();
 
-        for (int i = IdCodecBase.RADIX_MINIMUM; i <= IdCodecBase.RADIX_MAXIMUM; i++) {
-            LOGGER.trace("radix: {}", i);
-            encoder.setRadix(i);
-            decoder.setRadix(i);
+        for (int scale = IdCodecBase.RADIX_MINIMUM;
+             scale <= IdCodecBase.RADIX_MAXIMUM; scale++) {
+            LOGGER.trace("radix: {}", scale);
+            encoder.setRadix(scale);
+            decoder.setRadix(scale);
             final String encoded = encoder.encodeLong(expected);
             LOGGER.trace("encoded: {}", encoded);
             final long actual = decoder.decodeLong(encoded);
@@ -162,10 +163,11 @@ public class IdCodecTest {
 
         final long expected = ThreadLocalRandom.current().nextInt();
 
-        for (int i = IdCodecBase.SCALE_MINIMUM; i <= IdCodecBase.SCALE_MAXIMUM; i++) {
-            LOGGER.trace("scale: {}", i);
-            encoder.setScale(i);
-            decoder.setScale(i);
+        for (int scale = IdCodecBase.SCALE_MINIMUM;
+             scale <= IdCodecBase.SCALE_MAXIMUM; scale++) {
+            LOGGER.trace("scale: {}", scale);
+            encoder.setScale(scale);
+            decoder.setScale(scale);
             final String encoded = encoder.encodeLong(expected);
             LOGGER.trace("encoded: {}", encoded);
             final long actual = decoder.decodeLong(encoded);

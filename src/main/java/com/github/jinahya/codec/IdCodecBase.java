@@ -71,9 +71,10 @@ abstract class IdCodecBase {
      *
      * @return {@code radix} if valid
      *
-     * @throws IllegalArgumentException if {@code radix} is not valid
+     * @throws IllegalArgumentException if {@code radix} is less than
+     * {@value #RADIX_MINIMUM} or greater than {@value #RADIX_MAXIMUM}.
      */
-    static int requireValidRadix(final int radix) {
+    protected static int requireValidRadix(final int radix) {
 
         if (radix < RADIX_MINIMUM) {
             throw new IllegalArgumentException(
@@ -96,9 +97,10 @@ abstract class IdCodecBase {
      *
      * @return {@code scale} if valid
      *
-     * @throws IllegalArgumentException if {@code scale} is not valid
+     * @throws IllegalArgumentException if {@code scale} is less than
+     * {@value #SCALE_MINIMUM} or greater than {@value #SCALE_MAXIMUM}.
      */
-    static int requireValidScale(final int scale) {
+    protected static int requireValidScale(final int scale) {
 
         if (scale < SCALE_MINIMUM) {
             throw new IllegalArgumentException(
@@ -135,6 +137,8 @@ abstract class IdCodecBase {
      * Replaces the current value of {@code radix} with given.
      *
      * @param radix new value for {@code radix}.
+     *
+     * @see #requireValidRadix(int)
      */
     public void setRadix(final int radix) {
 
@@ -156,7 +160,10 @@ abstract class IdCodecBase {
     /**
      * Replaces the current value of {@code scale} with given.
      *
-     * @param scale new value for {@code scale}
+     * @param scale new value for {@code scale} between {@value #SCALE_MINIMUM}
+     * (inclusive) and {@value #SCALE_MAXIMUM} (inclusive).
+     *
+     * @see #requireValidScale(int)
      */
     public void setScale(final int scale) {
 
@@ -167,13 +174,13 @@ abstract class IdCodecBase {
     /**
      * radix.
      */
-    private int radix = IdCodecBase.RADIX_DEFAULT;
+    private int radix = RADIX_DEFAULT;
 
 
     /**
      * scale.
      */
-    private int scale = IdCodecBase.SCALE_DEFAULT;
+    private int scale = SCALE_DEFAULT;
 
 
 }

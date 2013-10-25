@@ -68,6 +68,9 @@ public class IdDecoder extends IdCodecBase {
      * @param scale the scale
      *
      * @return decoded output
+     *
+     * @see #requireValidRadix(int)
+     * @see #requireValidScale(int)
      */
     public static long decodeLong(final String encoded, final int radix,
                                   final int scale) {
@@ -94,6 +97,9 @@ public class IdDecoder extends IdCodecBase {
      * @param scale the scale
      *
      * @return decoded output
+     *
+     * @see #requireValidRadix(int)
+     * @see #requireValidScale(int)
      */
     public static UUID decodeUuid(final String encoded, final int radix,
                                   final int scale) {
