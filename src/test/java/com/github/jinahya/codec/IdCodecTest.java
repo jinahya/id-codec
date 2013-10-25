@@ -33,17 +33,17 @@ import org.testng.annotations.Test;
 public class IdCodecTest {
 
 
+    /**
+     * logger.
+     */
     private static final Logger LOGGER
         = LoggerFactory.getLogger(IdCodecTest.class);
 
 
     private static void encodeDecode(final long expected, final boolean print) {
 
-        final int radix = Character.MAX_RADIX;
-        final int scale = 2;
-
-        final String encoded = IdEncoder.encodeLong(expected, radix, scale);
-        final long actual = IdDecoder.decodeLong(encoded, radix, scale);
+        final String encoded = IdEncoderTest.encodeLong(expected);
+        final long actual = IdDecoderTest.decodeLong(encoded);
         if (print) {
             System.out.printf("%40d %40s\n", expected, encoded);
         }
@@ -69,11 +69,8 @@ public class IdCodecTest {
 
     private static void encodeDecode(final UUID expected, final boolean print) {
 
-        final int radix = Character.MAX_RADIX;
-        final int scale = 2;
-
-        final String encoded = IdEncoder.encodeUuid(expected, radix, scale);
-        final UUID actual = IdDecoder.decodeUuid(encoded, radix, scale);
+        final String encoded = IdEncoderTest.encodeUuid(expected);
+        final UUID actual = IdDecoderTest.decodeUuid(encoded);
         if (print) {
             System.out.printf("%40s %40s\n", expected, encoded);
         }
@@ -138,7 +135,7 @@ public class IdCodecTest {
 
 
     @Test
-    public void encodedDecode_radixAll() {
+    public void encodedDecode_allAvailableRadices() {
 
         final IdEncoder encoder = new IdEncoder();
         final IdDecoder decoder = new IdDecoder();
@@ -158,7 +155,7 @@ public class IdCodecTest {
 
 
     @Test
-    public void encodedDecode_scale1to5() {
+    public void encodedDecode_allAvailableScales() {
 
         final IdEncoder encoder = new IdEncoder();
         final IdDecoder decoder = new IdDecoder();
