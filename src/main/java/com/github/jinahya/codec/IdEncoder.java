@@ -26,7 +26,7 @@ import java.util.UUID;
  *
  * @author Jin Kwon <jinahya at gmail.com>
  */
-public class IdEncoder {
+public class IdEncoder extends IdCodecBase {
 
 
     /**
@@ -51,16 +51,24 @@ public class IdEncoder {
     }
 
 
+    /**
+     *
+     * @param decoded the block to encode
+     * @param radix the radix
+     * @param scale the scale
+     *
+     * @return encoded output
+     */
     private static String block(final long decoded, final int radix,
                                 final int scale) {
 
-        IdCodec.requireValidRadix(radix);
+        requireValidRadix(radix);
 
-        IdCodec.requireValidScale(scale);
+        requireValidScale(scale);
 
         final StringBuilder builder = new StringBuilder(Long.toString(decoded));
 
-        builder.ensureCapacity(builder.capacity() + scale);
+        builder.ensureCapacity(builder.length() + scale);
         for (int i = 0; i < scale - 1; i++) {
             builder.append(Integer.toString(sd()));
         }
@@ -72,6 +80,15 @@ public class IdEncoder {
     }
 
 
+    /**
+     * Encodes given value with specified radix and scale.
+     *
+     * @param decoded the value to encode
+     * @param radix the radix
+     * @param scale the scale
+     *
+     * @return encoded value.
+     */
     public static String encodeLong(final long decoded, final int radix,
                                     final int scale) {
 
@@ -80,26 +97,14 @@ public class IdEncoder {
     }
 
 
-//    /**
-//     * Encodes given value with {@link #DEFAULT_RADIX} and
-//     * {@link #DEFAULT_SCALE}.
-//     *
-//     * @param decoded the value to encode
-//     *
-//     * @return encoded output.
-//     */
-//    public static String encodeLong(final long decoded) {
-//
-//        return encodeLong(decoded, DEFAULT_RADIX, DEFAULT_SCALE);
-//    }
     /**
      * Encodes given value with specified radix and scale.
      *
-     * @param decoded the value
+     * @param decoded the value to encode
      * @param radix the radix
      * @param scale the scale
      *
-     * @return encoded output.
+     * @return encoded value.
      */
     protected static String encodeUuid(final UUID decoded, final int radix,
                                        final int scale) {
@@ -113,96 +118,30 @@ public class IdEncoder {
     }
 
 
-//    /**
-//     * Encodes given value with {@link #DEFAULT_RADIX} and
-//     * {@link #DEFAULT_SCALE}.
-//     *
-//     * @param decoded the value
-//     *
-//     * @return encoded output
-//     */
-//    public static String encodeUUID(final UUID decoded) {
-//
-//        return encodeUUID(decoded, DEFAULT_RADIX, DEFAULT_SCALE);
-//    }
     /**
-     * Encodes given value with {@code radix} and {@code scale}.
+     * Encodes given value.
      *
-     * @param decoded the value
+     * @param decoded the value to encode.
      *
-     * @return encoded result.
+     * @return encoded output.
      */
     public String encodeLong(final long decoded) {
 
-        return encodeLong(decoded, radix, scale);
+        return encodeLong(decoded, getRadix(), getScale());
     }
 
 
     /**
-     * Encodes given value with {@code radix} and {@code scale}.
+     * Encodes given value.
      *
-     * @param decoded the value
+     * @param decoded the value to encode
      *
-     * @return encoded result.
+     * @return encoded output.
      */
     public String encodeUuid(final UUID decoded) {
 
-        return encodeUuid(decoded, radix, scale);
+        return encodeUuid(decoded, getRadix(), getScale());
     }
-
-
-    /**
-     * Return current value of {@code radix}.
-     *
-     * @return the current value of {@code radix}.
-     */
-    public int getRadix() {
-
-        return radix;
-    }
-
-
-    /**
-     * Sets the current value of {@code radix} with given.
-     *
-     * @param radix new value of {@code radix}.
-     */
-    public void setRadix(final int radix) {
-
-        if (radix < Character.MIN_RADIX) {
-            throw new IllegalArgumentException(
-                "radix(" + radix + ") < " + Character.MIN_RADIX);
-        }
-
-        if (radix > Character.MAX_RADIX) {
-            throw new IllegalArgumentException(
-                "radix(" + radix + ") > " + Character.MAX_RADIX);
-        }
-
-        this.radix = radix;
-    }
-
-
-    public int getScale() {
-
-        return scale;
-    }
-
-
-    public void setScale(final int scale) {
-
-        if (scale < 1) {
-            throw new IllegalArgumentException("scale(" + scale + ") < 1");
-        }
-
-        this.scale = scale;
-    }
-
-
-    private int radix = IdCodec.RADIX_DEFAULT;
-
-
-    private int scale = IdCodec.SCALE_DEFAULT;
 
 
 }

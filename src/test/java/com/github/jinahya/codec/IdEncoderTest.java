@@ -32,15 +32,15 @@ public class IdEncoderTest {
 
     static String encodeLong(final long decoded) {
 
-        return IdEncoder.encodeLong(decoded, IdCodec.RADIX_DEFAULT,
-                                    IdCodec.SCALE_DEFAULT);
+        return IdEncoder.encodeLong(decoded, IdCodecBase.RADIX_DEFAULT,
+                                    IdCodecBase.SCALE_DEFAULT);
     }
 
 
     static String encodeUuid(final UUID decoded) {
 
-        return IdEncoder.encodeUuid(decoded, IdCodec.RADIX_DEFAULT,
-                                    IdCodec.SCALE_DEFAULT);
+        return IdEncoder.encodeUuid(decoded, IdCodecBase.RADIX_DEFAULT,
+                                    IdCodecBase.SCALE_DEFAULT);
     }
 
 

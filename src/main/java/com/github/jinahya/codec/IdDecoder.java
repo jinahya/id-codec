@@ -22,21 +22,21 @@ import java.util.UUID;
 
 
 /**
- * Decoder for Database IDs.
+ * A class for decoding identifiers.
  *
  * @author Jin Kwon <jinahya at gmail.com>
  */
-public class IdDecoder {
+public class IdDecoder extends IdCodecBase {
 
 
     /**
      * Decodes a single block.
      *
      * @param encoded the block to decode
-     * @param radix
-     * @param scale the number random prefixes
+     * @param radix the radix
+     * @param scale the scale
      *
-     * @return decoded block
+     * @return decoded output
      */
     private static long block(final String encoded, final int radix,
                               final int scale) {
@@ -45,9 +45,9 @@ public class IdDecoder {
             throw new NullPointerException("encoded == null");
         }
 
-        IdCodec.requireValidRadix(radix);
+        requireValidRadix(radix);
 
-        IdCodec.requireValidScale(scale);
+        requireValidScale(scale);
 
         final StringBuilder builder = new StringBuilder(
             Long.toString(Long.parseLong(encoded, radix)));
@@ -55,13 +55,20 @@ public class IdDecoder {
         builder.reverse();
 
         builder.delete(builder.length() - scale, builder.length());
-        //builder.deleteCharAt(builder.length() - 1);
-        //builder.deleteCharAt(builder.length() - 1);
 
         return Long.parseLong(builder.toString());
     }
 
 
+    /**
+     * Decodes given value with specified radix and scale.
+     *
+     * @param encoded the value to decode
+     * @param radix the radix
+     * @param scale the scale
+     *
+     * @return decoded output
+     */
     public static long decodeLong(final String encoded, final int radix,
                                   final int scale) {
 
@@ -79,6 +86,15 @@ public class IdDecoder {
     }
 
 
+    /**
+     * Decodes given value with specified radix and scale.
+     *
+     * @param encoded the value to decode
+     * @param radix the radix
+     * @param scale the scale
+     *
+     * @return decoded output
+     */
     public static UUID decodeUuid(final String encoded, final int radix,
                                   final int scale) {
 
@@ -106,52 +122,29 @@ public class IdDecoder {
 
 
     /**
-     * Decodes given {@code decoded}.
+     * Decodes given value.
      *
-     * @param encoded encoded value to decode.
+     * @param encoded the value to decode.
      *
      * @return decoded value
      */
     public long decodeLong(final String encoded) {
 
-        return decodeLong(encoded, radix, scale);
+        return decodeLong(encoded, getRadix(), getScale());
     }
 
 
+    /**
+     * Decodes given value.
+     *
+     * @param encoded the value to decode.
+     *
+     * @return decoded value
+     */
     public UUID decodeUuid(final String encoded) {
 
-        return decodeUuid(encoded, radix, scale);
+        return decodeUuid(encoded, getRadix(), getScale());
     }
-
-
-    public int getRadix() {
-
-        return radix;
-    }
-
-
-    public void setRadix(final int radix) {
-
-        this.radix = IdCodec.requireValidRadix(radix);
-    }
-
-
-    public int getScale() {
-
-        return scale;
-    }
-
-
-    public void setScale(final int scale) {
-
-        this.scale = IdCodec.requireValidScale(scale);
-    }
-
-
-    private int radix = IdCodec.RADIX_DEFAULT;
-
-
-    private int scale = IdCodec.SCALE_DEFAULT;
 
 
 }
