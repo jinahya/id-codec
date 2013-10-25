@@ -18,9 +18,7 @@
 package com.github.jinahya.codec;
 
 
-import com.github.jinahya.codec.IdDecoder;
 import java.util.UUID;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
@@ -31,17 +29,31 @@ import org.testng.annotations.Test;
 public class IdDecoderTest {
 
 
-    @Test(expectedExceptions = {NullPointerException.class})
-    public static void testDecodeLongWithNullDecoded() {
+    static long decodeLong(final String encoded) {
 
-        IdDecoder.decodeLong(null);
+        return IdDecoder.decodeLong(encoded, IdDecoder.DEFAULT_RADIX,
+                                    IdDecoder.DEFAULT_SCALE);
+    }
+
+
+    static UUID decodeUuid(final String encoded) {
+
+        return IdDecoder.decodeUuid(encoded, IdDecoder.DEFAULT_RADIX,
+                                    IdDecoder.DEFAULT_SCALE);
     }
 
 
     @Test(expectedExceptions = {NullPointerException.class})
-    public static void testDecodeUUIDWithNullDecoded() {
+    public static void decodeLong_nullEncoded_nullPointerException() {
 
-        IdDecoder.decodeUUID(null);
+        decodeLong(null);
+    }
+
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public static void decodeUuid_nullEncoded_nulPointerException() {
+
+        decodeUuid(null);
     }
 
 

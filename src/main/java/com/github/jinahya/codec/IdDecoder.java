@@ -29,38 +29,60 @@ import java.util.UUID;
 public class IdDecoder {
 
 
+    static final int DEFAULT_RADIX = Character.MAX_RADIX;
+
+
+    static final int DEFAULT_SCALE = 1;
+
+
     /**
      * Decodes a single block.
      *
      * @param encoded the block to decode
+     * @param radix
+     * @param scale the number random prefixes
      *
      * @return decoded block
      */
-    private static long block(final String encoded) {
+    private static long block(final String encoded, final int radix,
+                              final int scale) {
+
+        if (encoded == null) {
+            throw new NullPointerException("encoded == null");
+        }
+
+        if (radix < Character.MIN_RADIX) {
+            throw new IllegalArgumentException(
+                "radix(" + radix + ") < " + Character.MIN_RADIX);
+        }
+
+        if (radix > Character.MAX_RADIX) {
+            throw new IllegalArgumentException(
+                "radix(" + radix + ") > " + Character.MAX_RADIX);
+        }
+
+        if (scale < 1) {
+            throw new IllegalArgumentException("scale(" + scale + ") < 1");
+        }
 
         final StringBuilder builder = new StringBuilder(
-            Long.toString(Long.parseLong(encoded, Character.MAX_RADIX)));
+            Long.toString(Long.parseLong(encoded, radix)));
 
         builder.reverse();
 
-        builder.deleteCharAt(builder.length() - 1);
-        builder.deleteCharAt(builder.length() - 1);
+        builder.delete(builder.length() - scale, builder.length());
+        //builder.deleteCharAt(builder.length() - 1);
+        //builder.deleteCharAt(builder.length() - 1);
 
         return Long.parseLong(builder.toString());
     }
 
 
-    /**
-     * Decodes given {@code encoded}.
-     *
-     * @param encoded the value to be decoded
-     *
-     * @return the decoded value
-     */
-    public static long decodeLong(final String encoded) {
+    public static long decodeLong(final String encoded, final int radix,
+                                  final int scale) {
 
         if (encoded == null) {
-            throw new NullPointerException("encoded");
+            throw new NullPointerException("encoded == null");
         }
 
         final int index = encoded.indexOf('-');
@@ -68,22 +90,16 @@ public class IdDecoder {
             throw new IllegalArgumentException("wrong encoded: " + encoded);
         }
 
-        return (block(encoded.substring(0, index)) << 32)
-               | (block(encoded.substring(index + 1)));
+        return (block(encoded.substring(0, index), radix, scale) << 32)
+               | (block(encoded.substring(index + 1), radix, scale));
     }
 
 
-    /**
-     * Decodes given {@code encoded}.
-     *
-     * @param encoded the value to be decoded
-     *
-     * @return the decoded value
-     */
-    public static UUID decodeUUID(final String encoded) {
+    public static UUID decodeUuid(final String encoded, final int radix,
+                                  final int scale) {
 
         if (encoded == null) {
-            throw new NullPointerException("encoded");
+            throw new NullPointerException("encoded == null");
         }
 
         final int first = encoded.indexOf('-');
@@ -96,10 +112,10 @@ public class IdDecoder {
             throw new IllegalArgumentException("wrong encoded: " + encoded);
         }
 
-        final long mostSignificantBits =
-            decodeLong(encoded.substring(0, second));
-        final long leastSignificantBits =
-            decodeLong(encoded.substring(second + 1));
+        final long mostSignificantBits
+            = decodeLong(encoded.substring(0, second), radix, scale);
+        final long leastSignificantBits
+            = decodeLong(encoded.substring(second + 1), radix, scale);
 
         return new UUID(mostSignificantBits, leastSignificantBits);
     }
@@ -112,10 +128,60 @@ public class IdDecoder {
      *
      * @return decoded value
      */
-    public long decode(final String encoded) {
+    public long decodeLong(final String encoded) {
 
-        return decodeLong(encoded);
+        return decodeLong(encoded, radix, scale);
     }
+
+
+    public UUID decodeUuid(final String encoded) {
+
+        return decodeUuid(encoded, radix, scale);
+    }
+
+
+    public int getRadix() {
+
+        return radix;
+    }
+
+
+    public void setRadix(final int radix) {
+
+        if (radix < Character.MIN_RADIX) {
+            throw new IllegalArgumentException(
+                "radix(" + radix + ") < " + Character.MIN_RADIX);
+        }
+
+        if (radix > Character.MAX_RADIX) {
+            throw new IllegalArgumentException(
+                "radix(" + radix + ") > " + Character.MAX_RADIX);
+        }
+
+        this.radix = radix;
+    }
+
+
+    public int getScale() {
+
+        return scale;
+    }
+
+
+    public void setScale(final int scale) {
+
+        if (scale < 1) {
+            throw new IllegalArgumentException("scale(" + scale + ") < 1");
+        }
+
+        this.scale = scale;
+    }
+
+
+    private int radix = DEFAULT_RADIX;
+
+
+    private int scale = DEFAULT_SCALE;
 
 
 }

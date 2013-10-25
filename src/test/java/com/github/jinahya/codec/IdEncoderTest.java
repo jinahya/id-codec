@@ -18,7 +18,6 @@
 package com.github.jinahya.codec;
 
 
-import com.github.jinahya.codec.IdEncoder;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import org.testng.annotations.Test;
@@ -31,43 +30,42 @@ import org.testng.annotations.Test;
 public class IdEncoderTest {
 
 
-    @Test(invocationCount = 128)
-    public static void testEncodeLong() {
+    static String encodeLong(final long decoded) {
 
-        final String encoded =
-            IdEncoder.encodeLong(ThreadLocalRandom.current().nextLong());
+        return IdEncoder.encodeLong(decoded, IdEncoder.DEFAULT_RADIX,
+                                    IdEncoder.DEFAULT_SCALE);
+    }
+
+
+    static String encodeUuid(final UUID decoded) {
+
+        return IdEncoder.encodeUuid(decoded, IdEncoder.DEFAULT_RADIX,
+                                    IdEncoder.DEFAULT_SCALE);
+    }
+
+
+    @Test(invocationCount = 1024)
+    public static void encodeLong() {
+
+        final long decoded = ThreadLocalRandom.current().nextLong();
+
+        final String encoded = encodeLong(decoded);
     }
 
 
     @Test(expectedExceptions = {NullPointerException.class})
-    public static void testEncodeUUIDWithNullDecoded() {
+    public static void encodeUUID_nullDecoded_nullPointerException() {
 
-        IdEncoder.encodeUUID(null);
+        encodeUuid(null);
     }
 
 
-    @Test(invocationCount = 16)
+    @Test(invocationCount = 1024)
     public static void testEncodeUUID() {
-
-        System.out.printf("%40s %40s\n",
-                          "----------------------------------------",
-                          "----------------------------------------");
 
         final UUID decoded = UUID.randomUUID();
 
-        for (int i = 0; i < 10; i++) {
-            final String encoded = IdEncoder.encodeUUID(decoded);
-            System.out.printf("%40s %40s\n", decoded.toString(), encoded);
-        }
-    }
-
-
-    @Test(invocationCount = 128)
-    public void testEncode() {
-
-        final long decoded = ThreadLocalRandom.current().nextLong();
-        final String encoded = new IdEncoder().encode(decoded);
-        System.out.printf("%20d %20s\n", decoded, encoded);
+        final String encoded = encodeUuid(decoded);
     }
 
 

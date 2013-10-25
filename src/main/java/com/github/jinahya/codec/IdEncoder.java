@@ -29,6 +29,12 @@ import java.util.UUID;
 public class IdEncoder {
 
 
+    static final int DEFAULT_RADIX = Character.MAX_RADIX;
+
+
+    static final int DEFAULT_SCALE = 1;
+
+
     /**
      * Returns a random single digit.
      *
@@ -51,70 +57,168 @@ public class IdEncoder {
     }
 
 
-    /**
-     * Encodes a single block.
-     *
-     * @param decoded block to encode
-     * @param random a random to use
-     *
-     * @return encoded block
-     */
-    private static String block(final long decoded) {
+    private static String block(final long decoded, final int radix,
+                                final int scale) {
+
+        if (radix < Character.MIN_RADIX) {
+            throw new IllegalArgumentException(
+                "radix(" + radix + ") < " + Character.MIN_RADIX);
+        }
+
+        if (radix > Character.MAX_RADIX) {
+            throw new IllegalArgumentException(
+                "radix(" + radix + ") > " + Character.MAX_RADIX);
+        }
+
+        if (scale < 1) {
+            throw new IllegalArgumentException("scale(" + scale + ") < 1");
+        }
 
         final StringBuilder builder = new StringBuilder(Long.toString(decoded));
 
-        builder.append(Integer.toString(nzsd()));
+        builder.ensureCapacity(builder.capacity() + scale);
+        for (int i = 0; i < scale - 1; i++) {
+            builder.append(Integer.toString(sd()));
+        }
         builder.append(Integer.toString(nzsd()));
 
         builder.reverse();
 
-        return Long.toString(
-            Long.parseLong(builder.toString()), Character.MAX_RADIX);
+        return Long.toString(Long.parseLong(builder.toString()), radix);
     }
 
 
-    /**
-     * Encodes given {@code decoded}.
-     *
-     * @param decoded the value to encode
-     *
-     * @return encoded output.
-     */
-    public static String encodeLong(final long decoded) {
+    public static String encodeLong(final long decoded, final int radix,
+                                    final int scale) {
 
-        return block(decoded >>> 0x20) + "-" + block(decoded & 0xFFFFFFFFL);
+        return block(decoded >>> 0x20, radix, scale) + "-"
+               + block(decoded & 0xFFFFFFFFL, radix, scale);
     }
 
 
+//    /**
+//     * Encodes given value with {@link #DEFAULT_RADIX} and
+//     * {@link #DEFAULT_SCALE}.
+//     *
+//     * @param decoded the value to encode
+//     *
+//     * @return encoded output.
+//     */
+//    public static String encodeLong(final long decoded) {
+//
+//        return encodeLong(decoded, DEFAULT_RADIX, DEFAULT_SCALE);
+//    }
     /**
-     * Encodes given {@code decoded}.
+     * Encodes given value with specified radix and scale.
      *
-     * @param decoded the value to encode.
+     * @param decoded the value
+     * @param radix the radix
+     * @param scale the scale
      *
      * @return encoded output.
      */
-    public static String encodeUUID(final UUID decoded) {
+    protected static String encodeUuid(final UUID decoded, final int radix,
+                                       final int scale) {
 
         if (decoded == null) {
             throw new NullPointerException("decoded");
         }
 
-        return encodeLong(decoded.getMostSignificantBits()) + "-"
-               + encodeLong(decoded.getLeastSignificantBits());
+        return encodeLong(decoded.getMostSignificantBits(), radix, scale) + "-"
+               + encodeLong(decoded.getLeastSignificantBits(), radix, scale);
+    }
+
+
+//    /**
+//     * Encodes given value with {@link #DEFAULT_RADIX} and
+//     * {@link #DEFAULT_SCALE}.
+//     *
+//     * @param decoded the value
+//     *
+//     * @return encoded output
+//     */
+//    public static String encodeUUID(final UUID decoded) {
+//
+//        return encodeUUID(decoded, DEFAULT_RADIX, DEFAULT_SCALE);
+//    }
+    /**
+     * Encodes given value with {@code radix} and {@code scale}.
+     *
+     * @param decoded the value
+     *
+     * @return encoded result.
+     */
+    public String encodeLong(final long decoded) {
+
+        return encodeLong(decoded, radix, scale);
     }
 
 
     /**
-     * Encodes given {@code decoded}.
+     * Encodes given value with {@code radix} and {@code scale}.
      *
-     * @param decoded the value to encode.
+     * @param decoded the value
      *
      * @return encoded result.
      */
-    public String encode(final long decoded) {
+    public String encodeUuid(final UUID decoded) {
 
-        return encodeLong(decoded);
+        return encodeUuid(decoded, radix, scale);
     }
+
+
+    /**
+     * Return current value of {@code radix}.
+     *
+     * @return the current value of {@code radix}.
+     */
+    public int getRadix() {
+
+        return radix;
+    }
+
+
+    /**
+     * Sets the current value of {@code radix} with given.
+     *
+     * @param radix new value of {@code radix}.
+     */
+    public void setRadix(final int radix) {
+
+        if (radix < Character.MIN_RADIX) {
+            throw new IllegalArgumentException(
+                "radix(" + radix + ") < " + Character.MIN_RADIX);
+        }
+
+        if (radix > Character.MAX_RADIX) {
+            throw new IllegalArgumentException(
+                "radix(" + radix + ") > " + Character.MAX_RADIX);
+        }
+
+        this.radix = radix;
+    }
+
+
+    public int getScale() {
+
+        return scale;
+    }
+
+
+    public void setScale(final int scale) {
+
+        if (scale < 1) {
+            throw new IllegalArgumentException("scale(" + scale + ") < 1");
+        }
+
+        this.scale = scale;
+    }
+
+
+    private int radix = DEFAULT_RADIX;
+
+
+    private int scale = DEFAULT_SCALE;
 
 
 }
