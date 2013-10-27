@@ -2,7 +2,8 @@ id-codec
 ========
 
 ### Apidocs
-* 1.0-SNAPSHOT ([github](http://jinahya.github.io/id-codec/site/1.0-SNAPSHOT/apidocs/index.html)) ([jinahya](https://jinahya.com/mvn/site/com.github.jinahya/id-codec/1.0-SNAPSHOT/apidocs/index.html))
+* 1.0.1-SNAPSHOT ([github](http://jinahya.github.io/id-codec/site/1.0.1-SNAPSHOT/apidocs/index.html)) ([jinahya](https://jinahya.com/mvn/site/com.github.jinahya/id-codec/1.0.1-SNAPSHOT/apidocs/index.html))
+* 1.0 ([github](http://jinahya.github.io/id-codec/site/1.0/apidocs/index.html)) ([jinahya](https://jinahya.com/mvn/site/com.github.jinahya/id-codec/1.0/apidocs/index.html))
 
 ## Simple Encoding
 ```java
