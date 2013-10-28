@@ -24,7 +24,8 @@ import java.util.UUID;
 /**
  * A class for encoding identifiers.
  *
- * @author Jin Kwon <jinahya at gmail.com>
+ * @author <a href="mailto:onacit@gmail.com">Jin Kwon</a> <a
+ * href="http://goo.gl/jEcetr">donate</a>
  */
 public class IdEncoder extends IdCodecBase {
 
@@ -121,6 +122,15 @@ public class IdEncoder extends IdCodecBase {
 
         return encodeLong(decoded.getMostSignificantBits(), radix, scale) + "-"
                + encodeLong(decoded.getLeastSignificantBits(), radix, scale);
+    }
+
+
+    /**
+     * Creates a new instance.
+     */
+    public IdEncoder() {
+
+        super();
     }
 
 

@@ -24,7 +24,8 @@ import java.util.UUID;
 /**
  * A class for decoding identifiers.
  *
- * @author Jin Kwon <jinahya at gmail.com>
+ * @author <a href="mailto:onacit@gmail.com">Jin Kwon</a> <a
+ * href="http://goo.gl/jEcetr">donate</a>
  */
 public class IdDecoder extends IdCodecBase {
 
@@ -124,6 +125,15 @@ public class IdDecoder extends IdCodecBase {
             = decodeLong(encoded.substring(second + 1), radix, scale);
 
         return new UUID(mostSignificantBits, leastSignificantBits);
+    }
+
+
+    /**
+     * Creates a new instance.
+     */
+    public IdDecoder() {
+
+        super();
     }
 
 

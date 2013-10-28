@@ -29,31 +29,31 @@ abstract class IdCodecBase {
     /**
      * The minimum value for {@code radix}.
      */
-    static final int RADIX_MINIMUM = Character.MIN_RADIX;
+    public static final int RADIX_MINIMUM = Character.MIN_RADIX;
 
 
     /**
      * The maximum value for {@code radix}.
      */
-    static final int RADIX_MAXIMUM = Character.MAX_RADIX;
+    public static final int RADIX_MAXIMUM = Character.MAX_RADIX;
 
 
     /**
      * The default value for {@code radix}.
      */
-    static final int RADIX_DEFAULT = RADIX_MAXIMUM;
+    public static final int RADIX_DEFAULT = RADIX_MAXIMUM;
 
 
     /**
      * The minimum value for {@code scale}.
      */
-    static final int SCALE_MINIMUM = 1;
+    public static final int SCALE_MINIMUM = 1;
 
 
     /**
      * The maximum value for {@code scale}.
      */
-    static final int SCALE_MAXIMUM
+    public static final int SCALE_MAXIMUM
         = Long.toString(Long.MAX_VALUE).length()
           - Integer.toString(Integer.MAX_VALUE).length() - 1;
 
@@ -61,7 +61,7 @@ abstract class IdCodecBase {
     /**
      * The default value for {@code scale}.
      */
-    static final int SCALE_DEFAULT = SCALE_MINIMUM;
+    public static final int SCALE_DEFAULT = SCALE_MINIMUM;
 
 
     /**
@@ -74,7 +74,7 @@ abstract class IdCodecBase {
      * @throws IllegalArgumentException if {@code radix} is less than
      * {@value #RADIX_MINIMUM} or greater than {@value #RADIX_MAXIMUM}.
      */
-    protected static int requireValidRadix(final int radix) {
+    static int requireValidRadix(final int radix) {
 
         if (radix < RADIX_MINIMUM) {
             throw new IllegalArgumentException(
@@ -100,7 +100,7 @@ abstract class IdCodecBase {
      * @throws IllegalArgumentException if {@code scale} is less than
      * {@value #SCALE_MINIMUM} or greater than {@value #SCALE_MAXIMUM}.
      */
-    protected static int requireValidScale(final int scale) {
+    static int requireValidScale(final int scale) {
 
         if (scale < SCALE_MINIMUM) {
             throw new IllegalArgumentException(
