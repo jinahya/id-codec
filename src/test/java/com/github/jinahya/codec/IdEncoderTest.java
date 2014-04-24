@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 
 /**
  *
- * @author Jin Kwon <jinahya at gmail.com>
+ * @author Jin Kwon
  */
 public class IdEncoderTest {
 

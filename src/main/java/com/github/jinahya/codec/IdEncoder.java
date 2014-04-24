@@ -24,8 +24,7 @@ import java.util.UUID;
 /**
  * A class for encoding identifiers.
  *
- * @author <a href="mailto:onacit@gmail.com">Jin Kwon</a> <a
- * href="http://goo.gl/jEcetr">donate</a>
+ * @author Jin Kwon
  */
 public class IdEncoder extends IdCodecBase {
 

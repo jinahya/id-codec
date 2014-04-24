@@ -21,7 +21,7 @@ package com.github.jinahya.codec;
 /**
  * An abstract base class.
  *
- * @author Jin Kwon <jinahya at gmail.com>
+ * @author Jin Kwon
  */
 abstract class IdCodecBase {
 
@@ -53,9 +53,9 @@ abstract class IdCodecBase {
     /**
      * The maximum value for {@code scale}.
      */
-    public static final int SCALE_MAXIMUM
-        = Long.toString(Long.MAX_VALUE).length()
-          - Integer.toString(Integer.MAX_VALUE).length() - 1;
+    public static final int SCALE_MAXIMUM = 8;
+//        = Long.toString(Long.MAX_VALUE).length()
+//          - Integer.toString(Integer.MAX_VALUE).length() - 1;
 
 
     /**
