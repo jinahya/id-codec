@@ -24,7 +24,7 @@ import java.util.UUID;
 /**
  * A class for decoding identifiers.
  *
- * @author Jin Kwon <jinahya at gmail.com>
+ * @author Jin Kwon &lt;jinahya_at_gmail.com&gt;
  */
 public class IdDecoder extends IdCodecBase {
 
@@ -44,9 +44,7 @@ public class IdDecoder extends IdCodecBase {
         if (encoded == null) {
             throw new NullPointerException("encoded == null");
         }
-
         requireValidRadix(radix);
-
         requireValidScale(scale);
 
         final StringBuilder builder = new StringBuilder(
@@ -68,16 +66,15 @@ public class IdDecoder extends IdCodecBase {
      * @param scale the scale
      *
      * @return decoded output
-     *
-     * @see #requireValidRadix(int)
-     * @see #requireValidScale(int)
      */
     public static long decodeLong(final String encoded, final int radix,
                                   final int scale) {
 
         if (encoded == null) {
-            throw new NullPointerException("encoded == null");
+            throw new NullPointerException("null encoded");
         }
+        requireValidRadix(radix);
+        requireValidScale(scale);
 
         final int index = encoded.indexOf('-');
         if (index == -1) {
@@ -97,16 +94,15 @@ public class IdDecoder extends IdCodecBase {
      * @param scale the scale
      *
      * @return decoded output
-     *
-     * @see #requireValidRadix(int)
-     * @see #requireValidScale(int)
      */
     public static UUID decodeUuid(final String encoded, final int radix,
                                   final int scale) {
 
         if (encoded == null) {
-            throw new NullPointerException("encoded == null");
+            throw new NullPointerException("null encoded");
         }
+        requireValidRadix(radix);
+        requireValidScale(scale);
 
         final int first = encoded.indexOf('-');
         if (first == -1) {
@@ -136,6 +132,10 @@ public class IdDecoder extends IdCodecBase {
      */
     public long decodeLong(final String encoded) {
 
+        if (encoded == null) {
+            throw new NullPointerException("null encoded");
+        }
+
         return decodeLong(encoded, getRadix(), getScale());
     }
 
@@ -148,6 +148,10 @@ public class IdDecoder extends IdCodecBase {
      * @return decoded value
      */
     public UUID decodeUuid(final String encoded) {
+
+        if (encoded == null) {
+            throw new NullPointerException("null encoded");
+        }
 
         return decodeUuid(encoded, getRadix(), getScale());
     }

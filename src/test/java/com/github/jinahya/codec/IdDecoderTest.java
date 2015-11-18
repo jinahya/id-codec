@@ -24,7 +24,7 @@ import org.testng.annotations.Test;
 
 /**
  *
- * @author onacit
+ * @author Jin Kwon
  */
 public class IdDecoderTest {
 
