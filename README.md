@@ -35,7 +35,7 @@ final UUID decoded = decoder.decodeUuid(encoded);
 ```
 
 ## Examples
-### Encoding/Decoding a `long`
+### Encoding/Decoding `long`s
 ~~~
 decoded: -8775087020812241672
 
@@ -56,7 +56,7 @@ encoded:      ugsdd02-huu4bul
 encoded:    188xlh5e-108d35dp
 encoded:     ugsdd02-19f4kk59
 ~~~
-### Encoding/Decoding a `UUID`
+### Encoding/Decoding `UUID`s
 ~~~
 decoded:     1b3a263e-0928-4ad1-b728-742d0d06506e
 
