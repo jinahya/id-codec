@@ -1,10 +1,13 @@
 id-codec
 ========
 
-### Apidocs
-* 1.0.1 ([jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.1/apidocs/index.html))
+## Versions
+version|site|apidocs
+-------|----|-------
+1.0.1|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.1/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.1/apidocs/index.html)
 
-## Encoding
+## Usages
+### Encoding
 ```java
 final IdEncoder encoder = new IdEncoder();
 
@@ -17,7 +20,7 @@ final UUID decoded;
 final String encoded = encoder.encodeUuid(decoded);
 ```
 
-## Decoding
+### Decoding
 ```java
 final IdDecoder decoder = new IdDecoder();
 
