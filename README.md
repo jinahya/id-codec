@@ -4,6 +4,7 @@ id-codec
 ## Versions
 version|site|apidocs
 -------|----|-------
+1.0.2-SNAPSHOT|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.2-SNAPSHOT/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.2-SNAPSHOT/apidocs/index.html)
 1.0.1|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.1/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.1/apidocs/index.html)
 
 ## Usages
