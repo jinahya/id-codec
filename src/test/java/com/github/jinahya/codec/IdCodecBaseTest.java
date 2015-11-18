@@ -18,8 +18,9 @@
 package com.github.jinahya.codec;
 
 
+import static java.lang.invoke.MethodHandles.lookup;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.slf4j.LoggerFactory.getLogger;
 import org.testng.annotations.Test;
 
 
@@ -30,8 +31,7 @@ import org.testng.annotations.Test;
 public class IdCodecBaseTest {
 
 
-    private static final Logger logger
-        = LoggerFactory.getLogger(IdCodecBaseTest.class);
+    private static final Logger logger = getLogger(lookup().lookupClass());
 
 
     @Test
@@ -50,6 +50,7 @@ public class IdCodecBaseTest {
         logger.info("SCALE_MAXIMUM: {}", IdCodecBase.SCALE_MAXIMUM);
         logger.info("SCALE_DEFAULT: {}", IdCodecBase.SCALE_DEFAULT);
     }
+
 
 }
 

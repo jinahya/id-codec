@@ -38,10 +38,7 @@ abstract class IdCodecBase {
     public static final int RADIX_MAXIMUM = Character.MAX_RADIX;
 
 
-    /**
-     * The default value for {@code radix}.
-     */
-    public static final int RADIX_DEFAULT = RADIX_MAXIMUM;
+    static final int RADIX_DEFAULT = RADIX_MAXIMUM;
 
 
     /**
@@ -58,10 +55,7 @@ abstract class IdCodecBase {
 //          - Integer.toString(Integer.MAX_VALUE).length() - 1;
 
 
-    /**
-     * The default value for {@code scale}.
-     */
-    public static final int SCALE_DEFAULT = SCALE_MINIMUM;
+    static final int SCALE_DEFAULT = SCALE_MINIMUM;
 
 
     /**
@@ -171,15 +165,9 @@ abstract class IdCodecBase {
     }
 
 
-    /**
-     * radix.
-     */
     private int radix = RADIX_DEFAULT;
 
 
-    /**
-     * scale.
-     */
     private int scale = SCALE_DEFAULT;
 
 

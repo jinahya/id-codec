@@ -24,7 +24,7 @@ import java.util.UUID;
 /**
  * A class for decoding identifiers.
  *
- * @author Jin Kwon
+ * @author Jin Kwon &lt;jinahya_at_gmail.com&gt;
  */
 public class IdDecoder extends IdCodecBase {
 

@@ -18,26 +18,23 @@
 package com.github.jinahya.codec;
 
 
+import static java.lang.invoke.MethodHandles.lookup;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.slf4j.LoggerFactory.getLogger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
 /**
  *
- * @author Jin Kwon
+ * @author Jin Kwon &lt;jinahya_at_gmail.com&gt;
  */
-public class EncodeDecodeTest {
+public class IdCodecTest {
 
 
-    /**
-     * logger.
-     */
-    private static final Logger LOGGER
-        = LoggerFactory.getLogger(EncodeDecodeTest.class);
+    private static final Logger logger = getLogger(lookup().lookupClass());
 
 
     private static void encodeDecode(final long expected, final boolean print) {
@@ -57,7 +54,7 @@ public class EncodeDecodeTest {
                           "----------------------------------------",
                           "----------------------------------------");
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             encodeDecode(expected, true);
         }
 
@@ -88,7 +85,7 @@ public class EncodeDecodeTest {
                           "----------------------------------------",
                           "----------------------------------------");
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             encodeDecode(expected, true);
         }
 
@@ -144,11 +141,11 @@ public class EncodeDecodeTest {
 
         for (int scale = IdCodecBase.RADIX_MINIMUM;
              scale <= IdCodecBase.RADIX_MAXIMUM; scale++) {
-            LOGGER.trace("radix: {}", scale);
+            logger.trace("radix: {}", scale);
             encoder.setRadix(scale);
             decoder.setRadix(scale);
             final String encoded = encoder.encodeLong(expected);
-            LOGGER.trace("encoded: {}", encoded);
+            logger.trace("encoded: {}", encoded);
             final long actual = decoder.decodeLong(encoded);
             Assert.assertEquals(actual, expected);
         }
@@ -165,11 +162,11 @@ public class EncodeDecodeTest {
 
         for (int scale = IdCodecBase.SCALE_MINIMUM;
              scale <= IdCodecBase.SCALE_MAXIMUM; scale++) {
-            LOGGER.trace("scale: {}", scale);
+            logger.trace("scale: {}", scale);
             encoder.setScale(scale);
             decoder.setScale(scale);
             final String encoded = encoder.encodeLong(expected);
-            LOGGER.trace("encoded: {}", encoded);
+            logger.trace("encoded: {}", encoded);
             final long actual = decoder.decodeLong(encoded);
             Assert.assertEquals(actual, expected);
         }
