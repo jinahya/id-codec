@@ -60,6 +60,41 @@ public class IdDecoder extends IdCodecBase {
     }
 
 
+    private static String requireValidEncodedLong(final String encoded) {
+
+        if (encoded == null) {
+            throw new NullPointerException("null encoded");
+        }
+
+        final int index = encoded.indexOf('-');
+        if (index == -1) {
+            throw new IllegalArgumentException("wrong encoded: " + encoded);
+        }
+
+        return encoded;
+    }
+
+
+    private static String requireValidEncodedUuid(final String encoded) {
+
+        if (encoded == null) {
+            throw new NullPointerException("null encoded");
+        }
+
+        final int first = encoded.indexOf('-');
+        if (first == -1) {
+            throw new IllegalArgumentException("wrong encoded: " + encoded);
+        }
+
+        final int second = encoded.indexOf('-', first + 1);
+        if (second == -1) {
+            throw new IllegalArgumentException("wrong encoded: " + encoded);
+        }
+
+        return encoded;
+    }
+
+
     /**
      * Decodes given value with specified radix and scale.
      *
@@ -72,17 +107,13 @@ public class IdDecoder extends IdCodecBase {
     public static long decodeLong(final String encoded, final int radix,
                                   final int scale) {
 
-        if (encoded == null) {
-            throw new NullPointerException("null encoded");
-        }
-        final int index = encoded.indexOf('-');
-        if (index == -1) {
-            throw new IllegalArgumentException("wrong encoded: " + encoded);
-        }
+        requireValidEncodedLong(encoded);
 
         requireValidRadix(radix);
 
         requireValidScale(scale);
+
+        final int index = encoded.indexOf('-');
 
         return (block(encoded.substring(0, index), radix, scale) << 32)
                | (block(encoded.substring(index + 1), radix, scale));
@@ -101,22 +132,14 @@ public class IdDecoder extends IdCodecBase {
     public static UUID decodeUuid(final String encoded, final int radix,
                                   final int scale) {
 
-        if (encoded == null) {
-            throw new NullPointerException("null encoded");
-        }
-        final int first = encoded.indexOf('-');
-        if (first == -1) {
-            throw new IllegalArgumentException("wrong encoded: " + encoded);
-        }
-        final int second = encoded.indexOf('-', first + 1);
-        if (second == -1) {
-            throw new IllegalArgumentException("wrong encoded: " + encoded);
-        }
+        requireValidEncodedUuid(encoded);
 
         requireValidRadix(radix);
 
         requireValidScale(scale);
 
+        final int first = encoded.indexOf('-');
+        final int second = encoded.indexOf('-', first + 1);
         final long mostSignificantBits
             = decodeLong(encoded.substring(0, second), radix, scale);
         final long leastSignificantBits
@@ -135,10 +158,6 @@ public class IdDecoder extends IdCodecBase {
      */
     public long decodeLong(final String encoded) {
 
-        if (encoded == null) {
-            throw new NullPointerException("null encoded");
-        }
-
         return decodeLong(encoded, getRadix(), getScale());
     }
 
@@ -151,10 +170,6 @@ public class IdDecoder extends IdCodecBase {
      * @return decoded value
      */
     public UUID decodeUuid(final String encoded) {
-
-        if (encoded == null) {
-            throw new NullPointerException("null encoded");
-        }
 
         return decodeUuid(encoded, getRadix(), getScale());
     }
