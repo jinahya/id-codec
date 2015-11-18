@@ -68,7 +68,7 @@ abstract class IdCodecBase {
      * @throws IllegalArgumentException if {@code radix} is less than
      * {@value #RADIX_MINIMUM} or greater than {@value #RADIX_MAXIMUM}.
      */
-    static int requireValidRadix(final int radix) {
+    final static int requireValidRadix(final int radix) {
 
         if (radix < RADIX_MINIMUM) {
             throw new IllegalArgumentException(
@@ -94,7 +94,7 @@ abstract class IdCodecBase {
      * @throws IllegalArgumentException if {@code scale} is less than
      * {@value #SCALE_MINIMUM} or greater than {@value #SCALE_MAXIMUM}.
      */
-    static int requireValidScale(final int scale) {
+    final static int requireValidScale(final int scale) {
 
         if (scale < SCALE_MINIMUM) {
             throw new IllegalArgumentException(
