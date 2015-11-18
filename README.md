@@ -37,25 +37,43 @@ final UUID decoded = decoder.decodeUuid(encoded);
 ## Examples
 ### Encoding/Decoding a `long`
 ~~~
--------------------------------------------------------
- T E S T S
--------------------------------------------------------
-Running TestSuite
-       decoded:  8468775952159530071
-   encoded[00]:      pipm45r-a3cnp0f ->  8468775952159530071
-   encoded[01]:     756namn-1690umov ->  8468775952159530071
-   encoded[02]:     17w8kxov-nvhvt5r ->  8468775952159530071
-   encoded[03]:      gby4pe7-x29d7xb ->  8468775952159530071
-   encoded[04]:      gby4pe7-ja453rz ->  8468775952159530071
-   encoded[05]:     kxbverz-11nn3xb3 ->  8468775952159530071
-   encoded[06]:     17w8kxov-eoqeee7 ->  8468775952159530071
-   encoded[07]:      u43ctjj-x29d7xb ->  8468775952159530071
-   encoded[08]:      u43ctjj-nvhvt5r ->  8468775952159530071
-   encoded[09]:      u43ctjj-ja453rz ->  8468775952159530071
-   encoded[10]:     756namn-11nn3xb3 ->  8468775952159530071
-   encoded[11]:      kxbverz-ja453rz ->  8468775952159530071
-   encoded[12]:     17w8kxov-eoqeee7 ->  8468775952159530071
-   encoded[13]:      bqke00f-ja453rz ->  8468775952159530071
-   encoded[14]:      yph3ixb-nvhvt5r ->  8468775952159530071
-   encoded[15]:      u43ctjj-x29d7xb ->  8468775952159530071
+decoded: -8775087020812241672
+
+encoded:      gon58uq-mg7v18d
+encoded:     13njurrm-d9gdmgt
+encoded:     188xlh5e-d9gdmgt
+encoded:     pvemnma-108d35dp
+encoded:    188xlh5e-14tqturh
+encoded:     13njurrm-huu4bul
+encoded:      z2642du-8o2mx31
+encoded:      7hvnu36-mg7v18d
+encoded:      7hvnu36-vmzcfzx
+encoded:      ugsdd02-d9gdmgt
+encoded:      ugsdd02-huu4bul
+encoded:    188xlh5e-14tqturh
+encoded:      pvemnma-vmzcfzx
+encoded:      ugsdd02-huu4bul
+encoded:    188xlh5e-108d35dp
+encoded:     ugsdd02-19f4kk59
+~~~
+### Encoding/Decoding a `UUID`
+~~~
+decoded:     1b3a263e-0928-4ad1-b728-742d0d06506e
+
+encoded:          2riq02e-1ps1ian-dcsnc9b-1ki82sk
+encoded:          1dwll92-40gwuzj-mjk4r0v-2hkz0o4
+encoded:         2riq02e-1ps1ian-19igu9xr-13yulus
+encoded:         1ufz26u-33e5x3z-19igu9xr-3enpyjo
+encoded:          1ufz26u-198o1cv-r4xvgen-211ljqc
+encoded:         3823h06-40gwuzj-14x33kjz-1ki82sk
+encoded:           xd84ba-40gwuzj-vqbm5sf-211ljqc
+encoded:          3olgxxy-4h0abxb-dcsnc9b-13yulus
+encoded:           2riq02e-2musg67-8rewmvj-nfh4x0
+encoded:           3olgxxy-spakf3-mjk4r0v-3enpyjo
+encoded:           gtundi-33e5x3z-hy6e1n3-13yulus
+encoded:          3olgxxy-2musg67-8rewmvj-13yulus
+encoded:          1ufz26u-1ps1ian-mjk4r0v-1ki82sk
+encoded:          3823h06-40gwuzj-r4xvgen-13yulus
+encoded:          gtundi-3jxje1r-10bpcv67-2y4chlw
+encoded:         1ufz26u-26bez8f-10bpcv67-1ki82sk
 ~~~
