@@ -63,7 +63,6 @@ public class IdEncoder extends IdCodecBase {
                                 final int scale) {
 
         requireValidRadix(radix);
-
         requireValidScale(scale);
 
         final StringBuilder builder = new StringBuilder(Long.toString(decoded));
@@ -88,12 +87,12 @@ public class IdEncoder extends IdCodecBase {
      * @param scale the scale
      *
      * @return encoded value.
-     *
-     * @see #requireValidRadix(int)
-     * @see #requireValidScale(int)
      */
     public static String encodeLong(final long decoded, final int radix,
                                     final int scale) {
+
+        requireValidRadix(radix);
+        requireValidScale(scale);
 
         return block(decoded >>> 0x20, radix, scale) + "-"
                + block(decoded & 0xFFFFFFFFL, radix, scale);
@@ -108,9 +107,6 @@ public class IdEncoder extends IdCodecBase {
      * @param scale the scale
      *
      * @return encoded value.
-     *
-     * @see #requireValidRadix(int)
-     * @see #requireValidScale(int)
      */
     protected static String encodeUuid(final UUID decoded, final int radix,
                                        final int scale) {
@@ -118,18 +114,11 @@ public class IdEncoder extends IdCodecBase {
         if (decoded == null) {
             throw new NullPointerException("decoded");
         }
+        requireValidRadix(radix);
+        requireValidScale(scale);
 
         return encodeLong(decoded.getMostSignificantBits(), radix, scale) + "-"
                + encodeLong(decoded.getLeastSignificantBits(), radix, scale);
-    }
-
-
-    /**
-     * Creates a new instance.
-     */
-    public IdEncoder() {
-
-        super();
     }
 
 

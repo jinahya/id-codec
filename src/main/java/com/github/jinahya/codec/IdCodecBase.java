@@ -131,8 +131,6 @@ abstract class IdCodecBase {
      * Replaces the current value of {@code radix} with given.
      *
      * @param radix new value for {@code radix}.
-     *
-     * @see #requireValidRadix(int)
      */
     public void setRadix(final int radix) {
 
@@ -156,8 +154,6 @@ abstract class IdCodecBase {
      *
      * @param scale new value for {@code scale} between {@value #SCALE_MINIMUM}
      * (inclusive) and {@value #SCALE_MAXIMUM} (inclusive).
-     *
-     * @see #requireValidScale(int)
      */
     public void setScale(final int scale) {
 
