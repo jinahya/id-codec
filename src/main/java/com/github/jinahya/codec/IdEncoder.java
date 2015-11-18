@@ -95,6 +95,7 @@ public class IdEncoder extends IdCodecBase {
                                     final int scale) {
 
         requireValidRadix(radix);
+
         requireValidScale(scale);
 
         return block(decoded >>> 0x20, radix, scale) + "-"
@@ -115,9 +116,11 @@ public class IdEncoder extends IdCodecBase {
                                        final int scale) {
 
         if (decoded == null) {
-            throw new NullPointerException("decoded");
+            throw new NullPointerException("null decoded");
         }
+
         requireValidRadix(radix);
+
         requireValidScale(scale);
 
         return encodeLong(decoded.getMostSignificantBits(), radix, scale) + "-"
