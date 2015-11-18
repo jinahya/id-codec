@@ -44,7 +44,9 @@ public class IdDecoder extends IdCodecBase {
         if (encoded == null) {
             throw new NullPointerException("encoded == null");
         }
+
         requireValidRadix(radix);
+
         requireValidScale(scale);
 
         final StringBuilder builder = new StringBuilder(
@@ -73,13 +75,14 @@ public class IdDecoder extends IdCodecBase {
         if (encoded == null) {
             throw new NullPointerException("null encoded");
         }
-        requireValidRadix(radix);
-        requireValidScale(scale);
-
         final int index = encoded.indexOf('-');
         if (index == -1) {
             throw new IllegalArgumentException("wrong encoded: " + encoded);
         }
+
+        requireValidRadix(radix);
+
+        requireValidScale(scale);
 
         return (block(encoded.substring(0, index), radix, scale) << 32)
                | (block(encoded.substring(index + 1), radix, scale));
@@ -101,18 +104,18 @@ public class IdDecoder extends IdCodecBase {
         if (encoded == null) {
             throw new NullPointerException("null encoded");
         }
-        requireValidRadix(radix);
-        requireValidScale(scale);
-
         final int first = encoded.indexOf('-');
         if (first == -1) {
             throw new IllegalArgumentException("wrong encoded: " + encoded);
         }
-
         final int second = encoded.indexOf('-', first + 1);
         if (second == -1) {
             throw new IllegalArgumentException("wrong encoded: " + encoded);
         }
+
+        requireValidRadix(radix);
+
+        requireValidScale(scale);
 
         final long mostSignificantBits
             = decodeLong(encoded.substring(0, second), radix, scale);
