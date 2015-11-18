@@ -1,8 +1,8 @@
 id-codec
 ========
 
-### Apidocs
-* 1.0.1 ([jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.1/apidocs/index.html))
+### Site and Apidocs
+* `${project.version}` ([site](http://jinahya.github.io/${project.artifactId}/site/${project.version}/index.html)) ([apidocs](http://jinahya.github.io/${project.artifactId}/site/${project.version}/apidocs/index.html))
 
 ## Encoding
 ```java

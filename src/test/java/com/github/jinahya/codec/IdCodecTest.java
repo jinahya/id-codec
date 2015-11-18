@@ -24,6 +24,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 import org.testng.Assert;
+import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 
 
@@ -169,6 +170,36 @@ public class IdCodecTest {
             logger.trace("encoded: {}", encoded);
             final long actual = decoder.decodeLong(encoded);
             Assert.assertEquals(actual, expected);
+        }
+    }
+
+
+    @Test
+    public void documentation() {
+
+        {
+            final long expected = ThreadLocalRandom.current().nextLong();
+            System.out.printf("%s: %20d\n", "decoded", expected);
+            for (int i = 0; i < 16; i++) {
+                final String encoded = new IdEncoder().encodeLong(expected);
+                final long actual = new IdDecoder().decodeLong(encoded);
+                System.out.printf("%s: %20s\n", "encoded", encoded);
+                assertEquals(actual, expected);
+            }
+        }
+
+        System.out.println("=================================================");
+
+        {
+            final UUID expected = UUID.randomUUID();
+            System.out.printf("%s: %40s\n", "decoded", expected);
+
+            for (int i = 0; i < 16; i++) {
+                final String encoded = new IdEncoder().encodeUuid(expected);
+                final UUID actual = new IdDecoder().decodeUuid(encoded);
+                System.out.printf("%s: %40s\n", "encoded", encoded);
+                assertEquals(actual, expected);
+            }
         }
     }
 

@@ -19,6 +19,7 @@ package com.github.jinahya.codec;
 
 
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 /**
@@ -36,7 +37,8 @@ public class IdEncoder extends IdCodecBase {
      */
     private static int sd() {
 
-        return (int) (Math.random() * 10);
+        //return (int) (Math.random() * 10);
+        return ThreadLocalRandom.current().nextInt(10);
     }
 
 
@@ -47,7 +49,8 @@ public class IdEncoder extends IdCodecBase {
      */
     private static int nzsd() {
 
-        return (int) (Math.random() * 9) + 1;
+        //return (int) (Math.random() * 9) + 1;
+        return ThreadLocalRandom.current().nextInt(1, 10);
     }
 
 
