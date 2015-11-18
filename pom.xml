@@ -86,25 +86,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>com.github.github</groupId>
-        <artifactId>site-maven-plugin</artifactId>
-        <version>0.12</version>
-        <configuration>
-          <server>github</server>
-          <message>creating site for ${project.version}</message>
-          <path>sites/${project.version}</path>
-          <merge>true</merge>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>site</goal>
-            </goals>
-            <!--phase>site-deploy</phase-->
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
   <reporting>
