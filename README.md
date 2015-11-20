@@ -4,7 +4,8 @@ id-codec
 ## Versions
 version|site|apidocs
 -------|----|-------
-1.0.2-SNAPSHOT|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.2-SNAPSHOT/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.2-SNAPSHOT/apidocs/index.html)
+1.0.3-SNAPSHOT|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.3-SNAPSHOT/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.3-SNAPSHOT/apidocs/index.html)
+1.0.2|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.2/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.2/apidocs/index.html)
 1.0.1|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.1/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.1/apidocs/index.html)
 
 ## Usages
@@ -14,7 +15,7 @@ final IdEncoder encoder = new IdEncoder();
 
 // long
 final long decoded;
-final String encoded = encoder.encodeLong(decoded);
+final String encoded = encoder.encode(decoded);
 
 // UUID
 final UUID decoded;
@@ -27,7 +28,7 @@ final IdDecoder decoder = new IdDecoder();
 
 // long
 final String encoded;
-final long decoded = decoder.decodeLong(encoded);
+final long decoded = decoder.decode(encoded);
 
 // UUID
 final String encoded;
