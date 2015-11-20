@@ -29,33 +29,18 @@ import org.testng.annotations.Test;
 public class IdDecoderTest {
 
 
-    static long decodeLong(final String encoded) {
-
-        return IdDecoder.decodeLong(encoded, IdCodecBase.RADIX_DEFAULT,
-                                    IdCodecBase.SCALE_DEFAULT);
-    }
-
-
-    static UUID decodeUuid(final String encoded) {
-
-        return IdDecoder.decodeUuid(encoded, IdCodecBase.RADIX_DEFAULT,
-                                    IdCodecBase.SCALE_DEFAULT);
-    }
-
-
     @Test(expectedExceptions = {NullPointerException.class})
     public static void decodeLong_nullEncoded_nullPointerException() {
 
-        decodeLong(null);
+        new IdDecoder().decodeLong(null);
     }
 
 
     @Test(expectedExceptions = {NullPointerException.class})
     public static void decodeUuid_nullEncoded_nulPointerException() {
 
-        decodeUuid(null);
+        new IdDecoder().decodeUuid(null);
     }
-
 
 }
 

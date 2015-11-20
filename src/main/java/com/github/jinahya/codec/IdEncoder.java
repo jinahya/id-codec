@@ -54,77 +54,86 @@ public class IdEncoder extends IdCodecBase {
     }
 
 
-    /**
-     *
-     * @param decoded the block to encode
-     * @param radix the radix
-     * @param scale the scale
-     *
-     * @return encoded output
-     */
-    private static String block(final long decoded, final int radix,
-                                final int scale) {
-
-        requireValidRadix(radix);
-        requireValidScale(scale);
+//    /**
+//     *
+//     * @param decoded the block to encode
+//     * @param radix the radix
+//     * @param scale the scale
+//     *
+//     * @return encoded output
+//     */
+//    private static String block(final long decoded, final int radix,
+//                                final int scale) {
+//
+//        requireValidRadix(radix);
+//
+//        requireValidScale(scale);
+//
+//        final StringBuilder builder = new StringBuilder(Long.toString(decoded));
+//
+//        builder.ensureCapacity(builder.length() + scale);
+//        for (int i = 0; i < scale - 1; i++) {
+//            builder.append(Integer.toString(sd()));
+//        }
+//        builder.append(Integer.toString(nzsd()));
+//        builder.reverse();
+//
+//        return Long.toString(Long.parseLong(builder.toString()), radix);
+//    }
+//    /**
+//     * Encodes given value with specified radix and scale.
+//     *
+//     * @param decoded the value to encode
+//     * @param radix the radix
+//     * @param scale the scale
+//     *
+//     * @return encoded value.
+//     */
+//    public static String encodeLong(final long decoded, final int radix,
+//                                    final int scale) {
+//
+//        requireValidRadix(radix);
+//
+//        requireValidScale(scale);
+//
+//        return block(decoded >>> 0x20, radix, scale) + "-"
+//               + block(decoded & 0xFFFFFFFFL, radix, scale);
+//    }
+//    /**
+//     * Encodes given value with specified radix and scale.
+//     *
+//     * @param decoded the value to encode
+//     * @param radix the radix
+//     * @param scale the scale
+//     *
+//     * @return encoded value.
+//     */
+//    protected static String encodeUuid(final UUID decoded, final int radix,
+//                                       final int scale) {
+//
+//        if (decoded == null) {
+//            throw new NullPointerException("null decoded");
+//        }
+//
+//        requireValidRadix(radix);
+//
+//        requireValidScale(scale);
+//
+//        return encodeLong(decoded.getMostSignificantBits(), radix, scale) + "-"
+//               + encodeLong(decoded.getLeastSignificantBits(), radix, scale);
+//    }
+    private String block(final long decoded) {
 
         final StringBuilder builder = new StringBuilder(Long.toString(decoded));
 
-        builder.ensureCapacity(builder.length() + scale);
-        for (int i = 0; i < scale - 1; i++) {
+        builder.ensureCapacity(builder.length() + getScale());
+        for (int i = 0; i < getScale() - 1; i++) {
             builder.append(Integer.toString(sd()));
         }
         builder.append(Integer.toString(nzsd()));
-
         builder.reverse();
 
-        return Long.toString(Long.parseLong(builder.toString()), radix);
-    }
-
-
-    /**
-     * Encodes given value with specified radix and scale.
-     *
-     * @param decoded the value to encode
-     * @param radix the radix
-     * @param scale the scale
-     *
-     * @return encoded value.
-     */
-    public static String encodeLong(final long decoded, final int radix,
-                                    final int scale) {
-
-        requireValidRadix(radix);
-
-        requireValidScale(scale);
-
-        return block(decoded >>> 0x20, radix, scale) + "-"
-               + block(decoded & 0xFFFFFFFFL, radix, scale);
-    }
-
-
-    /**
-     * Encodes given value with specified radix and scale.
-     *
-     * @param decoded the value to encode
-     * @param radix the radix
-     * @param scale the scale
-     *
-     * @return encoded value.
-     */
-    protected static String encodeUuid(final UUID decoded, final int radix,
-                                       final int scale) {
-
-        if (decoded == null) {
-            throw new NullPointerException("null decoded");
-        }
-
-        requireValidRadix(radix);
-
-        requireValidScale(scale);
-
-        return encodeLong(decoded.getMostSignificantBits(), radix, scale) + "-"
-               + encodeLong(decoded.getLeastSignificantBits(), radix, scale);
+        return Long.toString(Long.parseLong(builder.toString()), getRadix());
     }
 
 
@@ -137,7 +146,8 @@ public class IdEncoder extends IdCodecBase {
      */
     public String encodeLong(final long decoded) {
 
-        return encodeLong(decoded, getRadix(), getScale());
+//        return encodeLong(decoded, getRadix(), getScale());
+        return block(decoded >>> 0x20) + "-" + block(decoded & 0xFFFFFFFFL);
     }
 
 
@@ -150,9 +160,10 @@ public class IdEncoder extends IdCodecBase {
      */
     public String encodeUuid(final UUID decoded) {
 
-        return encodeUuid(decoded, getRadix(), getScale());
+//        return encodeUuid(decoded, getRadix(), getScale());
+        return encodeLong(decoded.getMostSignificantBits()) + "-"
+               + encodeLong(decoded.getLeastSignificantBits());
     }
-
 
 }
 

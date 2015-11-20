@@ -166,6 +166,5 @@ abstract class IdCodecBase {
 
     private int scale = SCALE_DEFAULT;
 
-
 }
 

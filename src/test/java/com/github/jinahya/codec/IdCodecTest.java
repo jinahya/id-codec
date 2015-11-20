@@ -40,8 +40,8 @@ public class IdCodecTest {
 
     private static void encodeDecode(final long expected, final boolean print) {
 
-        final String encoded = IdEncoderTest.encodeLong(expected);
-        final long actual = IdDecoderTest.decodeLong(encoded);
+        final String encoded = new IdEncoder().encodeLong(expected);
+        final long actual = new IdDecoder().decodeLong(encoded);
         if (print) {
             System.out.printf("%40d %40s\n", expected, encoded);
         }
@@ -67,8 +67,8 @@ public class IdCodecTest {
 
     private static void encodeDecode(final UUID expected, final boolean print) {
 
-        final String encoded = IdEncoderTest.encodeUuid(expected);
-        final UUID actual = IdDecoderTest.decodeUuid(encoded);
+        final String encoded = new IdEncoder().encodeUuid(expected);
+        final UUID actual = new IdDecoder().decodeUuid(encoded);
         if (print) {
             System.out.printf("%40s %40s\n", expected, encoded);
         }
@@ -202,7 +202,6 @@ public class IdCodecTest {
             }
         }
     }
-
 
 }
 
