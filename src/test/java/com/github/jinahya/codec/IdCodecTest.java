@@ -18,6 +18,10 @@
 package com.github.jinahya.codec;
 
 
+import static com.github.jinahya.codec.IdCodecConstants.RADIX_MAXIMUM;
+import static com.github.jinahya.codec.IdCodecConstants.RADIX_MINIMUM;
+import static com.github.jinahya.codec.IdCodecConstants.SCALE_MAXIMUM;
+import static com.github.jinahya.codec.IdCodecConstants.SCALE_MINIMUM;
 import static java.lang.invoke.MethodHandles.lookup;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -140,8 +144,7 @@ public class IdCodecTest {
 
         final long expected = ThreadLocalRandom.current().nextInt();
 
-        for (int scale = IdCodecBase.RADIX_MINIMUM;
-             scale <= IdCodecBase.RADIX_MAXIMUM; scale++) {
+        for (int scale = RADIX_MINIMUM; scale <= RADIX_MAXIMUM; scale++) {
             logger.trace("radix: {}", scale);
             encoder.setRadix(scale);
             decoder.setRadix(scale);
@@ -161,8 +164,7 @@ public class IdCodecTest {
 
         final long expected = ThreadLocalRandom.current().nextInt();
 
-        for (int scale = IdCodecBase.SCALE_MINIMUM;
-             scale <= IdCodecBase.SCALE_MAXIMUM; scale++) {
+        for (int scale = SCALE_MINIMUM; scale <= SCALE_MAXIMUM; scale++) {
             logger.trace("scale: {}", scale);
             encoder.setScale(scale);
             decoder.setScale(scale);

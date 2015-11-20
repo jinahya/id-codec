@@ -26,7 +26,21 @@ import java.util.UUID;
  *
  * @author Jin Kwon &lt;jinahya_at_gmail.com&gt;
  */
-public class IdDecoder extends IdCodecBase {
+public class IdDecoder extends IdCodecBase<IdDecoder> {
+
+
+    @Override
+    public IdDecoder scale(int scale) {
+
+        return super.scale(scale);
+    }
+
+
+    @Override
+    public IdDecoder radix(int radix) {
+
+        return super.radix(radix);
+    }
 
 
     /**

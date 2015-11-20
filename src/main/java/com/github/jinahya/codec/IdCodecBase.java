@@ -18,102 +18,18 @@
 package com.github.jinahya.codec;
 
 
+import static com.github.jinahya.codec.IdCodecConstants.RADIX_MAXIMUM;
+import static com.github.jinahya.codec.IdCodecConstants.RADIX_MINIMUM;
+import static com.github.jinahya.codec.IdCodecConstants.SCALE_MAXIMUM;
+import static com.github.jinahya.codec.IdCodecConstants.SCALE_MINIMUM;
+
+
 /**
  * An abstract base class.
  *
- * @author Jin Kwon
+ * @param <T> implementation type parameter
  */
-abstract class IdCodecBase {
-
-
-    /**
-     * The minimum value for {@code radix}.
-     */
-    public static final int RADIX_MINIMUM = Character.MIN_RADIX;
-
-
-    /**
-     * The maximum value for {@code radix}.
-     */
-    public static final int RADIX_MAXIMUM = Character.MAX_RADIX;
-
-
-    static final int RADIX_DEFAULT = RADIX_MAXIMUM;
-
-
-    /**
-     * The minimum value for {@code scale}.
-     */
-    public static final int SCALE_MINIMUM = 1;
-
-
-    /**
-     * The maximum value for {@code scale}.
-     */
-    public static final int SCALE_MAXIMUM = 8;
-//        = Long.toString(Long.MAX_VALUE).length()
-//          - Integer.toString(Integer.MAX_VALUE).length() - 1;
-
-
-    static final int SCALE_DEFAULT = SCALE_MINIMUM;
-
-
-    /**
-     * Checks that the specified radix value is valid.
-     *
-     * @param radix the radix value to check for validity
-     *
-     * @return {@code radix} if valid
-     *
-     * @throws IllegalArgumentException if {@code radix} is less than
-     * {@value #RADIX_MINIMUM} or greater than {@value #RADIX_MAXIMUM}.
-     */
-    final static int requireValidRadix(final int radix) {
-
-        if (radix < RADIX_MINIMUM) {
-            throw new IllegalArgumentException(
-                "radix(" + radix + ") < " + RADIX_MINIMUM);
-        }
-
-        if (radix > RADIX_MAXIMUM) {
-            throw new IllegalArgumentException(
-                "radix(" + radix + ") > " + RADIX_MAXIMUM);
-        }
-
-        return radix;
-    }
-
-
-    /**
-     * Checks that the specified scale value is valid.
-     *
-     * @param scale the scale value to check for validity
-     *
-     * @return {@code scale} if valid
-     *
-     * @throws IllegalArgumentException if {@code scale} is less than
-     * {@value #SCALE_MINIMUM} or greater than {@value #SCALE_MAXIMUM}.
-     */
-    final static int requireValidScale(final int scale) {
-
-        if (scale < SCALE_MINIMUM) {
-            throw new IllegalArgumentException(
-                "scale(" + scale + ") < " + SCALE_MINIMUM);
-        }
-
-        if (scale > SCALE_MAXIMUM) {
-            throw new IllegalArgumentException(
-                "scale(" + scale + ") > " + SCALE_MAXIMUM);
-        }
-
-        return scale;
-    }
-
-
-    static {
-        requireValidRadix(RADIX_DEFAULT);
-        requireValidScale(SCALE_DEFAULT);
-    }
+abstract class IdCodecBase<T extends IdCodecBase<T>> {
 
 
     /**
@@ -128,13 +44,34 @@ abstract class IdCodecBase {
 
 
     /**
-     * Replaces the current value of {@code radix} with given.
+     * Replaces the current {@code radix} value with given.
      *
-     * @param radix new value for {@code radix}.
+     * @param radix new {@code radix} value between
+     * {@link IdCodecConstants#RADIX_MINIMUM} (inclusive) and
+     * {@link IdCodecConstants#RADIX_MAXIMUM} (inclusive).
      */
     public void setRadix(final int radix) {
 
-        this.radix = requireValidRadix(radix);
+        if (radix < RADIX_MINIMUM) {
+            throw new IllegalArgumentException(
+                "radix(" + radix + ") < " + RADIX_MINIMUM);
+        }
+
+        if (radix > RADIX_MAXIMUM) {
+            throw new IllegalArgumentException(
+                "radix(" + radix + ") > " + RADIX_MAXIMUM);
+        }
+
+        this.radix = radix;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    T radix(final int radix) {
+
+        setRadix(radix);
+
+        return (T) this;
     }
 
 
@@ -150,21 +87,41 @@ abstract class IdCodecBase {
 
 
     /**
-     * Replaces the current value of {@code scale} with given.
+     * Replaces the current {@code scale} value with given.
      *
-     * @param scale new value for {@code scale} between {@value #SCALE_MINIMUM}
-     * (inclusive) and {@value #SCALE_MAXIMUM} (inclusive).
+     * @param scale new {@code scale} between
+     * {@link IdCodecConstants#SCALE_MINIMUM} (inclusive) and
+     * {@link IdCodecConstants#SCALE_MAXIMUM} (inclusive).
      */
     public void setScale(final int scale) {
 
-        this.scale = requireValidScale(scale);
+        if (scale < SCALE_MINIMUM) {
+            throw new IllegalArgumentException(
+                "scale(" + scale + ") < " + SCALE_MINIMUM);
+        }
+
+        if (scale > SCALE_MAXIMUM) {
+            throw new IllegalArgumentException(
+                "scale(" + scale + ") > " + SCALE_MAXIMUM);
+        }
+
+        this.scale = scale;
     }
 
 
-    private int radix = RADIX_DEFAULT;
+    @SuppressWarnings("unchecked")
+    T scale(final int scale) {
+
+        setScale(scale);
+
+        return (T) this;
+    }
 
 
-    private int scale = SCALE_DEFAULT;
+    private int radix = RADIX_MAXIMUM;
+
+
+    private int scale = SCALE_MINIMUM;
 
 }
 

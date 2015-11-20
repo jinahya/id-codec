@@ -21,15 +21,28 @@ package com.github.jinahya.codec;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.UUID;
-import static java.util.concurrent.ThreadLocalRandom.current;
 
 
 /**
  * A class for encoding identifiers.
  *
- * @author Jin Kwon
+ * @author Jin Kwon &lt;jinahya_at_gmail.com&gt;
  */
-public class IdEncoder extends IdCodecBase {
+public class IdEncoder extends IdCodecBase<IdEncoder> {
+
+
+    @Override
+    public IdEncoder scale(int scale) {
+
+        return super.scale(scale);
+    }
+
+
+    @Override
+    public IdEncoder radix(int radix) {
+
+        return super.radix(radix);
+    }
 
 
     private String block(final long decoded) {
