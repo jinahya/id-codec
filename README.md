@@ -1,6 +1,6 @@
 id-codec
 ========
-
+A small library can encode/decode `long` values to/from partially randomized `String`s.
 ## Versions
 version|site|apidocs
 -------|----|-------
@@ -8,32 +8,19 @@ version|site|apidocs
 1.1.2|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.2/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.2/apidocs/index.html)
 
 ## Usages
-### Encoding
+### Encoding/Decoding `long`s
 ```java
-final IdEncoder encoder = new IdEncoder();
-
-// long
 final long decoded;
-final String encoded = encoder.encode(decoded);
-
-// UUID
-final UUID decoded;
-final String encoded = encoder.encodeUuid(decoded);
+final String encoded = new IdEncoder().encode(decoded);
+assert new IdDecoder().decode(encoded) == decoded;
 ```
 
-### Decoding
+### Encoding/Decoding `UUID`s
 ```java
-final IdDecoder decoder = new IdDecoder();
-
-// long
-final String encoded;
-final long decoded = decoder.decode(encoded);
-
-// UUID
-final String encoded;
-final UUID decoded = decoder.decodeUuid(encoded);
+final UUID decoded;
+final String encoded = new IdEncoder().encodeUuid(decoded);
+assert new IdDecoder().decode(encoded).equals(decoded);
 ```
-
 ## Examples
 ### Encoding/Decoding `long`s
 ~~~
