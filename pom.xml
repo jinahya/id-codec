@@ -171,6 +171,7 @@
   </reporting>
 
   <name>${project.artifactId}</name>
+  <description>id codec</description>
   <url>https://jinaya.github.io/${project.artifactId}/sites/${project.version}</url>
   <inceptionYear>2011</inceptionYear>
   <licenses>
