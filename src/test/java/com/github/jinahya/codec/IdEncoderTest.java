@@ -25,17 +25,17 @@ import org.testng.annotations.Test;
 
 /**
  *
- * @author Jin Kwon
+ * @author Jin Kwon &lt;jinahya_at_gmail.com&gt;
  */
 public class IdEncoderTest {
 
 
     @Test(invocationCount = 1024)
-    public static void encodeLong() {
+    public static void encode() {
 
         final long decoded = ThreadLocalRandom.current().nextLong();
 
-        final String encoded = new IdEncoder().encodeLong(decoded);
+        final String encoded = new IdEncoder().encode(decoded);
     }
 
 
@@ -47,7 +47,7 @@ public class IdEncoderTest {
 
 
     @Test(invocationCount = 1024)
-    public static void testEncodeUUID() {
+    public static void encodeUUID() {
 
         final UUID decoded = UUID.randomUUID();
 

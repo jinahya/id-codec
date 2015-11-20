@@ -29,120 +29,6 @@ import java.util.UUID;
 public class IdDecoder extends IdCodecBase {
 
 
-//    /**
-//     * Decodes a single block.
-//     *
-//     * @param encoded the block to decode
-//     * @param radix the radix
-//     * @param scale the scale
-//     *
-//     * @return decoded output
-//     */
-//    private static long block(final String encoded, final int radix,
-//                              final int scale) {
-//
-//        if (encoded == null) {
-//            throw new NullPointerException("encoded == null");
-//        }
-//
-//        requireValidRadix(radix);
-//
-//        requireValidScale(scale);
-//
-//        final StringBuilder builder = new StringBuilder(
-//            Long.toString(Long.parseLong(encoded, radix)));
-//
-//        builder.reverse();
-//
-//        builder.delete(builder.length() - scale, builder.length());
-//
-//        return Long.parseLong(builder.toString());
-//    }
-    private static String requireValidEncodedLong(final String encoded) {
-
-        if (encoded == null) {
-            throw new NullPointerException("null encoded");
-        }
-
-        final int index = encoded.indexOf('-');
-        if (index == -1) {
-            throw new IllegalArgumentException("wrong encoded: " + encoded);
-        }
-
-        return encoded;
-    }
-
-
-    private static String requireValidEncodedUuid(final String encoded) {
-
-        if (encoded == null) {
-            throw new NullPointerException("null encoded");
-        }
-
-        final int first = encoded.indexOf('-');
-        if (first == -1) {
-            throw new IllegalArgumentException("wrong encoded: " + encoded);
-        }
-
-        final int second = encoded.indexOf('-', first + 1);
-        if (second == -1) {
-            throw new IllegalArgumentException("wrong encoded: " + encoded);
-        }
-
-        return encoded;
-    }
-
-
-//    /**
-//     * Decodes given value with specified radix and scale.
-//     *
-//     * @param encoded the value to decode
-//     * @param radix the radix
-//     * @param scale the scale
-//     *
-//     * @return decoded output
-//     */
-//    public static long decodeLong(final String encoded, final int radix,
-//                                  final int scale) {
-//
-//        requireValidEncodedLong(encoded);
-//
-//        requireValidRadix(radix);
-//
-//        requireValidScale(scale);
-//
-//        final int index = encoded.indexOf('-');
-//
-//        return (block(encoded.substring(0, index), radix, scale) << 32)
-//               | (block(encoded.substring(index + 1), radix, scale));
-//    }
-//    /**
-//     * Decodes given value with specified radix and scale.
-//     *
-//     * @param encoded the value to decode
-//     * @param radix the radix
-//     * @param scale the scale
-//     *
-//     * @return decoded output
-//     */
-//    public static UUID decodeUuid(final String encoded, final int radix,
-//                                  final int scale) {
-//
-//        requireValidEncodedUuid(encoded);
-//
-//        requireValidRadix(radix);
-//
-//        requireValidScale(scale);
-//
-//        final int first = encoded.indexOf('-');
-//        final int second = encoded.indexOf('-', first + 1);
-//        final long mostSignificantBits
-//            = decodeLong(encoded.substring(0, second), radix, scale);
-//        final long leastSignificantBits
-//            = decodeLong(encoded.substring(second + 1), radix, scale);
-//
-//        return new UUID(mostSignificantBits, leastSignificantBits);
-//    }
     /**
      * Decodes a single block.
      *
@@ -172,14 +58,12 @@ public class IdDecoder extends IdCodecBase {
      *
      * @return decoded value
      */
-    public long decodeLong(final String encoded) {
+    public long decode(final String encoded) {
 
-//        return decodeLong(encoded, getRadix(), getScale());
         final int index = encoded.indexOf('-');
 
-        return (block(encoded.substring(0, index)) << 32)
+        return (block(encoded.substring(0, index)) << Integer.SIZE)
                | (block(encoded.substring(index + 1)));
-
     }
 
 
@@ -192,13 +76,10 @@ public class IdDecoder extends IdCodecBase {
      */
     public UUID decodeUuid(final String encoded) {
 
-//        return decodeUuid(encoded, getRadix(), getScale());
         final int first = encoded.indexOf('-');
         final int second = encoded.indexOf('-', first + 1);
-        final long mostSignificantBits
-            = decodeLong(encoded.substring(0, second));
-        final long leastSignificantBits
-            = decodeLong(encoded.substring(second + 1));
+        final long mostSignificantBits = decode(encoded.substring(0, second));
+        final long leastSignificantBits = decode(encoded.substring(second + 1));
 
         return new UUID(mostSignificantBits, leastSignificantBits);
     }

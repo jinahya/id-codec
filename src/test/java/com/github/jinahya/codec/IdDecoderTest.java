@@ -30,9 +30,9 @@ public class IdDecoderTest {
 
 
     @Test(expectedExceptions = {NullPointerException.class})
-    public static void decodeLong_nullEncoded_nullPointerException() {
+    public static void decode_nullEncoded_nullPointerException() {
 
-        new IdDecoder().decodeLong(null);
+        new IdDecoder().decode(null);
     }
 
 
