@@ -4,9 +4,8 @@ id-codec
 ## Versions
 version|site|apidocs
 -------|----|-------
-1.0.3-SNAPSHOT|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.3-SNAPSHOT/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.3-SNAPSHOT/apidocs/index.html)
-1.0.2|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.2/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.2/apidocs/index.html)
-1.0.1|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.1/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.1/apidocs/index.html)
+1.1.2-SNAPSHOT|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.2-SNAPSHOT/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.2-SNAPSHOT/apidocs/index.html)
+1.1.1|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.1/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.0.2/apidocs/index.html)
 
 ## Usages
 ### Encoding
