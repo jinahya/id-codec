@@ -52,5 +52,37 @@ public class IdCodecBaseTest {
     }
 
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void setScaleWithTooSmall() {
+
+        new IdCodecBase() {
+        }.setScale(IdCodecBase.SCALE_MINIMUM - 1);
+    }
+
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void setScaleWithTooBigl() {
+
+        new IdCodecBase() {
+        }.setScale(IdCodecBase.SCALE_MAXIMUM + 1);
+    }
+
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void setRadixWithTooSmall() {
+
+        new IdCodecBase() {
+        }.setRadix(IdCodecBase.RADIX_MINIMUM - 1);
+    }
+
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void setRadixWithTooBigl() {
+
+        new IdCodecBase() {
+        }.setRadix(IdCodecBase.RADIX_MAXIMUM + 1);
+    }
+
+
 }
 

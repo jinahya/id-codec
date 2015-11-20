@@ -24,6 +24,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 import org.testng.Assert;
+import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 
 
@@ -39,8 +40,8 @@ public class IdCodecTest {
 
     private static void encodeDecode(final long expected, final boolean print) {
 
-        final String encoded = IdEncoderTest.encodeLong(expected);
-        final long actual = IdDecoderTest.decodeLong(encoded);
+        final String encoded = new IdEncoder().encode(expected);
+        final long actual = new IdDecoder().decode(encoded);
         if (print) {
             System.out.printf("%40d %40s\n", expected, encoded);
         }
@@ -66,8 +67,8 @@ public class IdCodecTest {
 
     private static void encodeDecode(final UUID expected, final boolean print) {
 
-        final String encoded = IdEncoderTest.encodeUuid(expected);
-        final UUID actual = IdDecoderTest.decodeUuid(encoded);
+        final String encoded = new IdEncoder().encodeUuid(expected);
+        final UUID actual = new IdDecoder().decodeUuid(encoded);
         if (print) {
             System.out.printf("%40s %40s\n", expected, encoded);
         }
@@ -144,9 +145,9 @@ public class IdCodecTest {
             logger.trace("radix: {}", scale);
             encoder.setRadix(scale);
             decoder.setRadix(scale);
-            final String encoded = encoder.encodeLong(expected);
+            final String encoded = encoder.encode(expected);
             logger.trace("encoded: {}", encoded);
-            final long actual = decoder.decodeLong(encoded);
+            final long actual = decoder.decode(encoded);
             Assert.assertEquals(actual, expected);
         }
     }
@@ -165,13 +166,42 @@ public class IdCodecTest {
             logger.trace("scale: {}", scale);
             encoder.setScale(scale);
             decoder.setScale(scale);
-            final String encoded = encoder.encodeLong(expected);
+            final String encoded = encoder.encode(expected);
             logger.trace("encoded: {}", encoded);
-            final long actual = decoder.decodeLong(encoded);
+            final long actual = decoder.decode(encoded);
             Assert.assertEquals(actual, expected);
         }
     }
 
+
+    @Test
+    public void documentation() {
+
+        {
+            final long expected = ThreadLocalRandom.current().nextLong();
+            System.out.printf("%s: %20d\n", "decoded", expected);
+            for (int i = 0; i < 16; i++) {
+                final String encoded = new IdEncoder().encode(expected);
+                final long actual = new IdDecoder().decode(encoded);
+                System.out.printf("%s: %20s\n", "encoded", encoded);
+                assertEquals(actual, expected);
+            }
+        }
+
+        System.out.println("=================================================");
+
+        {
+            final UUID expected = UUID.randomUUID();
+            System.out.printf("%s: %40s\n", "decoded", expected);
+
+            for (int i = 0; i < 16; i++) {
+                final String encoded = new IdEncoder().encodeUuid(expected);
+                final UUID actual = new IdDecoder().decodeUuid(encoded);
+                System.out.printf("%s: %40s\n", "encoded", encoded);
+                assertEquals(actual, expected);
+            }
+        }
+    }
 
 }
 

@@ -25,49 +25,34 @@ import org.testng.annotations.Test;
 
 /**
  *
- * @author Jin Kwon
+ * @author Jin Kwon &lt;jinahya_at_gmail.com&gt;
  */
 public class IdEncoderTest {
 
 
-    static String encodeLong(final long decoded) {
-
-        return IdEncoder.encodeLong(decoded, IdCodecBase.RADIX_DEFAULT,
-                                    IdCodecBase.SCALE_DEFAULT);
-    }
-
-
-    static String encodeUuid(final UUID decoded) {
-
-        return IdEncoder.encodeUuid(decoded, IdCodecBase.RADIX_DEFAULT,
-                                    IdCodecBase.SCALE_DEFAULT);
-    }
-
-
     @Test(invocationCount = 1024)
-    public static void encodeLong() {
+    public static void encode() {
 
         final long decoded = ThreadLocalRandom.current().nextLong();
 
-        final String encoded = encodeLong(decoded);
+        final String encoded = new IdEncoder().encode(decoded);
     }
 
 
     @Test(expectedExceptions = {NullPointerException.class})
     public static void encodeUUID_nullDecoded_nullPointerException() {
 
-        encodeUuid(null);
+        new IdEncoder().encodeUuid(null);
     }
 
 
     @Test(invocationCount = 1024)
-    public static void testEncodeUUID() {
+    public static void encodeUUID() {
 
         final UUID decoded = UUID.randomUUID();
 
-        final String encoded = encodeUuid(decoded);
+        final String encoded = new IdEncoder().encodeUuid(decoded);
     }
-
 
 }
 
