@@ -18,6 +18,10 @@
 package com.github.jinahya.codec;
 
 
+import static com.github.jinahya.codec.IdCodecConstants.RADIX_MAXIMUM;
+import static com.github.jinahya.codec.IdCodecConstants.RADIX_MINIMUM;
+import static com.github.jinahya.codec.IdCodecConstants.SCALE_MAXIMUM;
+import static com.github.jinahya.codec.IdCodecConstants.SCALE_MINIMUM;
 import static java.lang.invoke.MethodHandles.lookup;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -37,18 +41,16 @@ public class IdCodecBaseTest {
     @Test
     public void radix() {
 
-        logger.info("RADIX_MINIMUM: {}", IdCodecBase.RADIX_MINIMUM);
-        logger.info("RADIX_MAXIMUM: {}", IdCodecBase.RADIX_MAXIMUM);
-        logger.info("RADIX_DEFAULT: {}", IdCodecBase.RADIX_DEFAULT);
+        logger.info("RADIX_MINIMUM: {}", RADIX_MINIMUM);
+        logger.info("RADIX_MAXIMUM: {}", RADIX_MAXIMUM);
     }
 
 
     @Test
     public void scale() {
 
-        logger.info("SCALE_MINIMUM: {}", IdCodecBase.SCALE_MINIMUM);
-        logger.info("SCALE_MAXIMUM: {}", IdCodecBase.SCALE_MAXIMUM);
-        logger.info("SCALE_DEFAULT: {}", IdCodecBase.SCALE_DEFAULT);
+        logger.info("SCALE_MINIMUM: {}", SCALE_MINIMUM);
+        logger.info("SCALE_MAXIMUM: {}", SCALE_MAXIMUM);
     }
 
 
@@ -56,7 +58,7 @@ public class IdCodecBaseTest {
     public void setScaleWithTooSmall() {
 
         new IdCodecBase() {
-        }.setScale(IdCodecBase.SCALE_MINIMUM - 1);
+        }.setScale(SCALE_MINIMUM - 1);
     }
 
 
@@ -64,7 +66,7 @@ public class IdCodecBaseTest {
     public void setScaleWithTooBigl() {
 
         new IdCodecBase() {
-        }.setScale(IdCodecBase.SCALE_MAXIMUM + 1);
+        }.setScale(SCALE_MAXIMUM + 1);
     }
 
 
@@ -72,7 +74,7 @@ public class IdCodecBaseTest {
     public void setRadixWithTooSmall() {
 
         new IdCodecBase() {
-        }.setRadix(IdCodecBase.RADIX_MINIMUM - 1);
+        }.setRadix(RADIX_MINIMUM - 1);
     }
 
 
@@ -80,9 +82,8 @@ public class IdCodecBaseTest {
     public void setRadixWithTooBigl() {
 
         new IdCodecBase() {
-        }.setRadix(IdCodecBase.RADIX_MAXIMUM + 1);
+        }.setRadix(RADIX_MAXIMUM + 1);
     }
-
 
 }
 
