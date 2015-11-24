@@ -1,10 +1,15 @@
 id-codec
 ========
+[![Build Status](https://travis-ci.org/jinahya/ossrh-parent.svg)](https://travis-ci.org/jinahya/ossrh-parent)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jinahya/ossrh-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.jinahya/ossrh-parent)
+[![Dependency Status](https://www.versioneye.com/user/projects/5654390dff016c0033000eb2/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5654390dff016c0033000eb2)
+
 A small library can encode/decode `long` values to/from partially randomized `String`s.
 ## Versions
 version|site|apidocs
 -------|----|-------
-1.1.3-SNAPSHOT|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.3-SNAPSHOT/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.3-SNAPSHOT/apidocs/index.html)
+1.1.4-SNAPSHOT|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.4-SNAPSHOT/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.4-SNAPSHOT/apidocs/index.html)
+1.1.3|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.3/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.3/apidocs/index.html)
 1.1.2|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.2/index.html)|[jinahya.github.io](http://jinahya.github.io/id-codec/site/1.1.2/apidocs/index.html)
 
 ## Usages
