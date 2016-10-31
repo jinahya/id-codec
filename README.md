@@ -46,7 +46,7 @@ encoded:     ugsdd02-19f4kk59
 ```
 
 ### Encoding/Decoding `UUID`s
-Not also that those `encoded` values will be decoded to exactly the same value as `decoded`.
+Note also that those `encoded` values will be decoded to exactly the same value as `decoded`.
 
 ```
 decoded:     1b3a263e-0928-4ad1-b728-742d0d06506e
