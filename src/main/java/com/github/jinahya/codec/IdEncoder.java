@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
 package com.github.jinahya.codec;
 
-
+import static java.lang.Long.parseLong;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.UUID;
-
 
 /**
  * A class for encoding identifiers.
@@ -30,25 +27,32 @@ import java.util.UUID;
  */
 public class IdEncoder extends IdCodecBase<IdEncoder> {
 
+    public static void main(final String... args) {
+        try {
+            System.out.println(
+                    new IdEncoder().encodeUuid(UUID.fromString(args[0])));
+        } catch (final IllegalArgumentException iae) {
+        } catch (final ArrayIndexOutOfBoundsException aioobe) {
+        }
+        try {
+            System.out.println(new IdEncoder().encode(parseLong(args[0])));
+        } catch (final NumberFormatException nfe) {
+        } catch (final ArrayIndexOutOfBoundsException aioobe) {
+        }
+    }
 
     @Override
-    public IdEncoder scale(int scale) {
-
+    public IdEncoder scale(final int scale) {
         return super.scale(scale);
     }
 
-
     @Override
-    public IdEncoder radix(int radix) {
-
+    public IdEncoder radix(final int radix) {
         return super.radix(radix);
     }
 
-
     private String block(final long decoded) {
-
         final StringBuilder builder = new StringBuilder(Long.toString(decoded));
-
         final Random random = new SecureRandom();
         builder.ensureCapacity(builder.length() + getScale());
         for (int i = 0; i < getScale() - 1; i++) {
@@ -56,37 +60,28 @@ public class IdEncoder extends IdCodecBase<IdEncoder> {
         }
         builder.append(Integer.toString(random.nextInt(9) + 1));
         builder.reverse();
-
         return Long.toString(Long.parseLong(builder.toString()), getRadix());
     }
-
 
     /**
      * Encodes given value.
      *
      * @param decoded the value to encode.
-     *
      * @return encoded output.
      */
     public String encode(final long decoded) {
-
         return block(decoded >>> Integer.SIZE) + "-"
                + block(decoded & 0xFFFFFFFFL);
     }
-
 
     /**
      * Encodes given value.
      *
      * @param decoded the value to encode
-     *
      * @return encoded output.
      */
     public String encodeUuid(final UUID decoded) {
-
         return encode(decoded.getMostSignificantBits()) + "-"
                + encode(decoded.getLeastSignificantBits());
     }
-
 }
-
