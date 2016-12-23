@@ -28,7 +28,8 @@ import static com.github.jinahya.codec.IdCodecConstants.SCALE_MINIMUM;
 abstract class IdCodecBase<T extends IdCodecBase<T>> {
 
     static final int RADIX_DEFAULT = RADIX_MAXIMUM;
-    static final int SACLE_DEFAULT = SCALE_MINIMUM;
+
+    static final int SCALE_DEFAULT = SCALE_MINIMUM;
 
     /**
      * Return current value of {@code radix}.
@@ -98,8 +99,7 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
         return (T) this;
     }
 
-    private int radix = RADIX_MAXIMUM;
+    private int radix = RADIX_DEFAULT;
 
-    private int scale = SCALE_MINIMUM;
-
+    private int scale = SCALE_DEFAULT;
 }
