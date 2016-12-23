@@ -24,6 +24,22 @@ import java.util.UUID;
  */
 public class IdDecoder extends IdCodecBase<IdDecoder> {
 
+    public static void main(final String... args) {
+        try {
+            final UUID decoded = new IdDecoder().decodeUuid(args[0]);
+            System.out.println(decoded);
+            System.exit(0);
+        } catch (final IndexOutOfBoundsException ioobe) {
+        }
+        try {
+            final long decoded = new IdDecoder().decode(args[0]);
+            System.out.println(decoded);
+            System.exit(0);
+        } catch (final IndexOutOfBoundsException ioobe) {
+        }
+        System.exit(1);
+    }
+
     @Override
     public IdDecoder scale(int scale) {
         return super.scale(scale);

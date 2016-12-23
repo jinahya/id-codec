@@ -29,16 +29,21 @@ public class IdEncoder extends IdCodecBase<IdEncoder> {
 
     public static void main(final String... args) {
         try {
-            System.out.println(
-                    new IdEncoder().encodeUuid(UUID.fromString(args[0])));
+            final String encoded
+                    = new IdEncoder().encodeUuid(UUID.fromString(args[0]));
+            System.out.println(encoded);
+            System.exit(0);
         } catch (final IllegalArgumentException iae) {
         } catch (final ArrayIndexOutOfBoundsException aioobe) {
         }
         try {
-            System.out.println(new IdEncoder().encode(parseLong(args[0])));
+            final String encoded = new IdEncoder().encode(parseLong(args[0]));
+            System.out.println(encoded);
+            System.exit(0);
         } catch (final NumberFormatException nfe) {
         } catch (final ArrayIndexOutOfBoundsException aioobe) {
         }
+        System.exit(1);
     }
 
     @Override
