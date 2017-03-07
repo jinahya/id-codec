@@ -15,6 +15,7 @@
  */
 package com.github.jinahya.codec;
 
+import java.io.PrintStream;
 import static java.lang.Long.parseLong;
 import java.security.SecureRandom;
 import java.util.Random;
@@ -27,34 +28,35 @@ import java.util.UUID;
  */
 public class IdEncoder extends IdCodecBase<IdEncoder> {
 
-    public static void main(final String... args) {
+    static void encode(final String decoded, final PrintStream printer) {
+        if (decoded == null) {
+            throw new NullPointerException("null decoded");
+        }
+        if (printer == null) {
+            throw new NullPointerException("null printer");
+        }
         try {
             final String encoded
-                    = new IdEncoder().encodeUuid(UUID.fromString(args[0]));
-            System.out.println(encoded);
-            System.exit(0);
-        } catch (final IllegalArgumentException iae) {
-        } catch (final ArrayIndexOutOfBoundsException aioobe) {
+                    = new IdEncoder().encodeUuid(UUID.fromString(decoded));
+            printer.println(encoded);
+            return;
+        } catch (final Exception e) {
         }
-        try {
-            final String encoded = new IdEncoder().encode(parseLong(args[0]));
-            System.out.println(encoded);
-            System.exit(0);
-        } catch (final NumberFormatException nfe) {
-        } catch (final ArrayIndexOutOfBoundsException aioobe) {
-        }
-        System.exit(1);
+        final String encoded = new IdEncoder().encode(parseLong(decoded));
+        printer.println(encoded);
     }
 
-//    @Override
-//    public IdEncoder scale(final int scale) {
-//        return super.scale(scale);
-//    }
-//
-//    @Override
-//    public IdEncoder radix(final int radix) {
-//        return super.radix(radix);
-//    }
+    /**
+     * Encodes command line arguments and prints each encoded value to
+     * {@code System.out}.
+     *
+     * @param args the command line arguments
+     */
+    public static void main(final String... args) {
+        for (final String arg : args) {
+            encode(arg, System.out);
+        }
+    }
 
     private String block(final long decoded) {
         final StringBuilder builder = new StringBuilder(Long.toString(decoded));

@@ -15,6 +15,7 @@
  */
 package com.github.jinahya.codec;
 
+import java.io.PrintStream;
 import java.util.UUID;
 
 /**
@@ -24,31 +25,34 @@ import java.util.UUID;
  */
 public class IdDecoder extends IdCodecBase<IdDecoder> {
 
-    public static void main(final String... args) {
-        try {
-            final UUID decoded = new IdDecoder().decodeUuid(args[0]);
-            System.out.println(decoded);
-            System.exit(0);
-        } catch (final IndexOutOfBoundsException ioobe) {
+    static void decode(final String encoded, final PrintStream printer) {
+        if (encoded == null) {
+            throw new NullPointerException("null encoded");
+        }
+        if (printer == null) {
+            throw new NullPointerException("null printer");
         }
         try {
-            final long decoded = new IdDecoder().decode(args[0]);
-            System.out.println(decoded);
-            System.exit(0);
-        } catch (final IndexOutOfBoundsException ioobe) {
+            final UUID decoded = new IdDecoder().decodeUuid(encoded);
+            printer.println(decoded);
+            return;
+        } catch (final Exception e) {
         }
-        System.exit(1);
+        final long decoded = new IdDecoder().decode(encoded);
+        printer.println(decoded);
     }
 
-//    @Override
-//    public IdDecoder scale(int scale) {
-//        return super.scale(scale);
-//    }
-//
-//    @Override
-//    public IdDecoder radix(int radix) {
-//        return super.radix(radix);
-//    }
+    /**
+     * Decodes command line arguments and prints each decoded value to
+     * {@code System.out}.
+     *
+     * @param args the command line arguments
+     */
+    public static void main(final String... args) {
+        for (final String arg : args) {
+            decode(arg, System.out);
+        }
+    }
 
     /**
      * Decodes a single block.
