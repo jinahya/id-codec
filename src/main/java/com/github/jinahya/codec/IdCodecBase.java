@@ -60,6 +60,13 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
         this.radix = radix;
     }
 
+    /**
+     * Replaces the current value of {@code radix} with given and return this
+     * instance.
+     *
+     * @param radix new value for {@code radix}
+     * @return this instance
+     */
     @SuppressWarnings("unchecked")
     public T radix(final int radix) {
         setRadix(radix);
@@ -95,6 +102,13 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
         this.scale = scale;
     }
 
+    /**
+     * Replace the current value of {@code scale} with given and return this
+     * instance.
+     *
+     * @param scale new value for {@code scale}
+     * @return this instance
+     */
     @SuppressWarnings("unchecked")
     public T scale(final int scale) {
         setScale(scale);
