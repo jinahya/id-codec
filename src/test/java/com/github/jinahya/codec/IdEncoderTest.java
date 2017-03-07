@@ -33,29 +33,23 @@ public class IdEncoderTest {
 
     @Test(invocationCount = 1024)
     public void encode() {
-
         final long decoded = ThreadLocalRandom.current().nextLong();
-
         final String encoded = new IdEncoder().encode(decoded);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
     public void encodeUUID_nullDecoded_nullPointerException() {
-
         new IdEncoder().encodeUuid(null);
     }
 
     @Test(invocationCount = 1024)
     public void encodeUUID() {
-
         final UUID decoded = UUID.randomUUID();
-
         final String encoded = new IdEncoder().encodeUuid(decoded);
     }
 
     @Test
     public void radix() {
-
         final IdEncoder expected = new IdEncoder();
         final IdEncoder actual = expected.radix(current().nextInt(
                 RADIX_MINIMUM, RADIX_MAXIMUM + 1));
@@ -64,11 +58,9 @@ public class IdEncoderTest {
 
     @Test
     public void scale() {
-
         final IdEncoder expected = new IdEncoder();
         final IdEncoder actual = expected.scale(current().nextInt(
                 SCALE_MINIMUM, SCALE_MAXIMUM + 1));
         assertSame(actual, expected);
     }
-
 }

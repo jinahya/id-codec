@@ -40,15 +40,15 @@ public class IdDecoder extends IdCodecBase<IdDecoder> {
         System.exit(1);
     }
 
-    @Override
-    public IdDecoder scale(int scale) {
-        return super.scale(scale);
-    }
-
-    @Override
-    public IdDecoder radix(int radix) {
-        return super.radix(radix);
-    }
+//    @Override
+//    public IdDecoder scale(int scale) {
+//        return super.scale(scale);
+//    }
+//
+//    @Override
+//    public IdDecoder radix(int radix) {
+//        return super.radix(radix);
+//    }
 
     /**
      * Decodes a single block.

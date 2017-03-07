@@ -31,19 +31,16 @@ public class IdDecoderTest {
 
     @Test(expectedExceptions = {NullPointerException.class})
     public static void decode_nullEncoded_nullPointerException() {
-
         new IdDecoder().decode(null);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
     public static void decodeUuid_nullEncoded_nulPointerException() {
-
         new IdDecoder().decodeUuid(null);
     }
 
     @Test
     public void radix() {
-
         final IdDecoder expected = new IdDecoder();
         final IdDecoder actual = expected.radix(current().nextInt(
                 RADIX_MINIMUM, RADIX_MAXIMUM + 1));
@@ -52,11 +49,9 @@ public class IdDecoderTest {
 
     @Test
     public void scale() {
-
         final IdDecoder expected = new IdDecoder();
         final IdDecoder actual = expected.scale(current().nextInt(
                 SCALE_MINIMUM, SCALE_MAXIMUM + 1));
         assertSame(actual, expected);
     }
-
 }

@@ -31,6 +31,7 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
 
     static final int SCALE_DEFAULT = SCALE_MINIMUM;
 
+    // ------------------------------------------------------------------- radix
     /**
      * Return current value of {@code radix}.
      *
@@ -60,11 +61,12 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
     }
 
     @SuppressWarnings("unchecked")
-    T radix(final int radix) {
+    public T radix(final int radix) {
         setRadix(radix);
         return (T) this;
     }
 
+    // ------------------------------------------------------------------- scale
     /**
      * Returns current value of {@code scale}.
      *
@@ -94,7 +96,7 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
     }
 
     @SuppressWarnings("unchecked")
-    T scale(final int scale) {
+    public T scale(final int scale) {
         setScale(scale);
         return (T) this;
     }

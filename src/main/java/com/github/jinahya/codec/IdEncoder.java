@@ -46,15 +46,15 @@ public class IdEncoder extends IdCodecBase<IdEncoder> {
         System.exit(1);
     }
 
-    @Override
-    public IdEncoder scale(final int scale) {
-        return super.scale(scale);
-    }
-
-    @Override
-    public IdEncoder radix(final int radix) {
-        return super.radix(radix);
-    }
+//    @Override
+//    public IdEncoder scale(final int scale) {
+//        return super.scale(scale);
+//    }
+//
+//    @Override
+//    public IdEncoder radix(final int radix) {
+//        return super.radix(radix);
+//    }
 
     private String block(final long decoded) {
         final StringBuilder builder = new StringBuilder(Long.toString(decoded));

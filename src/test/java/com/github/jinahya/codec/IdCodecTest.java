@@ -32,7 +32,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import static java.util.concurrent.ThreadLocalRandom.current;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
-import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 
@@ -40,13 +39,14 @@ public class IdCodecTest {
 
     private static final Logger logger = getLogger(lookup().lookupClass());
 
+    // -------------------------------------------------------------------------
     private static void encodeDecode(final long expected, final boolean print) {
         final String encoded = new IdEncoder().encode(expected);
         final long actual = new IdDecoder().decode(encoded);
         if (print) {
             System.out.printf("%40d %40s\n", expected, encoded);
         }
-        Assert.assertEquals(actual, expected);
+        assertEquals(actual, expected);
     }
 
     private static void encodeDecode(final long expected) {
@@ -67,11 +67,11 @@ public class IdCodecTest {
         if (print) {
             System.out.printf("%40s %40s\n", expected, encoded);
         }
-        Assert.assertEquals(actual, expected);
-        Assert.assertEquals(actual.getLeastSignificantBits(),
-                            expected.getLeastSignificantBits());
-        Assert.assertEquals(actual.getMostSignificantBits(),
-                            expected.getMostSignificantBits());
+        assertEquals(actual, expected);
+        assertEquals(actual.getLeastSignificantBits(),
+                     expected.getLeastSignificantBits());
+        assertEquals(actual.getMostSignificantBits(),
+                     expected.getMostSignificantBits());
     }
 
     private static void encodeDecode(final UUID expected) {
@@ -125,7 +125,7 @@ public class IdCodecTest {
             final String encoded = encoder.encode(expected);
             logger.trace("encoded: {}", encoded);
             final long actual = decoder.decode(encoded);
-            Assert.assertEquals(actual, expected);
+            assertEquals(actual, expected);
         }
     }
 
@@ -189,15 +189,17 @@ public class IdCodecTest {
             System.setOut(out);
         }
     }
-//
-//    @Test
-//    public static void encodeDecodeMainUuid() {
-//        final PrintStream out = System.out;
-//        try {
-//            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            System.setOut(new PrintStream(baos));
-//        } finally {
-//            System.setOut(out);
-//        }
-//    }
+
+    @Test(enabled = false)
+    public static void encodeDecodeMainUuid() {
+        final PrintStream out = System.out;
+        try {
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(baos, true));
+            final UUID expected = UUID.randomUUID();
+            IdEncoder.main(expected.toString());
+        } finally {
+            System.setOut(out);
+        }
+    }
 }
