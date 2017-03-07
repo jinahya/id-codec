@@ -13,34 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
 package com.github.jinahya.codec;
-
 
 /**
  * Constants for id-codec.
  */
 public final class IdCodecConstants {
 
-
     /**
      * The minimum value for {@code radix}.
      */
     public static final int RADIX_MINIMUM = Character.MIN_RADIX;
-
 
     /**
      * The maximum value for {@code radix}.
      */
     public static final int RADIX_MAXIMUM = Character.MAX_RADIX;
 
-
     /**
      * The minimum value for {@code scale}.
      */
     public static final int SCALE_MINIMUM = 1;
-
 
     /**
      * The maximum value for {@code scale}.
@@ -49,11 +42,7 @@ public final class IdCodecConstants {
 //        = Long.toString(Long.MAX_VALUE).length()
 //          - Integer.toString(Integer.MAX_VALUE).length() - 1;
 
-
     private IdCodecConstants() {
-
         super();
     }
-
 }
-

@@ -23,7 +23,7 @@ assert new IdDecoder().decode(encoded).equals(decoded);
 ```
 ## Examples
 ### Encoding/Decoding `long`s
-Note that those `encoded` values will be decoded to exactly the same value as `decoded`.
+Note that these `encoded` values will be decoded to exactly the same value as `decoded`.
 ```
 decoded: -8775087020812241672
 

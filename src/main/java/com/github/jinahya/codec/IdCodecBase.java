@@ -13,16 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
 package com.github.jinahya.codec;
-
 
 import static com.github.jinahya.codec.IdCodecConstants.RADIX_MAXIMUM;
 import static com.github.jinahya.codec.IdCodecConstants.RADIX_MINIMUM;
 import static com.github.jinahya.codec.IdCodecConstants.SCALE_MAXIMUM;
 import static com.github.jinahya.codec.IdCodecConstants.SCALE_MINIMUM;
-
 
 /**
  * An abstract base class.
@@ -31,17 +27,19 @@ import static com.github.jinahya.codec.IdCodecConstants.SCALE_MINIMUM;
  */
 abstract class IdCodecBase<T extends IdCodecBase<T>> {
 
+    static final int RADIX_DEFAULT = RADIX_MAXIMUM;
 
+    static final int SCALE_DEFAULT = SCALE_MINIMUM;
+
+    // ------------------------------------------------------------------- radix
     /**
      * Return current value of {@code radix}.
      *
      * @return the current value of {@code radix}.
      */
     public int getRadix() {
-
         return radix;
     }
-
 
     /**
      * Replaces the current {@code radix} value with given.
@@ -51,40 +49,32 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
      * {@link IdCodecConstants#RADIX_MAXIMUM} (inclusive).
      */
     public void setRadix(final int radix) {
-
         if (radix < RADIX_MINIMUM) {
             throw new IllegalArgumentException(
-                "radix(" + radix + ") < " + RADIX_MINIMUM);
+                    "radix(" + radix + ") < " + RADIX_MINIMUM);
         }
-
         if (radix > RADIX_MAXIMUM) {
             throw new IllegalArgumentException(
-                "radix(" + radix + ") > " + RADIX_MAXIMUM);
+                    "radix(" + radix + ") > " + RADIX_MAXIMUM);
         }
-
         this.radix = radix;
     }
 
-
     @SuppressWarnings("unchecked")
-    T radix(final int radix) {
-
+    public T radix(final int radix) {
         setRadix(radix);
-
         return (T) this;
     }
 
-
+    // ------------------------------------------------------------------- scale
     /**
      * Returns current value of {@code scale}.
      *
      * @return the current value of {@code scale}.
      */
     public int getScale() {
-
         return scale;
     }
-
 
     /**
      * Replaces the current {@code scale} value with given.
@@ -94,34 +84,24 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
      * {@link IdCodecConstants#SCALE_MAXIMUM} (inclusive).
      */
     public void setScale(final int scale) {
-
         if (scale < SCALE_MINIMUM) {
             throw new IllegalArgumentException(
-                "scale(" + scale + ") < " + SCALE_MINIMUM);
+                    "scale(" + scale + ") < " + SCALE_MINIMUM);
         }
-
         if (scale > SCALE_MAXIMUM) {
             throw new IllegalArgumentException(
-                "scale(" + scale + ") > " + SCALE_MAXIMUM);
+                    "scale(" + scale + ") > " + SCALE_MAXIMUM);
         }
-
         this.scale = scale;
     }
 
-
     @SuppressWarnings("unchecked")
-    T scale(final int scale) {
-
+    public T scale(final int scale) {
         setScale(scale);
-
         return (T) this;
     }
 
+    private int radix = RADIX_DEFAULT;
 
-    private int radix = RADIX_MAXIMUM;
-
-
-    private int scale = SCALE_MINIMUM;
-
+    private int scale = SCALE_DEFAULT;
 }
-
