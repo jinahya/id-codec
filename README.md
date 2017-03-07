@@ -5,7 +5,7 @@ id-codec
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.jinahya/id-codec.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.github.jinahya%22%20AND%20a%3A%22id-codec%22)
 [![Javadocs](http://www.javadoc.io/badge/com.github.jinahya/id-codec.svg)](http://www.javadoc.io/doc/com.github.jinahya/id-codec)
 
-A small library can encode/decode `long`s to/from partially randomized `String`s.
+A small library can encode/decode `long`s (and `UUID`s) to/from partially randomized `String`s.
 
 ## Usages
 ### Encoding/Decoding `long`s
