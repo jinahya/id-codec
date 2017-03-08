@@ -19,17 +19,9 @@ import static com.github.jinahya.codec.IdCodecConstants.RADIX_MAXIMUM;
 import static com.github.jinahya.codec.IdCodecConstants.RADIX_MINIMUM;
 import static com.github.jinahya.codec.IdCodecConstants.SCALE_MAXIMUM;
 import static com.github.jinahya.codec.IdCodecConstants.SCALE_MINIMUM;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import static java.lang.Long.parseLong;
 import static java.lang.invoke.MethodHandles.lookup;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-import static java.util.concurrent.ThreadLocalRandom.current;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.testng.Assert.assertEquals;
@@ -167,39 +159,6 @@ public class IdCodecTest {
                 System.out.printf("%s: %40s\n", "encoded", encoded);
                 assertEquals(actual, expected);
             }
-        }
-    }
-
-    @Test(enabled = false)
-    public static void encodeDecodeMain() throws IOException {
-        final PrintStream out = System.out;
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(baos));
-        try {
-            final long expected = current().nextLong();
-            IdEncoder.main(Long.toString(expected));
-            final String encoded = new BufferedReader(new InputStreamReader(
-                    new ByteArrayInputStream(baos.toByteArray()))).readLine();
-            baos.reset();
-            IdDecoder.main(encoded);
-            final String decoded = new BufferedReader(new InputStreamReader(
-                    new ByteArrayInputStream(baos.toByteArray()))).readLine();
-            assertEquals(parseLong(decoded), expected);
-        } finally {
-            System.setOut(out);
-        }
-    }
-
-    @Test(enabled = false)
-    public static void encodeDecodeMainUuid() {
-        final PrintStream out = System.out;
-        try {
-            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            System.setOut(new PrintStream(baos, true));
-            final UUID expected = UUID.randomUUID();
-            IdEncoder.main(expected.toString());
-        } finally {
-            System.setOut(out);
         }
     }
 }
