@@ -54,6 +54,7 @@ public class IdDecoder extends IdCodecBase<IdDecoder> {
         }
     }
 
+    // -------------------------------------------------------------------------
     /**
      * Decodes a single block.
      *

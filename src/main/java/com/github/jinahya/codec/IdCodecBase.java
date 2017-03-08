@@ -115,6 +115,7 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
         return (T) this;
     }
 
+    // -------------------------------------------------------------------------
     private int radix = RADIX_DEFAULT;
 
     private int scale = SCALE_DEFAULT;

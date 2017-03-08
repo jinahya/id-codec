@@ -58,6 +58,7 @@ public class IdEncoder extends IdCodecBase<IdEncoder> {
         }
     }
 
+    // -------------------------------------------------------------------------
     private String block(final long decoded) {
         final StringBuilder builder = new StringBuilder(Long.toString(decoded));
         final Random random = new SecureRandom();

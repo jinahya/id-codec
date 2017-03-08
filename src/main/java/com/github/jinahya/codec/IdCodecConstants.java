@@ -16,32 +16,35 @@
 package com.github.jinahya.codec;
 
 /**
- * Constants for id-codec.
+ * Constants.
  */
 public final class IdCodecConstants {
 
+    // ------------------------------------------------------------------- RADIX
     /**
-     * The minimum value for {@code radix}.
+     * The minimum value for {@code radix} which is {@value #RADIX_MINIMUM}.
      */
     public static final int RADIX_MINIMUM = Character.MIN_RADIX;
 
     /**
-     * The maximum value for {@code radix}.
+     * The maximum value for {@code radix} which is {@value #RADIX_MAXIMUM}.
      */
     public static final int RADIX_MAXIMUM = Character.MAX_RADIX;
 
+    // ------------------------------------------------------------------- SCALE
     /**
-     * The minimum value for {@code scale}.
+     * The minimum value for {@code scale} which is {@value #SCALE_MINIMUM}.
      */
     public static final int SCALE_MINIMUM = 1;
 
     /**
-     * The maximum value for {@code scale}.
+     * The maximum value for {@code scale} which is {@value #SCALE_MAXIMUM}.
      */
     public static final int SCALE_MAXIMUM = 8;
 //        = Long.toString(Long.MAX_VALUE).length()
 //          - Integer.toString(Integer.MAX_VALUE).length() - 1;
 
+    // -------------------------------------------------------------------------
     private IdCodecConstants() {
         super();
     }
