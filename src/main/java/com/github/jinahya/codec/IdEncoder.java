@@ -52,7 +52,7 @@ public class IdEncoder extends IdCodecBase<IdEncoder> {
      *
      * @param args the command line arguments
      */
-    public static void main(final String... args) {
+    public static void main(final String[] args) {
         for (final String arg : args) {
             encode(arg, System.out);
         }
