@@ -163,7 +163,7 @@ public class IdCodecTest {
         }
     }
 
-    @Test
+    @Test(invocationCount = 1024)
     public void encodeDecodeLong() {
         final IdEncoder encoder = new IdEncoder();
         final IdDecoder decoder = new IdDecoder();
@@ -181,7 +181,7 @@ public class IdCodecTest {
         }
     }
 
-    @Test
+    @Test(invocationCount = 1024)
     public void encodeDecodeUuid() {
         final IdEncoder encoder = new IdEncoder();
         final IdDecoder decoder = new IdDecoder();
