@@ -24,32 +24,20 @@ import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 import org.testng.annotations.Test;
 
-public class IdCodecBaseTest {
+public class IdCodecConstantsTest {
 
     private static final Logger logger = getLogger(lookup().lookupClass());
 
     // -------------------------------------------------------------------------
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void setScaleWithTooSmall() {
-        new IdCodecBase() {
-        }.setScale(SCALE_MINIMUM - 1);
+    @Test
+    public static void RADIX() {
+        logger.info("RADIX_MINIMUM: {}", RADIX_MINIMUM);
+        logger.info("RADIX_MAXIMUM: {}", RADIX_MAXIMUM);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void setScaleWithTooBigl() {
-        new IdCodecBase() {
-        }.setScale(SCALE_MAXIMUM + 1);
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void setRadixWithTooSmall() {
-        new IdCodecBase() {
-        }.setRadix(RADIX_MINIMUM - 1);
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void setRadixWithTooBigl() {
-        new IdCodecBase() {
-        }.setRadix(RADIX_MAXIMUM + 1);
+    @Test
+    public void SCALE() {
+        logger.info("SCALE_MINIMUM: {}", SCALE_MINIMUM);
+        logger.info("SCALE_MAXIMUM: {}", SCALE_MAXIMUM);
     }
 }
