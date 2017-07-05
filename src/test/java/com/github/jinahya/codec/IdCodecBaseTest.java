@@ -20,19 +20,25 @@ import static com.github.jinahya.codec.IdCodecConstants.RADIX_MINIMUM;
 import static com.github.jinahya.codec.IdCodecConstants.SCALE_MAXIMUM;
 import static com.github.jinahya.codec.IdCodecConstants.SCALE_MINIMUM;
 import static java.lang.invoke.MethodHandles.lookup;
+import static java.util.Objects.requireNonNull;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 import org.testng.annotations.Test;
 
-public class IdCodecBaseTest {
+abstract class IdCodecBaseTest<T extends IdCodecBase<T>> {
 
     private static final Logger logger = getLogger(lookup().lookupClass());
 
     // -------------------------------------------------------------------------
+    public IdCodecBaseTest(final Class<T> type) {
+        super();
+        this.type = requireNonNull(type);
+    }
+
+    // -------------------------------------------------------------------------
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void setScaleWithTooSmall() {
-        new IdCodecBase() {
-        }.setScale(SCALE_MINIMUM - 1);
+    public void setScaleWithTooSmall() throws ReflectiveOperationException {
+        type.newInstance().setScale(SCALE_MINIMUM - 1);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
@@ -52,4 +58,7 @@ public class IdCodecBaseTest {
         new IdCodecBase() {
         }.setRadix(RADIX_MAXIMUM + 1);
     }
+
+    // -------------------------------------------------------------------------
+    private final Class<T> type;
 }
