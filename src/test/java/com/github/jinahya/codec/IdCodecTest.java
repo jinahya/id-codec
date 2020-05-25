@@ -47,11 +47,11 @@ class IdCodecTest {
                 final long expected = current().nextLong();
                 final String encoded = encoder.encode(expected);
                 final long actual = decoder.decode(encoded);
-                log.debug("scale: {}", scale);
-                log.debug("radix: {}", radix);
-                log.debug("expected: {}", expected);
-                log.debug("encoded: {}", encoded);
-                log.debug("actual: {}", actual);
+//                log.debug("scale: {}", scale);
+//                log.debug("radix: {}", radix);
+//                log.debug("expected: {}", expected);
+//                log.debug("encoded: {}", encoded);
+//                log.debug("actual: {}", actual);
                 assertEquals(expected, actual);
             }
         }
@@ -73,11 +73,11 @@ class IdCodecTest {
                 final UUID expected = randomUUID();
                 final String encoded = encoder.encodeUuid(expected);
                 final UUID actual = decoder.decodeUuid(encoded);
-                log.debug("scale: {}", scale);
-                log.debug("radix: {}", radix);
-                log.debug("expected: {}", expected);
-                log.debug("encoded: {}", encoded);
-                log.debug("actual: {}", actual);
+//                log.debug("scale: {}", scale);
+//                log.debug("radix: {}", radix);
+//                log.debug("expected: {}", expected);
+//                log.debug("encoded: {}", encoded);
+//                log.debug("actual: {}", actual);
                 assertEquals(expected, actual);
             }
         }
