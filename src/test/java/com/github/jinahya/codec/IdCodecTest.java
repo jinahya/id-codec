@@ -15,156 +15,27 @@
  */
 package com.github.jinahya.codec;
 
-import static com.github.jinahya.codec.IdCodecConstants.RADIX_MAXIMUM;
-import static com.github.jinahya.codec.IdCodecConstants.RADIX_MINIMUM;
-import static com.github.jinahya.codec.IdCodecConstants.SCALE_MAXIMUM;
-import static com.github.jinahya.codec.IdCodecConstants.SCALE_MINIMUM;
-import static java.lang.invoke.MethodHandles.lookup;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+
 import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
+
+import static com.github.jinahya.codec.IdCodecBase.RADIX_MAXIMUM;
+import static com.github.jinahya.codec.IdCodecBase.RADIX_MINIMUM;
+import static com.github.jinahya.codec.IdCodecBase.SCALE_MAXIMUM;
+import static com.github.jinahya.codec.IdCodecBase.SCALE_MINIMUM;
+import static java.util.UUID.randomUUID;
 import static java.util.concurrent.ThreadLocalRandom.current;
-import org.slf4j.Logger;
-import static org.slf4j.LoggerFactory.getLogger;
-import static org.testng.Assert.assertEquals;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class IdCodecTest {
+@Slf4j
+class IdCodecTest {
 
-    private static final Logger logger = getLogger(lookup().lookupClass());
-
-    // -------------------------------------------------------------------------
-    private static void encodeDecode(final long expected, final boolean print) {
-        final String encoded = new IdEncoder().encode(expected);
-        final long actual = new IdDecoder().decode(encoded);
-        if (print) {
-            System.out.printf("%40d %40s\n", expected, encoded);
-        }
-        assertEquals(actual, expected);
-    }
-
-    private static void encodeDecode(final long expected) {
-        System.out.printf("%40s %40s\n",
-                          "----------------------------------------",
-                          "----------------------------------------");
-        for (int i = 0; i < 10; i++) {
-            encodeDecode(expected, true);
-        }
-        for (int i = 0; i < 1024; i++) {
-            encodeDecode(expected, false);
-        }
-    }
-
-    private static void encodeDecode(final UUID expected, final boolean print) {
-        final String encoded = new IdEncoder().encodeUuid(expected);
-        final UUID actual = new IdDecoder().decodeUuid(encoded);
-        if (print) {
-            System.out.printf("%40s %40s\n", expected, encoded);
-        }
-        assertEquals(actual, expected);
-        assertEquals(actual.getLeastSignificantBits(),
-                     expected.getLeastSignificantBits());
-        assertEquals(actual.getMostSignificantBits(),
-                     expected.getMostSignificantBits());
-    }
-
-    private static void encodeDecode(final UUID expected) {
-        System.out.printf("%40s %40s\n",
-                          "----------------------------------------",
-                          "----------------------------------------");
-        for (int i = 0; i < 10; i++) {
-            encodeDecode(expected, true);
-        }
-        for (int i = 0; i < 1024; i++) {
-            encodeDecode(expected, false);
-        }
-    }
-
-    @Test(invocationCount = 1)
-    public static void encodeDecoded_long() {
-        final long expected = ThreadLocalRandom.current().nextLong();
-        encodeDecode(expected);
-    }
-
-    @Test(invocationCount = 1)
-    public static void encodeDecode_long_magic() {
-        encodeDecode(Long.MIN_VALUE);
-        encodeDecode(Long.MAX_VALUE);
-        encodeDecode(-32L);
-        encodeDecode(-16L);
-        encodeDecode(-2L);
-        encodeDecode(-1L);
-        encodeDecode(0L);
-        encodeDecode(1L);
-        encodeDecode(2L);
-        encodeDecode(15L);
-        encodeDecode(31L);
-    }
-
-    @Test(invocationCount = 1)
-    public static void encodeDecode_UUID() {
-        final UUID expected = UUID.randomUUID();
-        encodeDecode(expected);
-    }
-
+    /**
+     * Tests {@link IdEncoder#encode(long)} method and {@link IdDecoder#decode(String)} method.
+     */
     @Test
-    public void encodedDecode_allAvailableRadices() {
-        final IdEncoder encoder = new IdEncoder();
-        final IdDecoder decoder = new IdDecoder();
-        final long expected = ThreadLocalRandom.current().nextInt();
-        for (int radix = RADIX_MINIMUM; radix <= RADIX_MAXIMUM; radix++) {
-            logger.trace("radix: {}", radix);
-            encoder.setRadix(radix);
-            decoder.setRadix(radix);
-            final String encoded = encoder.encode(expected);
-            logger.trace("encoded: {}", encoded);
-            final long actual = decoder.decode(encoded);
-            assertEquals(actual, expected);
-        }
-    }
-
-    @Test
-    public void encodedDecode_allAvailableScales() {
-        final IdEncoder encoder = new IdEncoder();
-        final IdDecoder decoder = new IdDecoder();
-        final long expected = ThreadLocalRandom.current().nextInt();
-        for (int scale = SCALE_MINIMUM; scale <= SCALE_MAXIMUM; scale++) {
-            logger.trace("scale: {}", scale);
-            encoder.setScale(scale);
-            decoder.setScale(scale);
-            final String encoded = encoder.encode(expected);
-            logger.trace("encoded: {}", encoded);
-            final long actual = decoder.decode(encoded);
-            assertEquals(actual, expected);
-        }
-    }
-
-    @Test
-    public void documentation() {
-        {
-            final long expected = ThreadLocalRandom.current().nextLong();
-            System.out.printf("%s: %20d\n", "decoded", expected);
-            for (int i = 0; i < 16; i++) {
-                final String encoded = new IdEncoder().encode(expected);
-                final long actual = new IdDecoder().decode(encoded);
-                System.out.printf("%s: %20s\n", "encoded", encoded);
-                assertEquals(actual, expected);
-            }
-        }
-        System.out.println("=================================================");
-        {
-            final UUID expected = UUID.randomUUID();
-            System.out.printf("%s: %40s\n", "decoded", expected);
-            for (int i = 0; i < 16; i++) {
-                final String encoded = new IdEncoder().encodeUuid(expected);
-                final UUID actual = new IdDecoder().decodeUuid(encoded);
-                System.out.printf("%s: %40s\n", "encoded", encoded);
-                assertEquals(actual, expected);
-            }
-        }
-    }
-
-    @Test(invocationCount = 1024)
-    public void encodeDecodeLong() {
+    void encodeDecodeLong() {
         final IdEncoder encoder = new IdEncoder();
         final IdDecoder decoder = new IdDecoder();
         for (int scale = SCALE_MINIMUM; scale <= SCALE_MAXIMUM; scale++) {
@@ -176,13 +47,21 @@ public class IdCodecTest {
                 final long expected = current().nextLong();
                 final String encoded = encoder.encode(expected);
                 final long actual = decoder.decode(encoded);
-                assertEquals(actual, expected);
+                log.debug("scale: {}", scale);
+                log.debug("radix: {}", radix);
+                log.debug("expected: {}", expected);
+                log.debug("encoded: {}", encoded);
+                log.debug("actual: {}", actual);
+                assertEquals(expected, actual);
             }
         }
     }
 
-    @Test(invocationCount = 1024)
-    public void encodeDecodeUuid() {
+    /**
+     * Tests {@link IdEncoder#encodeUuid(UUID)} method and {@link IdDecoder#decodeUuid(String)} method.
+     */
+    @Test
+    void encodeDecodeUuid() {
         final IdEncoder encoder = new IdEncoder();
         final IdDecoder decoder = new IdDecoder();
         for (int scale = SCALE_MINIMUM; scale <= SCALE_MAXIMUM; scale++) {
@@ -191,10 +70,15 @@ public class IdCodecTest {
             for (int radix = RADIX_MINIMUM; radix <= RADIX_MAXIMUM; radix++) {
                 encoder.radix(radix);
                 decoder.radix(radix);
-                final UUID expected = UUID.randomUUID();
+                final UUID expected = randomUUID();
                 final String encoded = encoder.encodeUuid(expected);
                 final UUID actual = decoder.decodeUuid(encoded);
-                assertEquals(actual, expected);
+                log.debug("scale: {}", scale);
+                log.debug("radix: {}", radix);
+                log.debug("expected: {}", expected);
+                log.debug("encoded: {}", encoded);
+                log.debug("actual: {}", actual);
+                assertEquals(expected, actual);
             }
         }
     }

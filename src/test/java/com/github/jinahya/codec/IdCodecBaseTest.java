@@ -15,50 +15,77 @@
  */
 package com.github.jinahya.codec;
 
-import static com.github.jinahya.codec.IdCodecConstants.RADIX_MAXIMUM;
-import static com.github.jinahya.codec.IdCodecConstants.RADIX_MINIMUM;
-import static com.github.jinahya.codec.IdCodecConstants.SCALE_MAXIMUM;
-import static com.github.jinahya.codec.IdCodecConstants.SCALE_MINIMUM;
-import static java.lang.invoke.MethodHandles.lookup;
-import static java.util.Objects.requireNonNull;
-import org.slf4j.Logger;
-import static org.slf4j.LoggerFactory.getLogger;
-import org.testng.annotations.Test;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 
+import static com.github.jinahya.codec.IdCodecBase.RADIX_MAXIMUM;
+import static com.github.jinahya.codec.IdCodecBase.RADIX_MINIMUM;
+import static com.github.jinahya.codec.IdCodecBase.SCALE_MAXIMUM;
+import static com.github.jinahya.codec.IdCodecBase.SCALE_MINIMUM;
+import static java.util.Objects.requireNonNull;
+import static java.util.stream.IntStream.rangeClosed;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@Slf4j
 abstract class IdCodecBaseTest<T extends IdCodecBase<T>> {
 
-    private static final Logger logger = getLogger(lookup().lookupClass());
-
-    // -------------------------------------------------------------------------
-    public IdCodecBaseTest(final Class<T> type) {
+    IdCodecBaseTest(final Class<T> clazz) {
         super();
-        this.type = requireNonNull(type);
+        this.clazz = requireNonNull(clazz);
     }
 
-    // -------------------------------------------------------------------------
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void setScaleWithTooSmall() throws ReflectiveOperationException {
-        type.newInstance().setScale(SCALE_MINIMUM - 1);
+    @Test
+    void setRadixWithTooSmall() {
+        assertThrows(IllegalArgumentException.class, () -> instance().setRadix(RADIX_MINIMUM - 1));
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void setScaleWithTooBigl() {
-        new IdCodecBase() {
-        }.setScale(SCALE_MAXIMUM + 1);
+    @Test
+    void setRadixWithTooBig() {
+        assertThrows(IllegalArgumentException.class, () -> instance().setRadix(RADIX_MAXIMUM + 1));
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void setRadixWithTooSmall() {
-        new IdCodecBase() {
-        }.setRadix(RADIX_MINIMUM - 1);
+    @Test
+    void testSetRadix() {
+        final T instance = instance();
+        rangeClosed(RADIX_MINIMUM, RADIX_MAXIMUM).forEach(instance::setRadix);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void setRadixWithTooBigl() {
-        new IdCodecBase() {
-        }.setRadix(RADIX_MAXIMUM + 1);
+    @Test
+    void testRadix() {
+        final T instance = instance();
+        rangeClosed(RADIX_MINIMUM, RADIX_MAXIMUM).forEach(r -> assertSame(instance, instance.radix(r)));
     }
 
-    // -------------------------------------------------------------------------
-    private final Class<T> type;
+    @Test
+    void setScaleWithTooSmall() {
+        assertThrows(IllegalArgumentException.class, () -> instance().setScale(SCALE_MINIMUM - 1));
+    }
+
+    @Test
+    void setScaleWithTooBig() {
+        assertThrows(IllegalArgumentException.class, () -> instance().setScale(SCALE_MAXIMUM + 1));
+    }
+
+    @Test
+    void testSetScale() {
+        final T instance = instance();
+        rangeClosed(SCALE_MINIMUM, SCALE_MAXIMUM).forEach(instance::setScale);
+    }
+
+    @Test
+    void testScale() {
+        final T instance = instance();
+        rangeClosed(SCALE_MINIMUM, SCALE_MAXIMUM).forEach(r -> assertSame(instance, instance.scale(r)));
+    }
+
+    T instance() {
+        try {
+            return clazz.getDeclaredConstructor().newInstance();
+        } catch (final ReflectiveOperationException roe) {
+            throw new RuntimeException(roe);
+        }
+    }
+
+    private final Class<T> clazz;
 }

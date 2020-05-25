@@ -15,11 +15,10 @@
  */
 package com.github.jinahya.codec;
 
-import java.io.PrintStream;
-import static java.lang.Long.parseLong;
-import java.security.SecureRandom;
 import java.util.Random;
 import java.util.UUID;
+
+import static java.lang.Long.parseLong;
 
 /**
  * A class for encoding identifiers.
@@ -28,47 +27,33 @@ import java.util.UUID;
  */
 public class IdEncoder extends IdCodecBase<IdEncoder> {
 
-    static void encode(final String decoded, final PrintStream printer) {
-        if (decoded == null) {
-            throw new NullPointerException("null decoded");
+    private String block(final long decoded, final Random random) {
+        if (decoded < 0L) {
+            throw new IllegalArgumentException("decoded(" + decoded + " < 0");
         }
-        if (printer == null) {
-            throw new NullPointerException("null printer");
+        if (random == null) {
+            throw new NullPointerException("random is null");
         }
-        try {
-            final String encoded
-                    = new IdEncoder().encodeUuid(UUID.fromString(decoded));
-            printer.println(encoded);
-            return;
-        } catch (final Exception e) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(decoded);
+        builder.ensureCapacity(builder.length() + getScale());
+        for (int i = 0; i < getScale() - 1; i++) {
+            builder.append(random.nextInt(10)); // 0 - 9
         }
-        final String encoded = new IdEncoder().encode(parseLong(decoded));
-        printer.println(encoded);
+        builder.append(random.nextInt(9) + 1); // 1 - 9
+        builder.reverse();
+        return Long.toString(parseLong(builder.toString()), getRadix());
     }
 
     /**
-     * Encodes command line arguments and prints each encoded value to
-     * {@code System.out}.
+     * Encodes given value.
      *
-     * @param args the command line arguments
+     * @param decoded the value to encode.
+     * @param random  a random to use.
+     * @return encoded output.
      */
-    public static void main(final String[] args) {
-        for (final String arg : args) {
-            encode(arg, System.out);
-        }
-    }
-
-    // -------------------------------------------------------------------------
-    private String block(final long decoded) {
-        final StringBuilder builder = new StringBuilder(Long.toString(decoded));
-        final Random random = new SecureRandom();
-        builder.ensureCapacity(builder.length() + getScale());
-        for (int i = 0; i < getScale() - 1; i++) {
-            builder.append(Integer.toString(random.nextInt(10)));
-        }
-        builder.append(Integer.toString(random.nextInt(9) + 1));
-        builder.reverse();
-        return Long.toString(Long.parseLong(builder.toString()), getRadix());
+    public String encode(final long decoded, final Random random) {
+        return block(decoded >>> Integer.SIZE, random) + "-" + block(decoded & 0xFFFFFFFFL, random);
     }
 
     /**
@@ -78,8 +63,25 @@ public class IdEncoder extends IdCodecBase<IdEncoder> {
      * @return encoded output.
      */
     public String encode(final long decoded) {
-        return block(decoded >>> Integer.SIZE) + "-"
-               + block(decoded & 0xFFFFFFFFL);
+        return encode(decoded, new Random());
+    }
+
+    /**
+     * Encodes given value.
+     *
+     * @param decoded the value to encode
+     * @param random  a random to use.
+     * @return encoded output.
+     */
+    public String encodeUuid(final UUID decoded, final Random random) {
+        if (decoded == null) {
+            throw new NullPointerException("decoded is null");
+        }
+        if (random == null) {
+            throw new NullPointerException("random is null");
+        }
+        return encode(decoded.getMostSignificantBits(), random) + "-"
+               + encode(decoded.getLeastSignificantBits(), random);
     }
 
     /**
@@ -89,7 +91,6 @@ public class IdEncoder extends IdCodecBase<IdEncoder> {
      * @return encoded output.
      */
     public String encodeUuid(final UUID decoded) {
-        return encode(decoded.getMostSignificantBits()) + "-"
-               + encode(decoded.getLeastSignificantBits());
+        return encodeUuid(decoded, new Random());
     }
 }

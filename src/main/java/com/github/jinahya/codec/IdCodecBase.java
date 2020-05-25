@@ -15,23 +15,51 @@
  */
 package com.github.jinahya.codec;
 
-import static com.github.jinahya.codec.IdCodecConstants.RADIX_MAXIMUM;
-import static com.github.jinahya.codec.IdCodecConstants.RADIX_MINIMUM;
-import static com.github.jinahya.codec.IdCodecConstants.SCALE_MAXIMUM;
-import static com.github.jinahya.codec.IdCodecConstants.SCALE_MINIMUM;
-
 /**
  * An abstract base class.
  *
- * @param <T> implementation type parameter
+ * @param <T> self type parameter
  */
 abstract class IdCodecBase<T extends IdCodecBase<T>> {
 
-    static final int RADIX_DEFAULT = RADIX_MAXIMUM;
+    /**
+     * The minimum value for {@code radix} property which is {@value}.
+     */
+    public static final int RADIX_MINIMUM = Character.MIN_RADIX;
 
-    static final int SCALE_DEFAULT = SCALE_MINIMUM;
+    /**
+     * The maximum value for {@code radix} property which is {@value}.
+     */
+    public static final int RADIX_MAXIMUM = Character.MAX_RADIX;
 
-    // ------------------------------------------------------------------- radix
+    /**
+     * The default value for {@code radix} property. The value is {@value}.
+     */
+    public static final int RADIX_DEFAULT = RADIX_MAXIMUM;
+
+    static {
+        assert RADIX_DEFAULT >= RADIX_MINIMUM && RADIX_DEFAULT <= RADIX_MAXIMUM;
+    }
+
+    /**
+     * The minimum value for {@code scale} which is {@value}.
+     */
+    public static final int SCALE_MINIMUM = 1;
+
+    /**
+     * The maximum value for {@code scale} which is {@value}.
+     */
+    public static final int SCALE_MAXIMUM = 8;
+
+    /**
+     * The default value for {@code scale} property. The value is {@value}.
+     */
+    public static final int SCALE_DEFAULT = SCALE_MINIMUM;
+
+    static {
+        assert SCALE_DEFAULT >= SCALE_MINIMUM && SCALE_DEFAULT <= SCALE_MAXIMUM;
+    }
+
     /**
      * Return current value of {@code radix}.
      *
@@ -42,38 +70,35 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
     }
 
     /**
-     * Replaces the current {@code radix} value with given.
+     * Replaces the current value of {@code radix} property with with given value.
      *
-     * @param radix new {@code radix} value between
-     * {@link IdCodecConstants#RADIX_MINIMUM} (inclusive) and
-     * {@link IdCodecConstants#RADIX_MAXIMUM} (inclusive).
+     * @param radix new value for {@code radix} property; between {@link #RADIX_MINIMUM} and {@link #RADIX_MAXIMUM},
+     *              both inclusive.
+     * @see #radix(int)
      */
     public void setRadix(final int radix) {
         if (radix < RADIX_MINIMUM) {
-            throw new IllegalArgumentException(
-                    "radix(" + radix + ") < " + RADIX_MINIMUM);
+            throw new IllegalArgumentException("radix(" + radix + ") < " + RADIX_MINIMUM);
         }
         if (radix > RADIX_MAXIMUM) {
-            throw new IllegalArgumentException(
-                    "radix(" + radix + ") > " + RADIX_MAXIMUM);
+            throw new IllegalArgumentException("radix(" + radix + ") > " + RADIX_MAXIMUM);
         }
         this.radix = radix;
     }
 
     /**
-     * Replaces the current value of {@code radix} with given and return this
-     * instance.
+     * Replaces the current value of {@code radix} property with given value and return this instance.
      *
-     * @param radix new value for {@code radix}
-     * @return this instance
+     * @param radix new value for {@code radix} property.
+     * @return this instance.
+     * @see #setRadix(int)
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked"})
     public T radix(final int radix) {
         setRadix(radix);
         return (T) this;
     }
 
-    // ------------------------------------------------------------------- scale
     /**
      * Returns current value of {@code scale}.
      *
@@ -84,38 +109,35 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
     }
 
     /**
-     * Replaces the current {@code scale} value with given.
+     * Replaces the current value of {@code scale} property with given value.
      *
-     * @param scale new {@code scale} between
-     * {@link IdCodecConstants#SCALE_MINIMUM} (inclusive) and
-     * {@link IdCodecConstants#SCALE_MAXIMUM} (inclusive).
+     * @param scale new value for {@code scale} property; between {@link #SCALE_MINIMUM} and {@link #SCALE_MAXIMUM},
+     *              both inclusive.
+     * @see #scale(int)
      */
     public void setScale(final int scale) {
         if (scale < SCALE_MINIMUM) {
-            throw new IllegalArgumentException(
-                    "scale(" + scale + ") < " + SCALE_MINIMUM);
+            throw new IllegalArgumentException("scale(" + scale + ") < " + SCALE_MINIMUM);
         }
         if (scale > SCALE_MAXIMUM) {
-            throw new IllegalArgumentException(
-                    "scale(" + scale + ") > " + SCALE_MAXIMUM);
+            throw new IllegalArgumentException("scale(" + scale + ") > " + SCALE_MAXIMUM);
         }
         this.scale = scale;
     }
 
     /**
-     * Replace the current value of {@code scale} with given and return this
-     * instance.
+     * Replace the current value of {@code scale} property with given value and return this instance.
      *
-     * @param scale new value for {@code scale}
-     * @return this instance
+     * @param scale new value for {@code scale} property.
+     * @return this instance.
+     * @see #setScale(int)
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked"})
     public T scale(final int scale) {
         setScale(scale);
         return (T) this;
     }
 
-    // -------------------------------------------------------------------------
     private int radix = RADIX_DEFAULT;
 
     private int scale = SCALE_DEFAULT;
