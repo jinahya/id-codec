@@ -15,52 +15,40 @@
  */
 package com.github.jinahya.codec;
 
-import static com.github.jinahya.codec.IdCodecConstants.RADIX_MAXIMUM;
-import static com.github.jinahya.codec.IdCodecConstants.RADIX_MINIMUM;
-import static com.github.jinahya.codec.IdCodecConstants.SCALE_MAXIMUM;
-import static com.github.jinahya.codec.IdCodecConstants.SCALE_MINIMUM;
+import org.junit.jupiter.api.Test;
+
 import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
+
+import static java.util.UUID.randomUUID;
 import static java.util.concurrent.ThreadLocalRandom.current;
-import static org.testng.Assert.assertSame;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- *
  * @author Jin Kwon &lt;jinahya_at_gmail.com&gt;
  */
-public class IdEncoderTest {
+class IdEncoderTest extends IdCodecBaseTest<IdEncoder> {
 
-    @Test(invocationCount = 1024)
-    public void encode() {
-        final long decoded = ThreadLocalRandom.current().nextLong();
-        final String encoded = new IdEncoder().encode(decoded);
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void encodeUUID_nullDecoded_nullPointerException() {
-        new IdEncoder().encodeUuid(null);
-    }
-
-    @Test(invocationCount = 1024)
-    public void encodeUUID() {
-        final UUID decoded = UUID.randomUUID();
-        final String encoded = new IdEncoder().encodeUuid(decoded);
+    IdEncoderTest() {
+        super(IdEncoder.class);
     }
 
     @Test
-    public void radix() {
-        final IdEncoder expected = new IdEncoder();
-        final IdEncoder actual = expected.radix(current().nextInt(
-                RADIX_MINIMUM, RADIX_MAXIMUM + 1));
-        assertSame(actual, expected);
+    void testEncode() {
+        final long decoded = current().nextLong();
+        final String encoded = instance().encode(decoded);
+        assertNotNull(encoded);
     }
 
     @Test
-    public void scale() {
-        final IdEncoder expected = new IdEncoder();
-        final IdEncoder actual = expected.scale(current().nextInt(
-                SCALE_MINIMUM, SCALE_MAXIMUM + 1));
-        assertSame(actual, expected);
+    void assertEncodeUuidThrowNullPointerExceptionWhenDecodedIsNull() {
+        assertThrows(NullPointerException.class, () -> instance().encodeUuid(null));
+    }
+
+    @Test
+    void testEncodeUUID() {
+        final UUID decoded = randomUUID();
+        final String encoded = instance().encodeUuid(decoded);
+        assertNotNull(encoded);
     }
 }

@@ -17,6 +17,8 @@ package com.github.jinahya.codec;
 
 import java.util.UUID;
 
+import static java.lang.Long.parseLong;
+
 /**
  * A class for decoding identifiers.
  *
@@ -24,46 +26,18 @@ import java.util.UUID;
  */
 public class IdDecoder extends IdCodecBase<IdDecoder> {
 
-    public static void main(final String... args) {
-        try {
-            final UUID decoded = new IdDecoder().decodeUuid(args[0]);
-            System.out.println(decoded);
-            System.exit(0);
-        } catch (final IndexOutOfBoundsException ioobe) {
-        }
-        try {
-            final long decoded = new IdDecoder().decode(args[0]);
-            System.out.println(decoded);
-            System.exit(0);
-        } catch (final IndexOutOfBoundsException ioobe) {
-        }
-        System.exit(1);
-    }
-
-//    @Override
-//    public IdDecoder scale(int scale) {
-//        return super.scale(scale);
-//    }
-//
-//    @Override
-//    public IdDecoder radix(int radix) {
-//        return super.radix(radix);
-//    }
-
     /**
-     * Decodes a single block.
+     * Decodes specified single block.
      *
      * @param encoded the block to decode
-     * @param radix the radix
-     * @param scale the scale
      * @return decoded output
      */
     private long block(final String encoded) {
-        final StringBuilder builder = new StringBuilder(
-                Long.toString(Long.parseLong(encoded, getRadix())));
+        final StringBuilder builder = new StringBuilder();
+        builder.append(parseLong(encoded, getRadix()));
         builder.reverse();
         builder.delete(builder.length() - getScale(), builder.length());
-        return Long.parseLong(builder.toString());
+        return parseLong(builder.toString());
     }
 
     /**
@@ -73,9 +47,11 @@ public class IdDecoder extends IdCodecBase<IdDecoder> {
      * @return decoded value
      */
     public long decode(final String encoded) {
+        if (encoded == null) {
+            throw new NullPointerException("encoded is null");
+        }
         final int index = encoded.indexOf('-');
-        return (block(encoded.substring(0, index)) << Integer.SIZE)
-               | (block(encoded.substring(index + 1)));
+        return (block(encoded.substring(0, index)) << Integer.SIZE) | (block(encoded.substring(index + 1)));
     }
 
     /**
@@ -85,6 +61,9 @@ public class IdDecoder extends IdCodecBase<IdDecoder> {
      * @return decoded value
      */
     public UUID decodeUuid(final String encoded) {
+        if (encoded == null) {
+            throw new NullPointerException("encoded is null");
+        }
         final int first = encoded.indexOf('-');
         final int second = encoded.indexOf('-', first + 1);
         final long mostSignificantBits = decode(encoded.substring(0, second));

@@ -1,29 +1,36 @@
-id-codec
-========
-[![Build Status](https://travis-ci.org/jinahya/ossrh-parent.svg)](https://travis-ci.org/jinahya/ossrh-parent)
-[![Dependency Status](https://www.versioneye.com/user/projects/5654390dff016c0033000eb2/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5654390dff016c0033000eb2)
+# id-codec
+
+![Java CI with Maven](https://github.com/jinahya/id-codec/workflows/Java%20CI%20with%20Maven/badge.svg)
+[![Build Status](https://travis-ci.org/jinahya/id-codec.svg?branch=develop)](https://travis-ci.org/jinahya/id-codec)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.jinahya/id-codec.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.github.jinahya%22%20AND%20a%3A%22id-codec%22)
 [![Javadocs](http://www.javadoc.io/badge/com.github.jinahya/id-codec.svg)](http://www.javadoc.io/doc/com.github.jinahya/id-codec)
 
-A small library can encode/decode `long`s to/from partially randomized `String`s.
+A small library for encoding/decoding `long`s (and `UUID`s) to/from partially randomized `String`s.
 
 ## Usages
+
 ### Encoding/Decoding `long`s
+
 ```java
-final long decoded;
+final long decoded = current().nextLong();
 final String encoded = new IdEncoder().encode(decoded);
 assert new IdDecoder().decode(encoded) == decoded;
 ```
 
-### Encoding/Decoding `UUID`s
+### encoding/decoding `UUID`s
+
 ```java
-final UUID decoded;
+final UUID decoded = randomUUID();
 final String encoded = new IdEncoder().encodeUuid(decoded);
-assert new IdDecoder().decode(encoded).equals(decoded);
+assert new IdDecoder().decodeUuid(encoded).equals(decoded);
 ```
+
 ## Examples
+
 ### Encoding/Decoding `long`s
+
 Note that these `encoded` values will be decoded to exactly the same value as `decoded`.
+
 ```
 decoded: -8775087020812241672
 
@@ -46,7 +53,8 @@ encoded:     ugsdd02-19f4kk59
 ```
 
 ### Encoding/Decoding `UUID`s
-Note also that those `encoded` values will be decoded to exactly the same value as `decoded`.
+
+Note also that these `encoded` values will be decoded to exactly the same value as `decoded`.
 
 ```
 decoded:     1b3a263e-0928-4ad1-b728-742d0d06506e
