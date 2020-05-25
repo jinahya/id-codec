@@ -1,7 +1,7 @@
 # id-codec
 
-[![Build Status](https://travis-ci.org/jinahya/ossrh-parent.svg)](https://travis-ci.org/jinahya/ossrh-parent)
-[![Dependency Status](https://www.versioneye.com/user/projects/5654390dff016c0033000eb2/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5654390dff016c0033000eb2)
+![Java CI with Maven](https://github.com/jinahya/id-codec/workflows/Java%20CI%20with%20Maven/badge.svg)
+[![Build Status](https://travis-ci.org/jinahya/id-codec.svg?branch=develop)](https://travis-ci.org/jinahya/id-codec)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.jinahya/id-codec.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.github.jinahya%22%20AND%20a%3A%22id-codec%22)
 [![Javadocs](http://www.javadoc.io/badge/com.github.jinahya/id-codec.svg)](http://www.javadoc.io/doc/com.github.jinahya/id-codec)
 

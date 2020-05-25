@@ -15,6 +15,9 @@
  */
 package com.github.jinahya.codec;
 
+import static java.lang.Character.MAX_RADIX;
+import static java.lang.Character.MIN_RADIX;
+
 /**
  * An abstract base class.
  *
@@ -25,12 +28,12 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
     /**
      * The minimum value for {@code radix} property which is {@value}.
      */
-    public static final int RADIX_MINIMUM = Character.MIN_RADIX;
+    public static final int RADIX_MINIMUM = MIN_RADIX;
 
     /**
      * The maximum value for {@code radix} property which is {@value}.
      */
-    public static final int RADIX_MAXIMUM = Character.MAX_RADIX;
+    public static final int RADIX_MAXIMUM = MAX_RADIX;
 
     /**
      * The default value for {@code radix} property. The value is {@value}.
