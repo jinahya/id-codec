@@ -2,6 +2,7 @@
 
 ![Java CI with Maven](https://github.com/jinahya/id-codec/workflows/Java%20CI%20with%20Maven/badge.svg)
 [![Build Status](https://travis-ci.org/jinahya/id-codec.svg?branch=develop)](https://travis-ci.org/jinahya/id-codec)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jinahya_id-codec&metric=alert_status)](https://sonarcloud.io/dashboard?id=jinahya_id-codec)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.jinahya/id-codec.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.github.jinahya%22%20AND%20a%3A%22id-codec%22)
 [![Javadocs](http://www.javadoc.io/badge/com.github.jinahya/id-codec.svg)](http://www.javadoc.io/doc/com.github.jinahya/id-codec)
 

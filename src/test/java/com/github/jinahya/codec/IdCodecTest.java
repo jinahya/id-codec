@@ -18,6 +18,7 @@ package com.github.jinahya.codec;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
 import java.util.UUID;
 
 import static com.github.jinahya.codec.IdCodecBase.RADIX_MAXIMUM;
@@ -32,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class IdCodecTest {
 
     /**
-     * Tests {@link IdEncoder#encode(long)} method and {@link IdDecoder#decode(String)} method.
+     * Tests {@link IdEncoder#encode(long, Random)} method and {@link IdDecoder#decode(String)} method.
      */
     @Test
     void encodeDecodeLong() {
@@ -45,7 +46,7 @@ class IdCodecTest {
                 encoder.radix(radix);
                 decoder.radix(radix);
                 final long expected = current().nextLong();
-                final String encoded = encoder.encode(expected);
+                final String encoded = encoder.encode(expected, current());
                 final long actual = decoder.decode(encoded);
 //                log.debug("scale: {}", scale);
 //                log.debug("radix: {}", radix);
@@ -58,7 +59,7 @@ class IdCodecTest {
     }
 
     /**
-     * Tests {@link IdEncoder#encodeUuid(UUID)} method and {@link IdDecoder#decodeUuid(String)} method.
+     * Tests {@link IdEncoder#encodeUuid(UUID, Random)} method and {@link IdDecoder#decodeUuid(String)} method.
      */
     @Test
     void encodeDecodeUuid() {
@@ -71,7 +72,7 @@ class IdCodecTest {
                 encoder.radix(radix);
                 decoder.radix(radix);
                 final UUID expected = randomUUID();
-                final String encoded = encoder.encodeUuid(expected);
+                final String encoded = encoder.encodeUuid(expected, current());
                 final UUID actual = decoder.decodeUuid(encoded);
 //                log.debug("scale: {}", scale);
 //                log.debug("radix: {}", radix);

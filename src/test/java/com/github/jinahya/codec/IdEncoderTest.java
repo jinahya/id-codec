@@ -36,19 +36,19 @@ class IdEncoderTest extends IdCodecBaseTest<IdEncoder> {
     @Test
     void testEncode() {
         final long decoded = current().nextLong();
-        final String encoded = instance().encode(decoded);
+        final String encoded = instance().encode(decoded, current());
         assertNotNull(encoded);
     }
 
     @Test
     void assertEncodeUuidThrowNullPointerExceptionWhenDecodedIsNull() {
-        assertThrows(NullPointerException.class, () -> instance().encodeUuid(null));
+        assertThrows(NullPointerException.class, () -> instance().encodeUuid(null, current()));
     }
 
     @Test
     void testEncodeUUID() {
         final UUID decoded = randomUUID();
-        final String encoded = instance().encodeUuid(decoded);
+        final String encoded = instance().encodeUuid(decoded, current());
         assertNotNull(encoded);
     }
 }

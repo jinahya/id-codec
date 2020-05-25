@@ -36,15 +36,6 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
     public static final int RADIX_MAXIMUM = MAX_RADIX;
 
     /**
-     * The default value for {@code radix} property. The value is {@value}.
-     */
-    public static final int RADIX_DEFAULT = RADIX_MAXIMUM;
-
-    static {
-        assert RADIX_DEFAULT >= RADIX_MINIMUM && RADIX_DEFAULT <= RADIX_MAXIMUM;
-    }
-
-    /**
      * The minimum value for {@code scale} which is {@value}.
      */
     public static final int SCALE_MINIMUM = 1;
@@ -53,15 +44,6 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
      * The maximum value for {@code scale} which is {@value}.
      */
     public static final int SCALE_MAXIMUM = 8;
-
-    /**
-     * The default value for {@code scale} property. The value is {@value}.
-     */
-    public static final int SCALE_DEFAULT = SCALE_MINIMUM;
-
-    static {
-        assert SCALE_DEFAULT >= SCALE_MINIMUM && SCALE_DEFAULT <= SCALE_MAXIMUM;
-    }
 
     /**
      * Return current value of {@code radix}.
@@ -141,7 +123,7 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
         return (T) this;
     }
 
-    private int radix = RADIX_DEFAULT;
+    private int radix = RADIX_MAXIMUM;
 
-    private int scale = SCALE_DEFAULT;
+    private int scale = SCALE_MINIMUM;
 }

@@ -56,15 +56,15 @@ public class IdEncoder extends IdCodecBase<IdEncoder> {
         return block(decoded >>> Integer.SIZE, random) + "-" + block(decoded & 0xFFFFFFFFL, random);
     }
 
-    /**
-     * Encodes given value.
-     *
-     * @param decoded the value to encode.
-     * @return encoded output.
-     */
-    public String encode(final long decoded) {
-        return encode(decoded, new Random());
-    }
+//    /**
+//     * Encodes given value.
+//     *
+//     * @param decoded the value to encode.
+//     * @return encoded output.
+//     */
+//    public String encode(final long decoded) {
+//        return encode(decoded, new Random());
+//    }
 
     /**
      * Encodes given value.
@@ -84,13 +84,13 @@ public class IdEncoder extends IdCodecBase<IdEncoder> {
                + encode(decoded.getLeastSignificantBits(), random);
     }
 
-    /**
-     * Encodes given value.
-     *
-     * @param decoded the value to encode
-     * @return encoded output.
-     */
-    public String encodeUuid(final UUID decoded) {
-        return encodeUuid(decoded, new Random());
-    }
+//    /**
+//     * Encodes given value.
+//     *
+//     * @param decoded the value to encode
+//     * @return encoded output.
+//     */
+//    public String encodeUuid(final UUID decoded) {
+//        return encodeUuid(decoded, new Random());
+//    }
 }
