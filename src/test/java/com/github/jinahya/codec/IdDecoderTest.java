@@ -15,24 +15,17 @@
  */
 package com.github.jinahya.codec;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 /**
  * A class for testing {@link IdDecoder} class.
  *
  * @author Jin Kwon
  */
-class IdDecoderTest {
+class IdDecoderTest extends IdCodecBaseTest<IdDecoder> {
 
-    @Test
-    void assertDecodeThrowNullPointerExceptionWhenEncodedIsNull() {
-        assertThrows(NullPointerException.class, () -> new IdDecoder().decode(null));
-    }
-
-    @Test
-    void assertDecodeUuidThrowNullPointerExceptionWhenEncodedIsNull() {
-        assertThrows(NullPointerException.class, () -> new IdDecoder().decodeUuid(null));
+    /**
+     * Creates a new instance.
+     */
+    IdDecoderTest() {
+        super(IdDecoder.class);
     }
 }

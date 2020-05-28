@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 import java.util.Random;
 import java.util.UUID;
 
-import static com.github.jinahya.codec.IdCodecBase.RADIX_MAXIMUM;
-import static com.github.jinahya.codec.IdCodecBase.RADIX_MINIMUM;
-import static com.github.jinahya.codec.IdCodecBase.SCALE_MAXIMUM;
-import static com.github.jinahya.codec.IdCodecBase.SCALE_MINIMUM;
+import static com.github.jinahya.codec.IdCodecBase.MAX_SCALE;
+import static com.github.jinahya.codec.IdCodecBase.MIN_SCALE;
+import static java.lang.Character.MAX_RADIX;
+import static java.lang.Character.MIN_RADIX;
 import static java.util.UUID.randomUUID;
 import static java.util.concurrent.ThreadLocalRandom.current;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,14 +37,10 @@ class IdCodecTest {
      */
     @Test
     void encodeDecodeLong() {
-        final IdEncoder encoder = new IdEncoder();
-        final IdDecoder decoder = new IdDecoder();
-        for (int scale = SCALE_MINIMUM; scale <= SCALE_MAXIMUM; scale++) {
-            encoder.scale(scale);
-            decoder.scale(scale);
-            for (int radix = RADIX_MINIMUM; radix <= RADIX_MAXIMUM; radix++) {
-                encoder.radix(radix);
-                decoder.radix(radix);
+        for (int radix = MIN_RADIX; radix <= MAX_RADIX; radix++) {
+            for (int scale = MIN_SCALE; scale <= MAX_SCALE; scale++) {
+                final IdEncoder encoder = new IdEncoder(radix, scale);
+                final IdDecoder decoder = new IdDecoder(radix, scale);
                 final long expected = current().nextLong();
                 final String encoded = encoder.encode(expected, current());
                 final long actual = decoder.decode(encoded);
@@ -63,14 +59,10 @@ class IdCodecTest {
      */
     @Test
     void encodeDecodeUuid() {
-        final IdEncoder encoder = new IdEncoder();
-        final IdDecoder decoder = new IdDecoder();
-        for (int scale = SCALE_MINIMUM; scale <= SCALE_MAXIMUM; scale++) {
-            encoder.scale(scale);
-            decoder.scale(scale);
-            for (int radix = RADIX_MINIMUM; radix <= RADIX_MAXIMUM; radix++) {
-                encoder.radix(radix);
-                decoder.radix(radix);
+        for (int radix = MIN_RADIX; radix <= MAX_RADIX; radix++) {
+            for (int scale = MIN_SCALE; scale <= MAX_SCALE; scale++) {
+                final IdEncoder encoder = new IdEncoder(radix, scale);
+                final IdDecoder decoder = new IdDecoder(radix, scale);
                 final UUID expected = randomUUID();
                 final String encoded = encoder.encodeUuid(expected, current());
                 final UUID actual = decoder.decodeUuid(encoded);

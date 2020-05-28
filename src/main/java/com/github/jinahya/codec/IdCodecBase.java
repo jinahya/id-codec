@@ -20,30 +20,42 @@ import static java.lang.Character.MIN_RADIX;
 
 /**
  * An abstract base class.
- *
- * @param <T> self type parameter
  */
-abstract class IdCodecBase<T extends IdCodecBase<T>> {
-
-    /**
-     * The minimum value for {@code radix} property which is {@value}.
-     */
-    public static final int RADIX_MINIMUM = MIN_RADIX;
-
-    /**
-     * The maximum value for {@code radix} property which is {@value}.
-     */
-    public static final int RADIX_MAXIMUM = MAX_RADIX;
+abstract class IdCodecBase {
 
     /**
      * The minimum value for {@code scale} which is {@value}.
      */
-    public static final int SCALE_MINIMUM = 1;
+    public static final int MIN_SCALE = 1;
 
     /**
      * The maximum value for {@code scale} which is {@value}.
      */
-    public static final int SCALE_MAXIMUM = 8;
+    public static final int MAX_SCALE = 8;
+
+    /**
+     * Creates a new instance with specified radix and scale.
+     *
+     * @param radix the radix; between {@link Character#MIN_RADIX} and {@link Character#MAX_RADIX}, both inclusive.
+     * @param scale the scale; between {@link #MIN_SCALE} and {@link #MAX_SCALE}, both inclusive.
+     */
+    IdCodecBase(final int radix, final int scale) {
+        super();
+        if (radix < MIN_RADIX) {
+            throw new IllegalArgumentException("radix(" + radix + ") < " + MIN_RADIX);
+        }
+        if (radix > MAX_RADIX) {
+            throw new IllegalArgumentException("radix(" + radix + ") > " + MAX_RADIX);
+        }
+        if (scale < MIN_SCALE) {
+            throw new IllegalArgumentException("scale(" + scale + ") < " + MIN_SCALE);
+        }
+        if (scale > MAX_SCALE) {
+            throw new IllegalArgumentException("scale(" + scale + ") > " + MAX_SCALE);
+        }
+        this.radix = radix;
+        this.scale = scale;
+    }
 
     /**
      * Return current value of {@code radix}.
@@ -55,36 +67,6 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
     }
 
     /**
-     * Replaces the current value of {@code radix} property with with given value.
-     *
-     * @param radix new value for {@code radix} property; between {@link #RADIX_MINIMUM} and {@link #RADIX_MAXIMUM},
-     *              both inclusive.
-     * @see #radix(int)
-     */
-    public void setRadix(final int radix) {
-        if (radix < RADIX_MINIMUM) {
-            throw new IllegalArgumentException("radix(" + radix + ") < " + RADIX_MINIMUM);
-        }
-        if (radix > RADIX_MAXIMUM) {
-            throw new IllegalArgumentException("radix(" + radix + ") > " + RADIX_MAXIMUM);
-        }
-        this.radix = radix;
-    }
-
-    /**
-     * Replaces the current value of {@code radix} property with given value and return this instance.
-     *
-     * @param radix new value for {@code radix} property.
-     * @return this instance.
-     * @see #setRadix(int)
-     */
-    @SuppressWarnings({"unchecked"})
-    public T radix(final int radix) {
-        setRadix(radix);
-        return (T) this;
-    }
-
-    /**
      * Returns current value of {@code scale}.
      *
      * @return the current value of {@code scale}.
@@ -93,37 +75,7 @@ abstract class IdCodecBase<T extends IdCodecBase<T>> {
         return scale;
     }
 
-    /**
-     * Replaces the current value of {@code scale} property with given value.
-     *
-     * @param scale new value for {@code scale} property; between {@link #SCALE_MINIMUM} and {@link #SCALE_MAXIMUM},
-     *              both inclusive.
-     * @see #scale(int)
-     */
-    public void setScale(final int scale) {
-        if (scale < SCALE_MINIMUM) {
-            throw new IllegalArgumentException("scale(" + scale + ") < " + SCALE_MINIMUM);
-        }
-        if (scale > SCALE_MAXIMUM) {
-            throw new IllegalArgumentException("scale(" + scale + ") > " + SCALE_MAXIMUM);
-        }
-        this.scale = scale;
-    }
+    final int radix;
 
-    /**
-     * Replace the current value of {@code scale} property with given value and return this instance.
-     *
-     * @param scale new value for {@code scale} property.
-     * @return this instance.
-     * @see #setScale(int)
-     */
-    @SuppressWarnings({"unchecked"})
-    public T scale(final int scale) {
-        setScale(scale);
-        return (T) this;
-    }
-
-    private int radix = RADIX_MAXIMUM;
-
-    private int scale = SCALE_MINIMUM;
+    final int scale;
 }

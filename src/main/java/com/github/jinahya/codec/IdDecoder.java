@@ -24,7 +24,17 @@ import static java.lang.Long.parseLong;
  *
  * @author Jin Kwon &lt;jinahya_at_gmail.com&gt;
  */
-public class IdDecoder extends IdCodecBase<IdDecoder> {
+public class IdDecoder extends IdCodecBase {
+
+    /**
+     * Creates a new instance with specified radix and scale.
+     *
+     * @param radix the radix; between {@link Character#MIN_RADIX} and {@link Character#MAX_RADIX}, both inclusive.
+     * @param scale the scale; between {@link #MIN_SCALE} and {@link #MAX_SCALE}, both inclusive.
+     */
+    public IdDecoder(final int radix, final int scale) {
+        super(radix, scale);
+    }
 
     /**
      * Decodes specified single block.
@@ -34,17 +44,17 @@ public class IdDecoder extends IdCodecBase<IdDecoder> {
      */
     private long block(final String encoded) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(parseLong(encoded, getRadix()));
+        builder.append(parseLong(encoded, radix));
         builder.reverse();
-        builder.delete(builder.length() - getScale(), builder.length());
+        builder.delete(builder.length() - scale, builder.length());
         return parseLong(builder.toString());
     }
 
     /**
-     * Decodes given value.
+     * Decodes specified encoded value.
      *
-     * @param encoded the value to decode.
-     * @return decoded value
+     * @param encoded the encoded value to decode.
+     * @return a decoded value.
      */
     public long decode(final String encoded) {
         if (encoded == null) {
@@ -55,17 +65,23 @@ public class IdDecoder extends IdCodecBase<IdDecoder> {
     }
 
     /**
-     * Decodes given value.
+     * Decodes specified encoded value.
      *
-     * @param encoded the value to decode.
-     * @return decoded value
+     * @param encoded the encoded value to decode.
+     * @return a decoded value
      */
     public UUID decodeUuid(final String encoded) {
         if (encoded == null) {
             throw new NullPointerException("encoded is null");
         }
         final int first = encoded.indexOf('-');
+        if (first == -1) {
+            throw new IllegalArgumentException("illegal encoded value: " + encoded);
+        }
         final int second = encoded.indexOf('-', first + 1);
+        if (second == -1) {
+            throw new IllegalArgumentException("illegal encoded value: " + encoded);
+        }
         final long mostSignificantBits = decode(encoded.substring(0, second));
         final long leastSignificantBits = decode(encoded.substring(second + 1));
         return new UUID(mostSignificantBits, leastSignificantBits);

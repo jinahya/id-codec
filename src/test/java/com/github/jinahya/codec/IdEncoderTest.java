@@ -17,38 +17,56 @@ package com.github.jinahya.codec;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
 import java.util.UUID;
 
+import static com.github.jinahya.codec.IdCodecBase.MAX_SCALE;
+import static com.github.jinahya.codec.IdCodecBase.MIN_SCALE;
+import static java.lang.Character.MAX_RADIX;
+import static java.lang.Character.MIN_RADIX;
 import static java.util.UUID.randomUUID;
 import static java.util.concurrent.ThreadLocalRandom.current;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
+ * A class for testing {@link IdEncoder} class.
+ *
  * @author Jin Kwon &lt;jinahya_at_gmail.com&gt;
  */
 class IdEncoderTest extends IdCodecBaseTest<IdEncoder> {
 
+    /**
+     * Creates a new instance.
+     */
     IdEncoderTest() {
         super(IdEncoder.class);
     }
 
+    /**
+     * Tests {@link IdEncoder#encode(long, Random)} method.
+     */
     @Test
     void testEncode() {
-        final long decoded = current().nextLong();
-        final String encoded = instance().encode(decoded, current());
-        assertNotNull(encoded);
+        for (int radix = MIN_RADIX; radix <= MAX_RADIX; radix++) {
+            for (int scale = MIN_SCALE; scale <= MAX_SCALE; scale++) {
+                final long decoded = current().nextLong();
+                final String encoded = instance(radix, scale, v -> v.encode(decoded, current()));
+                assertNotNull(encoded);
+            }
+        }
     }
 
-    @Test
-    void assertEncodeUuidThrowNullPointerExceptionWhenDecodedIsNull() {
-        assertThrows(NullPointerException.class, () -> instance().encodeUuid(null, current()));
-    }
-
+    /**
+     * Tests {@link IdEncoder#encodeUuid(UUID, Random)} method.
+     */
     @Test
     void testEncodeUUID() {
-        final UUID decoded = randomUUID();
-        final String encoded = instance().encodeUuid(decoded, current());
-        assertNotNull(encoded);
+        for (int radix = MIN_RADIX; radix <= MAX_RADIX; radix++) {
+            for (int scale = MIN_SCALE; scale <= MAX_SCALE; scale++) {
+                final UUID decoded = randomUUID();
+                final String encoded = instance(radix, scale, v -> v.encodeUuid(decoded, current()));
+                assertNotNull(encoded);
+            }
+        }
     }
 }

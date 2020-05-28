@@ -16,76 +16,78 @@
 package com.github.jinahya.codec;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
 
-import static com.github.jinahya.codec.IdCodecBase.RADIX_MAXIMUM;
-import static com.github.jinahya.codec.IdCodecBase.RADIX_MINIMUM;
-import static com.github.jinahya.codec.IdCodecBase.SCALE_MAXIMUM;
-import static com.github.jinahya.codec.IdCodecBase.SCALE_MINIMUM;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.function.Function;
+
 import static java.util.Objects.requireNonNull;
-import static java.util.stream.IntStream.rangeClosed;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * An abstract class for testing subclasses of {@link IdCodecBase} class.
+ *
+ * @param <T> class type parameter
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 @Slf4j
-abstract class IdCodecBaseTest<T extends IdCodecBase<T>> {
+abstract class IdCodecBaseTest<T extends IdCodecBase> {
 
+    /**
+     * Creates a new instance.
+     *
+     * @param clazz the class to test.
+     */
     IdCodecBaseTest(final Class<T> clazz) {
         super();
         this.clazz = requireNonNull(clazz);
     }
 
-    @Test
-    void setRadixWithTooSmall() {
-        assertThrows(IllegalArgumentException.class, () -> instance().setRadix(RADIX_MINIMUM - 1));
-    }
-
-    @Test
-    void setRadixWithTooBig() {
-        assertThrows(IllegalArgumentException.class, () -> instance().setRadix(RADIX_MAXIMUM + 1));
-    }
-
-    @Test
-    void testSetRadix() {
-        final T instance = instance();
-        rangeClosed(RADIX_MINIMUM, RADIX_MAXIMUM).forEach(instance::setRadix);
-    }
-
-    @Test
-    void testRadix() {
-        final T instance = instance();
-        rangeClosed(RADIX_MINIMUM, RADIX_MAXIMUM).forEach(r -> assertSame(instance, instance.radix(r)));
-    }
-
-    @Test
-    void setScaleWithTooSmall() {
-        assertThrows(IllegalArgumentException.class, () -> instance().setScale(SCALE_MINIMUM - 1));
-    }
-
-    @Test
-    void setScaleWithTooBig() {
-        assertThrows(IllegalArgumentException.class, () -> instance().setScale(SCALE_MAXIMUM + 1));
-    }
-
-    @Test
-    void testSetScale() {
-        final T instance = instance();
-        rangeClosed(SCALE_MINIMUM, SCALE_MAXIMUM).forEach(instance::setScale);
-    }
-
-    @Test
-    void testScale() {
-        final T instance = instance();
-        rangeClosed(SCALE_MINIMUM, SCALE_MAXIMUM).forEach(r -> assertSame(instance, instance.scale(r)));
-    }
-
-    T instance() {
+    /**
+     * Applies an instance of {@link #clazz}, constructed with specified radix and scale, to specified function.
+     *
+     * @param radix    the radix.
+     * @param scale    the scale.
+     * @param function the function.
+     * @param <R>      result type parameter
+     * @return the result of the function.
+     * @see #instance(int, int)
+     */
+    <R> R instance(final int radix, final int scale, final Function<? super T, ? extends R> function) {
         try {
-            return clazz.getDeclaredConstructor().newInstance();
+            return function.apply(instance(radix, scale));
         } catch (final ReflectiveOperationException roe) {
             throw new RuntimeException(roe);
         }
     }
 
+    /**
+     * Creates a new instance of {@link #clazz} with specified radix and scale.
+     *
+     * @param radix the radix.
+     * @param scale the scale.
+     * @return a new instance.
+     * @see #constructor()
+     */
+    T instance(final int radix, final int scale)
+            throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        return constructor().newInstance(radix, scale);
+    }
+
+    /**
+     * Returns the constructor of {@link IdCodecBase#IdCodecBase(int, int)}.
+     *
+     * @return the constructor of {@link #clazz}.
+     * @throws NoSuchMethodException if the constructor not found.
+     * @see Class#getConstructor(Class[])
+     */
+    Constructor<T> constructor() throws NoSuchMethodException {
+        if (constructor == null) {
+            constructor = clazz.getConstructor(int.class, int.class);
+        }
+        return constructor;
+    }
+
     private final Class<T> clazz;
+
+    private Constructor<T> constructor;
 }
