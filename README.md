@@ -13,17 +13,21 @@ A small library for encoding/decoding `long`s (and `UUID`s) to/from partially ra
 ### Encoding/Decoding `long`s
 
 ```java
+final int radix = ...;
+final int scale = ...;
 final long decoded = current().nextLong();
-final String encoded = new IdEncoder().encode(decoded);
-assert new IdDecoder().decode(encoded) == decoded;
+final String encoded = new IdEncoder(radix, scale).encode(decoded);
+assert new IdDecoder(radix, scale).decode(encoded) == decoded;
 ```
 
 ### encoding/decoding `UUID`s
 
 ```java
+final int radix = ...;
+final int scale = ...;
 final UUID decoded = randomUUID();
-final String encoded = new IdEncoder().encodeUuid(decoded);
-assert new IdDecoder().decodeUuid(encoded).equals(decoded);
+final String encoded = new IdEncoder(radix, scale).encodeUuid(decoded);
+assert new IdDecoder(radix, scale).decodeUuid(encoded).equals(decoded);
 ```
 
 ## Examples
