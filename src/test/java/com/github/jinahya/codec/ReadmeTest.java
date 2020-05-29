@@ -24,6 +24,7 @@ public class ReadmeTest {
         for (int i = 0; i < 8; i++) {
             final String encoded = encoder.encode(expected, current());
             log.debug("encoded: {}", encoded);
+            assertEquals(25, encoded.length());
             final long actual = decoder.decode(encoded);
             assertEquals(expected, actual);
         }

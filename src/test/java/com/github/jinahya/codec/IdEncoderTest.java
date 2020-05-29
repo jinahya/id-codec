@@ -15,6 +15,7 @@
  */
 package com.github.jinahya.codec;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -33,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  *
  * @author Jin Kwon &lt;jinahya_at_gmail.com&gt;
  */
+@Slf4j
 class IdEncoderTest extends IdCodecBaseTest<IdEncoder> {
 
     /**

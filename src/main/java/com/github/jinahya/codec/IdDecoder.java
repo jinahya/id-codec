@@ -43,6 +43,7 @@ public class IdDecoder extends IdCodecBase {
      * @return decoded output
      */
     private long block(final String encoded) {
+        assert encoded != null;
         final StringBuilder builder = new StringBuilder();
         builder.append(parseLong(encoded, radix));
         builder.reverse();

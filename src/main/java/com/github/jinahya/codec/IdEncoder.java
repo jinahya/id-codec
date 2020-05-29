@@ -38,19 +38,15 @@ public class IdEncoder extends IdCodecBase {
     }
 
     private String block(final long decoded, final Random random) {
-        if (decoded < 0L) {
-            throw new IllegalArgumentException("decoded(" + decoded + " < 0");
-        }
-        if (random == null) {
-            throw new NullPointerException("random is null");
-        }
+        assert decoded >= 0L;
+        assert random != null;
         final StringBuilder builder = new StringBuilder();
         builder.append(decoded);
         builder.ensureCapacity(builder.length() + scale);
         for (int i = 0; i < scale - 1; i++) {
             builder.append(random.nextInt(10)); // 0 - 9
         }
-        builder.append(random.nextInt(9) + 1); // 1 - 9
+        builder.append(random.nextInt(8) + 2); // 2 - 9
         builder.reverse();
         return Long.toString(parseLong(builder.toString()), radix);
     }
