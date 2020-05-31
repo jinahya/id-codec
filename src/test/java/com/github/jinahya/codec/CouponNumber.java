@@ -18,9 +18,6 @@ class CouponNumber {
     private static final int L_MAX_VALUE_DIGITS = Long.toString(Long.MAX_VALUE).length();
 
     static String encode2(int decoded) {
-        if (false) {
-            return Integer.toString(((decoded >> 4) & 0xF) + 20, MAX_RADIX) + Integer.toString((decoded & 0xF) + 20, MAX_RADIX);
-        }
         int v = 0;
         for (int i = 0; i < 2; i++) {
             v <<= 5;
@@ -33,9 +30,6 @@ class CouponNumber {
     static int decode2(final String encoded) {
         assert encoded != null;
         assert encoded.length() == 2;
-        if (false) {
-            return (Integer.parseInt(encoded.substring(0, 1), MAX_RADIX) - 20) << 4 | Integer.parseInt(encoded.substring(1), MAX_RADIX) - 20;
-        }
         int decoded = 0;
         int v = parseInt(encoded, MAX_RADIX);
         for (int i = 0; i < 2; i++) {
