@@ -1,17 +1,16 @@
 package com.github.jinahya.codec;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static com.github.jinahya.codec.CouponNumber.*;
 import static java.lang.String.format;
 import static java.util.concurrent.ThreadLocalRandom.current;
+import static java.util.stream.Collectors.joining;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
@@ -24,7 +23,7 @@ class CouponNumberTest {
             final String encoded = CouponNumber.encode2(expected);
             assertNotNull(encoded);
             assertEquals(2, encoded.length());
-            log.debug("{} -> {}", format("0x%02x", expected), encoded);
+            log.debug(" 2: {} -> {}", format("0x%02x", expected), encoded);
             assertTrue(set.add(encoded));
             final int actual = CouponNumber.decode2(encoded);
             assertEquals(expected, actual);
@@ -61,13 +60,30 @@ class CouponNumberTest {
     }
 
     @Test
-    void encodeDecode16() {
+    void encodeDecode16First128() {
+        final Set<Long> ds = new HashSet<>();
+        final Set<String> es = new HashSet<>();
+        for (long expected = 0L; expected < 128L; expected++) {
+            final String encoded = encode16(expected);
+            log.debug("16: {} -> {}", format("0x%016X", expected),
+                      String.join("-", encoded.split("(?<=\\G.{4})")));
+            assertNotNull(encoded);
+            assertEquals(16, encoded.length());
+            assertEquals(ds.add(expected), es.add(encoded));
+            final long actual = decode16(encoded);
+            assertEquals(expected, actual);
+        }
+    }
+
+    @Test
+    void encodeDecode16Random() {
         final Set<Long> ds = new HashSet<>();
         final Set<String> es = new HashSet<>();
         for (int i = 0; i < 128; i++) {
             final long expected = current().nextLong();
             final String encoded = encode16(expected);
-            log.debug("16: {} -> {}", format("0x%016X", expected), encoded);
+            log.debug("16: {} -> {}", format("0x%016X", expected),
+                      String.join("-", encoded.split("(?<=\\G.{4})")));
             assertNotNull(encoded);
             assertEquals(16, encoded.length());
             assertEquals(ds.add(expected), es.add(encoded));
@@ -139,31 +155,5 @@ class CouponNumberTest {
             final long actual = decode13(encoded);
             assertEquals(magicNumber, actual);
         }
-    }
-
-    @RepeatedTest(1)
-    void testBase36() {
-//        for (int i = 0; i < 256; i++) {
-//            log.debug("{} -> {}", format("%3d", i), format("%4s", Integer.toString(i, Character.MAX_RADIX)));
-//        }
-//        log.debug(Integer.toString(0b11, Character.MAX_RADIX));
-//        log.debug(Integer.toString(0b0_11111, Character.MAX_RADIX));
-//        log.debug(Integer.toString(0b1_000001, Character.MAX_RADIX));
-//        log.debug(Integer.toString(0b1_000000, Character.MAX_RADIX));
-        final Set<Integer> ys = new HashSet<>();
-        final int e = 0b1_0100; // 20
-//        final int e = 0b10_0011; // 35
-//        final int e = 0b10_1100; // 40
-        for (int i = 0; i < 16; i++) {
-            int x = i << 1;
-            final String xb = Integer.toBinaryString(x);
-            final int y = x ^ e;
-            final String yb = Integer.toBinaryString(y);
-            assertTrue(ys.add(y));
-            assertTrue(y <= 35);
-            final int z = y ^ e;
-            assertEquals(x, z);
-        }
-        log.debug("ys: {}", ys);
     }
 }
