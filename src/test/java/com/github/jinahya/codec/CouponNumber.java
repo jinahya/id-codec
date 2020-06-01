@@ -11,12 +11,6 @@ import static java.util.Objects.requireNonNull;
 @Slf4j
 class CouponNumber {
 
-    private static final int S_MAX_VALUE_DIGITS = Short.toString(Short.MAX_VALUE).length();
-
-    private static final int I_MAX_VALUE_DIGITS = Integer.toString(Integer.MAX_VALUE).length();
-
-    private static final int L_MAX_VALUE_DIGITS = Long.toString(Long.MAX_VALUE).length();
-
     static String encode2(int decoded) {
         int v = 0;
         for (int i = 0; i < 2; i++) {
@@ -56,7 +50,7 @@ class CouponNumber {
 
     static int decode8(final String encoded) {
         if (requireNonNull(encoded, "encoded is null").length() != 8) {
-            throw new IllegalArgumentException("encoded.length(" + encoded.length() + ") != 8");
+            throw new IllegalArgumentException("encoded.length(" + encoded.length() + ") != " + 8);
         }
         return decode4(encoded.substring(0, 4)) << Short.SIZE | decode4(encoded.substring(4));
     }
@@ -67,7 +61,7 @@ class CouponNumber {
 
     static long decode16(final String encoded) {
         if (requireNonNull(encoded, "encoded is null").length() != 16) {
-            throw new IllegalArgumentException("encoded.length(" + encoded.length() + ") != 16");
+            throw new IllegalArgumentException("encoded.length(" + encoded.length() + ") != " + 16);
         }
         return (long) decode8(encoded.substring(0, 8)) << Integer.SIZE | decode8(encoded.substring(8)) & 0xFFFFFFFFL;
     }
@@ -90,7 +84,7 @@ class CouponNumber {
 
     static int decode7(final String encoded) {
         if (requireNonNull(encoded, "encoded is null").length() != 7) {
-            throw new IllegalArgumentException("encoded.length(" + encoded.length() + ") != 7");
+            throw new IllegalArgumentException("encoded.length(" + encoded.length() + ") != " + 7);
         }
         int decoded = 0;
         long v = parseUnsignedLong(encoded, MAX_RADIX);
@@ -120,7 +114,7 @@ class CouponNumber {
 
     static long decode13(final String encoded) {
         if (requireNonNull(encoded, "encoded is null").length() != 13) {
-            throw new IllegalArgumentException("encoded.length(" + encoded.length() + ") != 13");
+            throw new IllegalArgumentException("encoded.length(" + encoded.length() + ") != " + 13);
         }
         long decoded = 0L;
         for (int i = 12; i > 0; i--) {

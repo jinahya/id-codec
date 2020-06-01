@@ -3,15 +3,25 @@ package com.github.jinahya.codec;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.github.jinahya.codec.CouponNumber.*;
+import static com.github.jinahya.codec.CouponNumber.decode13;
+import static com.github.jinahya.codec.CouponNumber.decode16;
+import static com.github.jinahya.codec.CouponNumber.decode4;
+import static com.github.jinahya.codec.CouponNumber.decode7;
+import static com.github.jinahya.codec.CouponNumber.decode8;
+import static com.github.jinahya.codec.CouponNumber.encode13;
+import static com.github.jinahya.codec.CouponNumber.encode16;
+import static com.github.jinahya.codec.CouponNumber.encode4;
+import static com.github.jinahya.codec.CouponNumber.encode7;
+import static com.github.jinahya.codec.CouponNumber.encode8;
 import static java.lang.String.format;
 import static java.util.concurrent.ThreadLocalRandom.current;
-import static java.util.stream.Collectors.joining;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
 class CouponNumberTest {
@@ -112,7 +122,7 @@ class CouponNumberTest {
     void testEncodeDecode7WithMagicNumbers() {
         final Set<Integer> ds = new HashSet<>();
         final Set<String> es = new HashSet<>();
-        final int[] magicNumbers = new int[]{Integer.MIN_VALUE, -2, -1, 0, 1, 2, Integer.MAX_VALUE};
+        final int[] magicNumbers = new int[] {Integer.MIN_VALUE, -2, -1, 0, 1, 2, Integer.MAX_VALUE};
         for (final int magicNumber : magicNumbers) {
             final String encoded = encode7(magicNumber);
             log.debug("{} -> {}", format("%08x", magicNumber), encoded);
@@ -123,7 +133,6 @@ class CouponNumberTest {
             assertEquals(magicNumber, actual);
         }
     }
-
 
     @Test
     void testEncodeDecode13() {
@@ -145,7 +154,7 @@ class CouponNumberTest {
     void testEncodeDecode13WithMagicNumbers() {
         final Set<Long> ds = new HashSet<>();
         final Set<String> es = new HashSet<>();
-        final long[] magicNumbers = new long[]{Long.MIN_VALUE, -2L, -1L, 0L, 1L, 2L, Long.MAX_VALUE};
+        final long[] magicNumbers = new long[] {Long.MIN_VALUE, -2L, -1L, 0L, 1L, 2L, Long.MAX_VALUE};
         for (final long magicNumber : magicNumbers) {
             final String encoded = encode13(magicNumber);
             log.debug("{} -> {}", format("0x%016x", magicNumber), encoded);
