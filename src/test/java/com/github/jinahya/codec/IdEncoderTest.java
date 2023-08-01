@@ -44,6 +44,20 @@ class IdEncoderTest extends IdCodecBaseTest<IdEncoder> {
         super(IdEncoder.class);
     }
 
+    @Test
+    void __LongMax() {
+//        final long decoded = current().nextLong();
+        final long decoded = Long.MAX_VALUE;
+        {
+            final String encoded = instance(MAX_RADIX, MIN_SCALE, v -> v.encode(decoded, current()));
+            log.debug("encoded: {}", encoded);
+        }
+        {
+            final String encoded = instance(MAX_RADIX, MAX_SCALE, v -> v.encode(decoded, current()));
+            log.debug("encoded: {}", encoded);
+        }
+    }
+
     /**
      * Tests {@link IdEncoder#encode(long, Random)} method.
      */
@@ -53,6 +67,7 @@ class IdEncoderTest extends IdCodecBaseTest<IdEncoder> {
             for (int scale = MIN_SCALE; scale <= MAX_SCALE; scale++) {
                 final long decoded = current().nextLong();
                 final String encoded = instance(radix, scale, v -> v.encode(decoded, current()));
+                log.debug("radix: {}, encoded: {}", radix, encoded);
                 assertNotNull(encoded);
             }
         }

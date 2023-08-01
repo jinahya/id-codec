@@ -52,7 +52,7 @@ public class IdEncoder extends IdCodecBase {
     }
 
     /**
-     * Encodes specified value using specified random intance.
+     * Encodes specified value using specified random instance.
      *
      * @param decoded the value to encode.
      * @param random  the random to use.
