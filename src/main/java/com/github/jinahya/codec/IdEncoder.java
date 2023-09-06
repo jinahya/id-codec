@@ -30,11 +30,11 @@ public class IdEncoder extends IdCodecBase {
     /**
      * Creates a new instance with specified radix and scale.
      *
-     * @param radix the radix; between {@link Character#MIN_RADIX} and {@link Character#MAX_RADIX}, both inclusive.
      * @param scale the scale; between {@link #MIN_SCALE} and {@link #MAX_SCALE}, both inclusive.
+     * @param radix the radix; between {@link #MIN_RADIX} and {@link #MAX_RADIX}, both inclusive.
      */
-    public IdEncoder(final int radix, final int scale) {
-        super(radix, scale);
+    public IdEncoder(final int scale, final int radix) {
+        super(scale, radix);
     }
 
     private String block(final long decoded, final Random random) {
